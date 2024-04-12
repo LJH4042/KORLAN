@@ -1,0 +1,44 @@
+.userContainer {
+  width: 500px;
+  margin: 0 auto;
+}
+.userContainer h1 {
+  text-align: center;
+  margin-bottom: 60px;
+}
+.userContainer label {
+  font-weight: bold;
+  font-size: 17px;
+}
+.userContainer input {
+  display: block;
+  width: 100%;
+  padding: 10px;
+  margin: 25px 0px 25px 0px;
+  border: none;
+  outline: none;
+  border-bottom: 2px solid gray;
+  font-size: 20px;
+}
+.userContainer button {
+  width: 105%;
+  padding: 10px;
+  font-size: 20px;
+  font-weight: bold;
+  border: none;
+  margin-top: 20px;
+}
+.userContainer button:hover {
+  background-color: black;
+  color: white;
+}
+.userContainer p {
+  color: dodgerblue;
+  text-align: center;
+  margin-top: 50px;
+  font-weight: bold;
+}
+.userContainer p:hover {
+  color: blue;
+  text-decoration: underline;
+}

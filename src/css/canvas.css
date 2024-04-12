@@ -1,0 +1,13 @@
+.canvas button {
+  width: 100px;
+  height: 30px;
+  font-size: 15px;
+  font-weight: bold;
+  border: 1px solid black;
+  background-color: white;
+}
+
+.canvas button:hover {
+  color: white;
+  background-color: black;
+}
