@@ -6,8 +6,10 @@ import PostAdd from "./page/Comunity/PostAdd";
 import PostList from "./page/Comunity/PostList";
 import PostDetail from "./page/Comunity/PostDetail";
 import PostUpdate from "./page/Comunity/PostUpdate";
-import Canvas from "./page/Canvas/Canvas";
+import Canvas from "./page/Game/Canvas";
 import Home from "./page/Home";
+import ImageRegist from "./page/Game/ImageRegist";
+import ImageGame from "./page/Game/ImageGame";
 
 function App() {
   return (
@@ -22,6 +24,8 @@ function App() {
           <Route path="/post/:id" element={<PostDetail />} />
           <Route path="/post/:id/update" element={<PostUpdate />} />
           <Route path="/canvas" element={<Canvas />} />
+          <Route path="/image" element={<ImageGame />} />
+          <Route path="/image/add" element={<ImageRegist />} />
         </Routes>
       </BrowserRouter>
     </div>
