@@ -23,9 +23,26 @@ const postCanvas = asynchHandler(async (req, res) => {
 });
 
 //Get random Image, /image
+let imageID = [];
+
 const getImage = asynchHandler(async (req, res) => {
-  const game = await Game.aggregate([{ $sample: { size: 1 } }]);
-  res.status(200).send(game);
+  if (imageID.length >= 5) {
+    imageID = [];
+    res.send({ message: "게임이 종료되었습니다." });
+  } else {
+    const game = await Game.aggregate([
+      { $match: { _id: { $nin: imageID } } },
+      { $sample: { size: 1 } },
+    ]);
+    imageID.push(game[0]._id);
+    res.status(200).send({ game: game, count: imageID.length });
+  }
+  console.log(imageID);
+});
+
+//Post reset Image ID, /image/reset
+const resetImageID = asynchHandler(async (req, res) => {
+  imageID = [];
 });
 
 //Post Image, /image
@@ -36,4 +53,4 @@ const postImage = asynchHandler(async (req, res) => {
   res.status(201).send({ message: "등록되었습니다." });
 });
 
-module.exports = { postCanvas, getImage, postImage };
+module.exports = { postCanvas, getImage, resetImageID, postImage };

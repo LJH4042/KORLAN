@@ -6,10 +6,10 @@ import PostAdd from "./page/Comunity/PostAdd";
 import PostList from "./page/Comunity/PostList";
 import PostDetail from "./page/Comunity/PostDetail";
 import PostUpdate from "./page/Comunity/PostUpdate";
-import Canvas from "./page/Game/Canvas";
 import Home from "./page/Home";
 import ImageRegist from "./page/Game/ImageRegist";
 import ImageGame from "./page/Game/ImageGame";
+import CombineGame from "./page/Game/CombineGame";
 
 function App() {
   return (
@@ -23,9 +23,9 @@ function App() {
           <Route path="/post/add" element={<PostAdd />} />
           <Route path="/post/:id" element={<PostDetail />} />
           <Route path="/post/:id/update" element={<PostUpdate />} />
-          <Route path="/canvas" element={<Canvas />} />
-          <Route path="/image" element={<ImageGame />} />
           <Route path="/image/add" element={<ImageRegist />} />
+          <Route path="/imageGame" element={<ImageGame />} />
+          <Route path="/combineGame" element={<CombineGame />} />
         </Routes>
       </BrowserRouter>
     </div>

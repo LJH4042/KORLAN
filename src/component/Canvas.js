@@ -1,8 +1,15 @@
 import React, { useEffect, useRef, useState } from "react";
 import axios from "axios";
-import "../../css/game.css";
+import "../css/game.css";
 
-function Canvas() {
+function Canvas({
+  checkAnswer,
+  fetchData,
+  quiz,
+  checkQuiz,
+  setCheckQuiz,
+  setAnswerObjButton,
+}) {
   const canvasRef = useRef(null);
 
   const [isDrawing, setIsDrawing] = useState(false);
@@ -68,16 +75,17 @@ function Canvas() {
     setIsDrawing(false);
   };
 
-  const outputCanvas = async () => {
+  const outputCanvasImage = async () => {
     const canvas = canvasRef.current;
     setOutputImageSrc(canvas.toDataURL());
-
     const dataURL = canvas.toDataURL("image/png");
     await axios
       .post("http://localhost:5000/canvas", { dataURL: dataURL })
       .then((res) => {
         setImgText(res.data.text);
+        checkAnswer(res.data.text);
       });
+    console.log(outputImageSrc);
   };
 
   const clearCanvas = () => {
@@ -89,7 +97,7 @@ function Canvas() {
     setImgText("");
   };
 
-  const returnCanvas = () => {
+  const returnCurrentLine = () => {
     setPaths((prevPaths) => prevPaths.slice(0, -1));
   };
 
@@ -109,26 +117,41 @@ function Canvas() {
 
   useEffect(redrawCanvas, [paths]);
 
+  const nextLevel = () => {
+    fetchData();
+    clearCanvas();
+    setCheckQuiz(false);
+    setAnswerObjButton(false);
+  };
+
   return (
-    <div className="canvas">
+    <div className="canvasContainer">
       <canvas
         ref={canvasRef}
         width={500}
-        height={500}
+        height={200}
         style={{ border: "1px solid black" }}
         onMouseDown={drawingCanvas}
         onMouseUp={stopDrawing}
         onMouseOut={canvasOut}
       />
-      {outputImageSrc && <img src={outputImageSrc} alt="분석된 이미지" />}
-      <div>
-        <button onClick={outputCanvas}>추출</button>
-        <button onClick={clearCanvas}>다시 쓰기</button>
-        <button onClick={returnCanvas}>한 획 지우기</button>
+      <div className="canvasButtonDiv">
+        {checkQuiz ? (
+          <div>
+            <h3>
+              정답: [{quiz}], 제출한 답: [{imgText}]
+            </h3>
+            <button onClick={nextLevel}>다음 레벨</button>
+          </div>
+        ) : (
+          <div>
+            <button onClick={outputCanvasImage}>제출</button>
+            <button onClick={clearCanvas}>다시 쓰기</button>
+            <button onClick={returnCurrentLine}>한 획 지우기</button>
+          </div>
+        )}
       </div>
-      <div>
-        <h1>{imgText}</h1>
-      </div>
+      {/*outputImageSrc && <img src={outputImageSrc} alt="분석된 이미지" />*/}
     </div>
   );
 }

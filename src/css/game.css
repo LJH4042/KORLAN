@@ -1,13 +1,93 @@
-.canvas button {
+.imageGameContainer,
+.combineGameContainer {
+  width: 500px;
+  margin: 0 auto;
+}
+.imageDiv,
+.combineDiv {
+  text-align: center;
+  margin: 0 auto;
+}
+.imageDiv h2,
+.combineDiv h2 {
+  margin-left: 100px;
+  margin-right: 50px;
+}
+.imageDiv img {
+  border: 1px solid black;
+  width: 500px;
+  height: 350px;
+  object-fit: fill;
+}
+.imageDiv button,
+.combineDiv button {
   width: 100px;
   height: 30px;
   font-size: 15px;
   font-weight: bold;
   border: 1px solid black;
   background-color: white;
+  margin-right: 10px;
+}
+.imageDiv button:hover,
+.combineDiv button:hover {
+  color: white;
+  background-color: black;
+}
+.roundDiv {
+  display: flex;
+  align-items: center;
+}
+.combineDiv span {
+  font-size: 40px;
+  font-weight: bold;
+}
+.textQuizDiv {
+  border: 1px solid black;
+  padding: 10px;
+  margin-bottom: 10px;
 }
 
-.canvas button:hover {
+.canvasContainer button {
+  width: 100px;
+  height: 30px;
+  font-size: 15px;
+  font-weight: bold;
+  border: 1px solid black;
+  background-color: white;
+  margin-right: 10px;
+}
+.canvasContainer button:hover {
+  color: white;
+  background-color: black;
+}
+.canvasButtonDiv {
+  width: 100%;
+  text-align: center;
+  margin: 0 auto;
+}
+
+.typingContainer {
+  width: 100%;
+  text-align: center;
+  margin-top: 10px;
+  margin-left: 5px;
+}
+.typingContainer input {
+  width: 370px;
+  height: 28px;
+  margin-right: 10px;
+}
+.typingContainer button {
+  width: 100px;
+  height: 30px;
+  font-size: 15px;
+  font-weight: bold;
+  border: 1px solid black;
+  background-color: white;
+  margin-right: 10px;
+}
+.typingContainer button:hover {
   color: white;
   background-color: black;
 }
