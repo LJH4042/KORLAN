@@ -3,8 +3,11 @@ import React, { useEffect, useState } from "react";
 import "../../css/game.css";
 import Canvas from "../../component/Canvas";
 import Typing from "../../component/Typing";
+import { useNavigate } from "react-router-dom";
 
 function ImageGame() {
+  const navigate = useNavigate();
+
   const winNum = 1;
   const [imageData, setImagaData] = useState([]);
 
@@ -20,17 +23,11 @@ function ImageGame() {
   const [answerObjName, setAnswerObjName] = useState("타이핑");
   const [answerObjButton, setAnswerObjButton] = useState(false);
 
-  const resetButton = () => {
-    window.location.reload();
-  };
+  const resetButton = () => window.location.reload();
 
-  const changeAnswerObj = () => {
+  const toggleAnswerObj = () => {
     setAnswerObj((answerObj) => !answerObj);
-    if (answerObjName === "타이핑") {
-      setAnswerObjName("캔버스");
-    } else {
-      setAnswerObjName("타이핑");
-    }
+    setAnswerObjName((prev) => (prev === "타이핑" ? "캔버스" : "타이핑"));
   };
 
   const checkAnswer = async (text) => {
@@ -52,32 +49,58 @@ function ImageGame() {
     }
   };
 
-  const fetchData = () => {
-    axios.get("http://localhost:5000/game").then((res) => {
-      if (res.data.game && res.data.game.length > 0) {
-        setImagaData(res.data.game[0].image);
-        setQuiz(res.data.game[0].title);
-        setCount(res.data.count);
-        if (count >= 5) {
+  const fetchData = async () => {
+    try {
+      axios.get("http://localhost:5000/game").then((res) => {
+        if (res.data.game && res.data.game.length > 0) {
+          setImagaData(res.data.game[0].image);
+          setQuiz(res.data.game[0].title);
+          setCount(res.data.count);
+          if (count >= 5) {
+            setGameOver(true);
+            alert(res.data.message);
+          }
+        } else {
           setGameOver(true);
           alert(res.data.message);
         }
-      } else {
-        setGameOver(true);
-        alert(res.data.message);
-      }
-    });
+      });
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
+  const updateScore = async () => {
+    const token = localStorage.getItem("token");
+
+    const headerData = {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    };
+
+    try {
+      await axios.post(
+        "http://localhost:5000/imageScore",
+        { imageScore: winNum },
+        headerData
+      );
+    } catch (error) {
+      console.error(error);
+    }
   };
 
   useEffect(() => {
-    fetchData();
+    if (localStorage.getItem("token") === null) {
+      navigate("/");
+    } else {
+      fetchData();
+    }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [navigate]);
 
   useEffect(() => {
-    if (score >= 50) {
-      axios.post("http://localhost:5000/imageScore", { imageScore: winNum });
-    }
+    if (score >= 50) updateScore();
   }, [score]);
 
   return (
@@ -87,13 +110,13 @@ function ImageGame() {
           <div>
             <h1>Game Over, 점수: {score} / 50</h1>
             <button onClick={resetButton}>다시하기</button>
-            <button >홈으로</button>
+            <button onClick={() => navigate("/main")}>홈으로</button>
           </div>
         ) : (
           <div>
             <div className="roundDiv">
               <h2>Round: {count} / 5</h2>
-              <button onClick={changeAnswerObj} disabled={answerObjButton}>
+              <button onClick={toggleAnswerObj} disabled={answerObjButton}>
                 {answerObjName}
               </button>
             </div>

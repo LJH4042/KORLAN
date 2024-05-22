@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import axios from "axios";
 import "../../css/user.css";
 import { useNavigate } from "react-router-dom";
@@ -27,13 +27,19 @@ function Login() {
             alert(res.data.message);
             const { token } = res.data;
             localStorage.setItem("token", token);
-            navigate("/post");
+            navigate("/main");
           });
       } catch (err) {
         alert(err.response.data.message);
+        setUsername("");
+        setPassword("");
       }
     }
   };
+
+  useEffect(() => {
+    if (localStorage.getItem("token") !== null) navigate("/main");
+  }, [navigate]);
 
   return (
     <div className="userContainer">

@@ -16,8 +16,8 @@ function App() {
     <div>
       <BrowserRouter>
         <Routes>
-          <Route index element={<Home />} />
-          <Route path="/login" element={<Login />} />
+          <Route index element={<Login />} />
+          <Route path="/main" element={<Home />} />
           <Route path="/register" element={<Register />} />
           <Route path="/post" element={<PostList />} />
           <Route path="/post/add" element={<PostAdd />} />

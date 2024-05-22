@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import axios from "axios";
 import "../../css/user.css";
 import { useNavigate } from "react-router-dom";
@@ -31,13 +31,20 @@ function Register() {
           .post("http://localhost:5000/register", registerData)
           .then((res) => {
             alert(res.data.message);
-            navigate("/login");
+            navigate("/");
           });
       } catch (err) {
         alert(err.response.data.message);
+        setUsername("");
+        setPassword("");
+        setCheckPassword("");
       }
     }
   };
+
+  useEffect(() => {
+    if (localStorage.getItem("token") !== null) navigate("/main");
+  }, [navigate]);
 
   return (
     <div className="userContainer">
@@ -61,7 +68,7 @@ function Register() {
         </div>
         <button type="submit">회원가입</button>
       </form>
-      <p onClick={() => navigate("/login")}>-#로그인-</p>
+      <p onClick={() => navigate("/")}>-#로그인-</p>
     </div>
   );
 }

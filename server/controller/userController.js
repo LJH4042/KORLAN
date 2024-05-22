@@ -44,4 +44,36 @@ const registerUser = asynchHandler(async (req, res) => {
   }
 });
 
-module.exports = { loginUser, registerUser };
+//Post ImageGame Score Add, /imageScore
+const addImageScore = asynchHandler(async (req, res) => {
+  const { imageScore } = req.body;
+  const user = await User.findById(req.user._id);
+  user.imageScore += parseInt(imageScore); // 점수를 증가시킵니다.
+  await user.save();
+});
+
+//Post CombineGame Score Add, /CombineScore
+const addCombineScore = asynchHandler(async (req, res) => {
+  const { combineScore } = req.body;
+  const user = await User.findById(req.user._id);
+  user.combineScore += parseInt(combineScore); // 점수를 증가시킵니다.
+  await user.save();
+});
+
+//Get User Data, /login
+const getUserData = asynchHandler(async (req, res) => {
+  const user = await User.findById(req.user._id);
+  if (user) {
+    res.status(200).send(user);
+  } else {
+    res.status(404);
+  }
+});
+
+module.exports = {
+  loginUser,
+  registerUser,
+  addImageScore,
+  addCombineScore,
+  getUserData,
+};
