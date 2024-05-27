@@ -20,7 +20,7 @@ function ImageRegist() {
       alert("이미지 파일을 등록해주세요.");
     } else {
       await axios
-        .post("http://localhost:5000/image", imageData, {
+        .post("http://localhost:5000/game", imageData, {
           headers: { "Content-Type": "multipart/form-data" },
         })
         .then((res) => {

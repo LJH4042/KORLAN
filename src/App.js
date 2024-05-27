@@ -10,6 +10,9 @@ import Home from "./page/Home";
 import ImageRegist from "./page/Game/ImageRegist";
 import ImageGame from "./page/Game/ImageGame";
 import CombineGame from "./page/Game/CombineGame";
+import IdFind from "./page/User/IdFind";
+import PwdFind from "./page/User/PwdFind";
+import PwdChange from "./page/User/PwdChange";
 
 function App() {
   return (
@@ -17,8 +20,11 @@ function App() {
       <BrowserRouter>
         <Routes>
           <Route index element={<Login />} />
-          <Route path="/main" element={<Home />} />
+          <Route path="/find_id" element={<IdFind />} />
+          <Route path="/find_pwd" element={<PwdFind />} />
+          <Route path="/change_pwd" element={<PwdChange />} />
           <Route path="/register" element={<Register />} />
+          <Route path="/main" element={<Home />} />
           <Route path="/post" element={<PostList />} />
           <Route path="/post/add" element={<PostAdd />} />
           <Route path="/post/:id" element={<PostDetail />} />

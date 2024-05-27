@@ -37,6 +37,10 @@
 .roundDiv {
   display: flex;
   align-items: center;
+  height: 100px;
+}
+.roundDiv h2 {
+  padding-top: 35px;
 }
 .combineDiv span {
   font-size: 40px;

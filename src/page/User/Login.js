@@ -9,6 +9,9 @@ function Login() {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
 
+  const [usernameError, setUsernameError] = useState("");
+  const [passwordError, setPasswordError] = useState("");
+
   const changeUsername = (e) => setUsername(e.target.value);
   const changePassword = (e) => setPassword(e.target.value);
 
@@ -18,7 +21,7 @@ function Login() {
     const loginData = { username: username, password: password };
 
     if (username === "" || password === "") {
-      alert("ID, 비밀번호를 입력해주세요.");
+      alert("빈칸을 입력해주세요.");
     } else {
       try {
         await axios
@@ -30,9 +33,8 @@ function Login() {
             navigate("/main");
           });
       } catch (err) {
-        alert(err.response.data.message);
-        setUsername("");
-        setPassword("");
+        setUsernameError(err.response.data.nameMessage);
+        setPasswordError(err.response.data.pwdMessage);
       }
     }
   };
@@ -47,15 +49,27 @@ function Login() {
       <p></p>
       <form onSubmit={loginSubmit}>
         <div>
-          <label>아이디</label>
+          <label>ID</label>
           <input type="text" value={username} onChange={changeUsername} />
+          <h4>{usernameError}</h4>
         </div>
         <div>
           <label>비밀번호</label>
           <input type="password" value={password} onChange={changePassword} />
+          <h4>{passwordError}</h4>
         </div>
-        <button type="submit">로그인</button>
+        <button className="submitBtn" type="submit">
+          로그인
+        </button>
       </form>
+      <div className="findDiv">
+        <button className="findBtn" onClick={() => navigate("/find_id")}>
+          ID 찾기
+        </button>
+        <button className="findBtn2" onClick={() => navigate("/find_pwd")}>
+          비밀번호 찾기
+        </button>
+      </div>
       <p onClick={() => navigate("/register")}>-#계정 생성-</p>
     </div>
   );

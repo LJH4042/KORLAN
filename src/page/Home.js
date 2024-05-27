@@ -49,8 +49,6 @@ function Home() {
   return (
     <div>
       <div>
-        <button onClick={() => navigate("/")}>로그인</button>
-        <button onClick={() => navigate("/register")}>회원가입</button>
         <button onClick={() => navigate("/post")}>커뮤니티</button>
         <button onClick={resetImage}>이미지 게임</button>
         <button onClick={resetText}>낱말 조합</button>
