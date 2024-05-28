@@ -30,7 +30,7 @@ function Login() {
             alert(res.data.message);
             const { token } = res.data;
             localStorage.setItem("token", token);
-            navigate("/main");
+            navigate("/");
           });
       } catch (err) {
         setUsernameError(err.response.data.nameMessage);
@@ -40,7 +40,7 @@ function Login() {
   };
 
   useEffect(() => {
-    if (localStorage.getItem("token") !== null) navigate("/main");
+    if (localStorage.getItem("token") !== null) navigate("/");
   }, [navigate]);
 
   return (

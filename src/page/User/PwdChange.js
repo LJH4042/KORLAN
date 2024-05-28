@@ -34,7 +34,7 @@ function PwdChange() {
           .post("http://localhost:5000/change_pwd", pwdData)
           .then((res) => {
             alert(res.data.message);
-            navigate("/");
+            navigate("/login");
           });
         localStorage.removeItem("username");
       } catch (err) {
@@ -44,8 +44,8 @@ function PwdChange() {
   };
 
   useEffect(() => {
-    if (localStorage.getItem("username") === null) navigate("/");
-    if (localStorage.getItem("token") !== null) navigate("/main");
+    if (localStorage.getItem("username") === null) navigate("/login");
+    if (localStorage.getItem("token") !== null) navigate("/");
   }, [navigate]);
 
   return (

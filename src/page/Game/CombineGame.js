@@ -109,13 +109,9 @@ function CombineGame() {
   };
 
   useEffect(() => {
-    if (localStorage.getItem("token") === null) {
-      navigate("/");
-    } else {
-      fetchData();
-    }
+    fetchData();
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [navigate]);
+  }, []);
 
   useEffect(() => {
     setCharArray(separateText().sort(() => Math.random() - 0.5));
@@ -133,7 +129,7 @@ function CombineGame() {
           <div>
             <h1>Game Over, 점수: {score} / 50</h1>
             <button onClick={resetButton}>다시하기</button>
-            <button onClick={() => navigate("/main")}>홈으로</button>
+            <button onClick={() => navigate("/")}>홈으로</button>
           </div>
         ) : (
           <div>

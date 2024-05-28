@@ -37,7 +37,7 @@ function IdFind() {
   };
 
   useEffect(() => {
-    if (localStorage.getItem("token") !== null) navigate("/main");
+    if (localStorage.getItem("token") !== null) navigate("/");
   }, [navigate]);
 
   return (
@@ -46,7 +46,7 @@ function IdFind() {
       {isFind ? (
         <div>
           <h2>ID : {username}</h2>
-          <button className="submitBtn" onClick={() => navigate("/")}>
+          <button className="submitBtn" onClick={() => navigate("/login")}>
             로그인
           </button>
         </div>
@@ -65,7 +65,7 @@ function IdFind() {
             </div>
             <button className="submitBtn">ID 찾기</button>
           </form>
-          <p onClick={() => navigate("/")}>-#로그인-</p>
+          <p onClick={() => navigate("/login")}>-#로그인-</p>
         </div>
       )}
     </div>

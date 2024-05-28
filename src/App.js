@@ -13,18 +13,20 @@ import CombineGame from "./page/Game/CombineGame";
 import IdFind from "./page/User/IdFind";
 import PwdFind from "./page/User/PwdFind";
 import PwdChange from "./page/User/PwdChange";
+import MyPage from "./page/User/MyPage";
 
 function App() {
   return (
     <div>
       <BrowserRouter>
         <Routes>
-          <Route index element={<Login />} />
+          <Route index element={<Home />} />
+          <Route path="/login" element={<Login />} />
           <Route path="/find_id" element={<IdFind />} />
           <Route path="/find_pwd" element={<PwdFind />} />
           <Route path="/change_pwd" element={<PwdChange />} />
           <Route path="/register" element={<Register />} />
-          <Route path="/main" element={<Home />} />
+          <Route path="/mypage" element={<MyPage />} />
           <Route path="/post" element={<PostList />} />
           <Route path="/post/add" element={<PostAdd />} />
           <Route path="/post/:id" element={<PostDetail />} />

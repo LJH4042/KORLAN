@@ -2,20 +2,12 @@ import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 
-function Home() {
+function MyPage() {
   const navigate = useNavigate();
   const [userData, setUserData] = useState([]);
 
-  const resetImage = () => {
-    axios.post("http://localhost:5000/game/reset");
-    navigate("/imageGame");
-  };
-  const resetText = () => {
-    axios.post("http://localhost:5000/game/reset");
-    navigate("/combineGame");
-  };
   const logout = () => {
-    navigate("/login");
+    navigate("/");
     localStorage.removeItem("token");
   };
 
@@ -38,20 +30,19 @@ function Home() {
   };
 
   useEffect(() => {
-    fetchUserData();
+    if (localStorage.getItem("token") === null) {
+      navigate("/login");
+    } else {
+      fetchUserData();
+    }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [navigate]);
 
   return (
     <div>
       <div>
-        <button onClick={() => navigate("/login")}>로그인</button>
-        <button onClick={() => navigate("/register")}>회원가입</button>
-        <button onClick={() => navigate("/post")}>커뮤니티</button>
-        <button onClick={resetImage}>이미지 게임</button>
-        <button onClick={resetText}>낱말 조합</button>
+        <button onClick={() => navigate("/")}>홈</button>
         <button onClick={logout}>로그아웃</button>
-        <button onClick={() => navigate("/mypage")}>마이 페이지</button>
       </div>
       <div>
         <h1>유저 이름 : {userData.username}</h1>
@@ -62,4 +53,4 @@ function Home() {
   );
 }
 
-export default Home;
+export default MyPage;

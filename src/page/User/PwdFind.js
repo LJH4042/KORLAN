@@ -63,7 +63,7 @@ function PwdFind() {
   };
 
   useEffect(() => {
-    if (localStorage.getItem("token") !== null) navigate("/main");
+    if (localStorage.getItem("token") !== null) navigate("/");
   }, [navigate]);
 
   return (
@@ -104,7 +104,7 @@ function PwdFind() {
               다음
             </button>
           </form>
-          <p onClick={() => navigate("/")}>-#로그인-</p>
+          <p onClick={() => navigate("/login")}>-#로그인-</p>
         </div>
       )}
     </div>

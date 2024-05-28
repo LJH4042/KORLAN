@@ -39,7 +39,7 @@ function Register() {
           .post("http://localhost:5000/register", registerData)
           .then((res) => {
             alert(res.data.message);
-            navigate("/");
+            navigate("/login");
           });
       } catch (err) {
         setUsernameError(err.response.data.nameMessage);
@@ -50,7 +50,7 @@ function Register() {
   };
 
   useEffect(() => {
-    if (localStorage.getItem("token") !== null) navigate("/main");
+    if (localStorage.getItem("token") !== null) navigate("/");
   }, [navigate]);
 
   return (
