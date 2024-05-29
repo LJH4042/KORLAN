@@ -10,10 +10,11 @@ import Home from "./page/Home";
 import ImageRegist from "./page/Game/ImageRegist";
 import ImageGame from "./page/Game/ImageGame";
 import CombineGame from "./page/Game/CombineGame";
-import IdFind from "./page/User/IdFind";
-import PwdFind from "./page/User/PwdFind";
-import PwdChange from "./page/User/PwdChange";
+import IdFind from "./page/User/ID/IdFind";
+import PwdFind from "./page/User/PWD/PwdFind";
+import PwdChange from "./page/User/PWD/PwdChange";
 import MyPage from "./page/User/MyPage";
+import IdCheck from "./page/User/ID/IdCheck";
 
 function App() {
   return (
@@ -23,6 +24,7 @@ function App() {
           <Route index element={<Home />} />
           <Route path="/login" element={<Login />} />
           <Route path="/find_id" element={<IdFind />} />
+          <Route path="/check_id" element={<IdCheck />} />
           <Route path="/find_pwd" element={<PwdFind />} />
           <Route path="/change_pwd" element={<PwdChange />} />
           <Route path="/register" element={<Register />} />

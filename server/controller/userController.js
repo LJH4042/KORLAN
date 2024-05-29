@@ -34,6 +34,21 @@ const loginUser = asynchHandler(async (req, res) => {
   res.status(200).json({ message: "로그인 성공", token });
 });
 
+//메일 발송 트랜스포트
+const mailPoster = nodemailer.createTransport({
+  service: "naver",
+  host: "smtp.naver.com",
+  port: 587,
+  auth: { user: process.env.MAIL_USER, pass: process.env.MAIL_PWD },
+});
+
+//Post Username Data, /check_id : username 가져오기
+const getUsername = asynchHandler(async (req, res) => {
+  const { email } = req.body;
+  const user = await User.findOne({ email });
+  res.status(200).send(user);
+});
+
 //Post Find User_id, /find_id : 아이디 찾기
 const findId = asynchHandler(async (req, res) => {
   const { email } = req.body;
@@ -41,16 +56,25 @@ const findId = asynchHandler(async (req, res) => {
   if (!user) {
     return res.status(401).json({ message: "존재하지 않는 이메일입니다." });
   } else {
-    res.status(201).send(user);
-  }
-});
+    const code = Math.floor(100000 + Math.random() * 900000);
+    await Authcode.create({ code });
 
-//메일 발송 트랜스포트
-const mailPoster = nodemailer.createTransport({
-  service: "naver",
-  host: "smtp.naver.com",
-  port: 587,
-  auth: { user: process.env.MAIL_USER, pass: process.env.MAIL_PWD },
+    const mailOption = {
+      from: process.env.MAIL_USER,
+      to: email,
+      subject: "비밀번호 재설정 인증코드",
+      text: `인증 코드는 ${code}입니다.`,
+    };
+
+    mailPoster.sendMail(mailOption, (error, info) => {
+      if (error) {
+        console.log(error);
+        res.status(400).json({ message: "인증코드 전송에 실패햇습니다." });
+      } else {
+        res.status(201).json({ message: "인증코드가 전송되었습니다." });
+      }
+    });
+  }
 });
 
 //Post Find User_pwd, /find_pwd : 비밀번호 찾기
@@ -142,6 +166,7 @@ module.exports = {
   getUserData,
   loginUser,
   findId,
+  getUsername,
   findPwd,
   changePwd,
   checkAuthCode,

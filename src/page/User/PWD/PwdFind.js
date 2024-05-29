@@ -1,7 +1,7 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import "../../css/user.css";
+import "../../../css/user.css";
 
 function PwdFind() {
   const navigate = useNavigate();

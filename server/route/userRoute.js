@@ -4,6 +4,7 @@ const {
   getUserData,
   loginUser,
   findId,
+  getUsername,
   findPwd,
   changePwd,
   checkAuthCode,
@@ -13,6 +14,7 @@ const { authUser } = require("../middleware/authMiddleware");
 
 router.route("/login").get(authUser, getUserData).post(loginUser);
 router.route("/find_id").post(findId);
+router.route("/check_id").post(getUsername);
 router.route("/find_pwd").post(findPwd);
 router.route("/change_pwd").post(changePwd);
 router.route("/authcode").post(checkAuthCode);

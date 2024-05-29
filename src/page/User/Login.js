@@ -32,6 +32,7 @@ function Login() {
             localStorage.setItem("token", token);
             navigate("/");
           });
+        localStorage.removeItem("email");
       } catch (err) {
         setUsernameError(err.response.data.nameMessage);
         setPasswordError(err.response.data.pwdMessage);
