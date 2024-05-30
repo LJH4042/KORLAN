@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
+import ControlledCarousel from "../component/Carousel/Carousels";
+import Nav from "../component/Nav";
 
 function Home() {
   const navigate = useNavigate();
@@ -44,6 +46,7 @@ function Home() {
 
   return (
     <div>
+      <Nav />
       <div>
         <button onClick={() => navigate("/login")}>로그인</button>
         <button onClick={() => navigate("/register")}>회원가입</button>
@@ -57,6 +60,9 @@ function Home() {
         <h1>유저 이름 : {userData.username}</h1>
         <h1>이미지 게임 점수 : {userData.imageScore}</h1>
         <h1>조합 게임 점수 : {userData.combineScore}</h1>
+      </div>
+      <div>
+        <ControlledCarousel />
       </div>
     </div>
   );

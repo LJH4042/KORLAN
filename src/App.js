@@ -15,6 +15,7 @@ import PwdFind from "./page/User/PWD/PwdFind";
 import PwdChange from "./page/User/PWD/PwdChange";
 import MyPage from "./page/User/MyPage";
 import IdCheck from "./page/User/ID/IdCheck";
+import LearningPage from "./page/Learn/LearningPage";
 
 function App() {
   return (
@@ -36,6 +37,7 @@ function App() {
           <Route path="/image/add" element={<ImageRegist />} />
           <Route path="/imageGame" element={<ImageGame />} />
           <Route path="/combineGame" element={<CombineGame />} />
+          <Route path="/learn" element={<LearningPage />} />
         </Routes>
       </BrowserRouter>
     </div>

@@ -6,7 +6,6 @@ const {
   findId,
   getUsername,
   findPwd,
-  getUsername,
   changePwd,
   checkAuthCode,
   registerUser,
