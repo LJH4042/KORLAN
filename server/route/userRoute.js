@@ -4,6 +4,7 @@ const {
   getUserData,
   loginUser,
   findId,
+  getUsername,
   findPwd,
   getUsername,
   changePwd,
