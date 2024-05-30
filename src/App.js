@@ -14,11 +14,14 @@ import IdFind from "./page/User/IdFind";
 import PwdFind from "./page/User/PwdFind";
 import PwdChange from "./page/User/PwdChange";
 import MyPage from "./page/User/MyPage";
+import LearningPage from "./page/LearningPage";
+import Nav from "./page/Nav";
 
 function App() {
   return (
     <div>
       <BrowserRouter>
+        <Nav />
         <Routes>
           <Route index element={<Home />} />
           <Route path="/login" element={<Login />} />
@@ -34,6 +37,8 @@ function App() {
           <Route path="/image/add" element={<ImageRegist />} />
           <Route path="/imageGame" element={<ImageGame />} />
           <Route path="/combineGame" element={<CombineGame />} />
+          <Route path="/learningpage" element={<LearningPage />} />
+          <Route path="/Mypage" element={<MyPage />} />
         </Routes>
       </BrowserRouter>
     </div>
