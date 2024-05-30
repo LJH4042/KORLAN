@@ -70,7 +70,7 @@ function IdFind() {
         <div>
           <form onSubmit={submitAuthCode}>
             <div>
-              <label>인증코드(4자리){<Timer setIsFind={setIsFind} />}</label>
+              <label>인증코드(6자리){<Timer setIsFind={setIsFind} />}</label>
               <input type="text" value={authCode} onChange={changeAuthCode} />
               <h4>{authCodeError}</h4>
             </div>
