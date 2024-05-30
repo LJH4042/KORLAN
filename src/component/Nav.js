@@ -12,7 +12,7 @@ function Nav() {
       <Link className="navbarMenu" to={"/"}>
         홈
       </Link>
-      <Link className="navbarMenu" to={"/LearningPage"}>
+      <Link className="navbarMenu" to={"/learn"}>
         학습하기
       </Link>
       {
