@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import "../../../css/user.css";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import Timer from "../../../component/Timer";
 
 function IdFind() {
   const navigate = useNavigate();
@@ -69,7 +70,7 @@ function IdFind() {
         <div>
           <form onSubmit={submitAuthCode}>
             <div>
-              <label>인증코드(4자리, 3분)</label>
+              <label>인증코드(4자리){<Timer setIsFind={setIsFind} />}</label>
               <input type="text" value={authCode} onChange={changeAuthCode} />
               <h4>{authCodeError}</h4>
             </div>

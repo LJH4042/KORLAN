@@ -72,3 +72,8 @@ h2 {
   background-color: black;
   color: white;
 }
+
+.timer {
+  margin-left: 320px;
+  color: red;
+}
