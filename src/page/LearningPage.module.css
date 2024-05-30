@@ -1,0 +1,63 @@
+/* LearningPage.css */
+@import url('https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css');
+
+.pageContainer {
+  margin: auto;
+}
+
+h2 {
+  text-align: center;
+  color: #333;
+}
+
+h3 {
+  color: #555;
+  margin-top: 20px;
+}
+
+/* 버튼 컨테이너 */
+.buttonContainer {
+  text-align: center;
+  margin: 20px 0;
+}
+
+/* 버튼 스타일 */
+.buttonContainer button {
+  background-color: #81afcd;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  margin: 5px;
+  border-radius: 5px;
+  cursor: pointer;
+  font-family: -apple-system, BlinkMacSystemFont, 'Apple SD Gothic Neo',
+    'Pretendard Variable', Pretendard, Roboto, 'Noto Sans KR', 'Segoe UI',
+    'Malgun Gothic', 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol',
+    sans-serif;
+  font-size: 18px;
+}
+
+.buttonContainer button:hover {
+  background-color: #417a9e;
+}
+
+/* .flexContainer {
+  display: flex;
+  justify-content: center;
+  align-items: start;
+  gap: 20px;
+  margin: 10px 10px;
+} */
+
+.selectedLetter {
+  font-size: 50px;
+  font-weight: bold;
+  color: #333;
+  text-align: center;
+}
+
+#studyCanvas {
+  width: 100%;
+  height: 400px;
+  margin: auto;
+}
