@@ -1,44 +1,40 @@
-import axios from "axios";
 import React, { useEffect, useState } from "react";
+import "../../../css/user.css";
+import axios from "axios";
 import { useNavigate } from "react-router-dom";
-import "../../css/user.css";
 
-function PwdFind() {
+function IdFind() {
   const navigate = useNavigate();
 
   const [isFind, setIsFind] = useState(false);
 
-  const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
   const [authCode, setAuthCode] = useState("");
 
-  const [usernameError, setUsernameError] = useState("");
   const [emailError, setEmailError] = useState("");
   const [authCodeError, setAuthCodeError] = useState("");
 
-  const changeUsername = (e) => setUsername(e.target.value);
   const changeEmail = (e) => setEmail(e.target.value);
   const changeAuthCode = (e) => setAuthCode(e.target.value);
 
-  const pwdFindSubmit = async (e) => {
+  const IdFindSubmit = async (e) => {
     e.preventDefault();
 
-    const pwdData = { username: username, email: email };
+    const idData = { email: email };
 
-    if (username === "" || email === "") {
+    if (email === "") {
       alert("빈칸을 입력해주세요.");
     } else {
       try {
         await axios
-          .post("http://localhost:5000/find_pwd", pwdData)
+          .post("http://localhost:5000/find_id", idData)
           .then((res) => {
-            alert(res.data.message);
             setIsFind(true);
+            alert(res.data.message);
           });
-        localStorage.setItem("username", username);
+        localStorage.setItem("email", email);
       } catch (err) {
-        setUsernameError(err.response.data.nameMessage);
-        setEmailError(err.response.data.emailMessage);
+        setEmailError(err.response.data.message);
       }
     }
   };
@@ -54,7 +50,7 @@ function PwdFind() {
           .post("http://localhost:5000/authcode", { code: authCode })
           .then((res) => {
             alert(res.data.message);
-            navigate("/change_pwd");
+            navigate("/check_id");
           });
       } catch (err) {
         setAuthCodeError(err.response.data.message);
@@ -68,7 +64,7 @@ function PwdFind() {
 
   return (
     <div className="userContainer">
-      <h1>비밀번호 찾기</h1>
+      <h1>ID 찾기</h1>
       {isFind ? (
         <div>
           <form onSubmit={submitAuthCode}>
@@ -84,12 +80,7 @@ function PwdFind() {
         </div>
       ) : (
         <div>
-          <form onSubmit={pwdFindSubmit}>
-            <div>
-              <label>ID</label>
-              <input type="text" value={username} onChange={changeUsername} />
-              <h4>{usernameError}</h4>
-            </div>
+          <form onSubmit={IdFindSubmit}>
             <div>
               <label>이메일</label>
               <input
@@ -100,9 +91,7 @@ function PwdFind() {
               />
               <h4>{emailError}</h4>
             </div>
-            <button type="submit" className="submitBtn">
-              다음
-            </button>
+            <button className="submitBtn">ID 찾기</button>
           </form>
           <p onClick={() => navigate("/login")}>-#로그인-</p>
         </div>
@@ -111,4 +100,4 @@ function PwdFind() {
   );
 }
 
-export default PwdFind;
+export default IdFind;
