@@ -1,5 +1,5 @@
 import axios from "axios";
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import "../../css/game.css";
 import Canvas from "../../component/Canvas";
 import Typing from "../../component/Typing";
@@ -70,12 +70,13 @@ function ImageGame() {
     }
   };
 
-  const updateScore = async () => {
+  const updateScore = useCallback(async () => {
     const token = localStorage.getItem("token");
     const headerData = {
       headers: {
         Authorization: `Bearer ${token}`,
       },
+      withCredentials: true,
     };
     try {
       await axios.post(
@@ -84,18 +85,32 @@ function ImageGame() {
         headerData
       );
     } catch (err) {
-      console.log(err);
+      if (err.response.status === 401) {
+        try {
+          const refreshRes = await axios.post(
+            "http://localhost:5000/refresh",
+            {},
+            { withCredentials: true }
+          );
+          const newToken = refreshRes.data.token;
+          localStorage.setItem("token", newToken);
+          axios.defaults.headers.common["Authorization"] = `Bearer ${newToken}`;
+          updateScore();
+        } catch (err) {
+          console.error(err);
+        }
+      }
     }
-  };
+  }, []);
 
   useEffect(() => {
     fetchData();
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [winNum]);
 
   useEffect(() => {
     if (score >= 50 && localStorage.getItem("token")) updateScore();
-  }, [score]);
+  }, [score, updateScore]);
 
   return (
     <div className="imageGameContainer">
