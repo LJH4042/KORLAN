@@ -2,6 +2,7 @@ import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import "../../../css/user.css";
+import Timer from "../../../component/Timer";
 
 function PwdFind() {
   const navigate = useNavigate();
@@ -73,7 +74,7 @@ function PwdFind() {
         <div>
           <form onSubmit={submitAuthCode}>
             <div>
-              <label>인증코드(4자리, 3분)</label>
+              <label>인증코드(6자리){<Timer setIsFind={setIsFind} />}</label>
               <input type="text" value={authCode} onChange={changeAuthCode} />
               <h4>{authCodeError}</h4>
             </div>

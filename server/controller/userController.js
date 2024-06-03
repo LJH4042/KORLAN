@@ -62,7 +62,7 @@ const findId = asynchHandler(async (req, res) => {
     const mailOption = {
       from: process.env.MAIL_USER,
       to: email,
-      subject: "비밀번호 재설정 인증코드",
+      subject: "아이디 찾기 인증코드",
       text: `인증 코드는 ${code}입니다.`,
     };
 
