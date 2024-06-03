@@ -47,7 +47,7 @@ function Home() {
   return (
     <div>
       <Nav />
-      <div>
+      {/* <div>
         <button onClick={() => navigate("/login")}>로그인</button>
         <button onClick={() => navigate("/register")}>회원가입</button>
         <button onClick={() => navigate("/post")}>커뮤니티</button>
@@ -60,7 +60,7 @@ function Home() {
         <h1>유저 이름 : {userData.username}</h1>
         <h1>이미지 게임 점수 : {userData.imageScore}</h1>
         <h1>조합 게임 점수 : {userData.combineScore}</h1>
-      </div>
+      </div> */}
       <div>
         <ControlledCarousel />
       </div>
