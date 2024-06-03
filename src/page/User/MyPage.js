@@ -17,9 +17,18 @@ function MyPage() {
     setProgress(progress + increment);
   };
 
-  const logout = () => {
-    navigate("/login");
-    localStorage.removeItem("token");
+  const logout = async () => {
+    try {
+      await axios.post(
+        "http://localhost:5000/logout",
+        {},
+        { withCredentials: true }
+      );
+      localStorage.removeItem("token");
+      navigate("/login");
+    } catch (err) {
+      console.error("Logout failed", err);
+    }
   };
 
   const fetchUserData = async () => {
@@ -48,7 +57,11 @@ function MyPage() {
           fetchUserData();
         } catch (err) {
           console.error(err);
+          localStorage.removeItem("token");
         }
+      } else {
+        console.error(err);
+        localStorage.removeItem("token");
       }
     }
   };

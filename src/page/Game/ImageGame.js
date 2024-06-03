@@ -98,7 +98,11 @@ function ImageGame() {
           updateScore();
         } catch (err) {
           console.error(err);
+          localStorage.removeItem("token");
         }
+      } else {
+        console.error(err);
+        localStorage.removeItem("token");
       }
     }
   }, []);

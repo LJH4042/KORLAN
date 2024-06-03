@@ -5,12 +5,14 @@ const bcrypt = require("bcrypt");
 require("dotenv").config();
 const jwt = require("jsonwebtoken");
 const jwtSecret = process.env.JWT_SECRET;
+const refreshSecret = process.env.REFRESH_SECRET;
 const mailer = require("../util/email");
 
 //Get User Data, /login : 사용자 정보 가져오기
 const getUserData = asynchHandler(async (req, res) => {
   const user = await User.findById(req.user._id);
-  res.status(200).send(user);
+  const { password, refreshToken, ...userData } = user.toObject();
+  res.status(200).send(userData);
 });
 
 //Post Login User, /login : 로그인
@@ -22,11 +24,17 @@ const loginUser = asynchHandler(async (req, res) => {
   const isMatch = await bcrypt.compare(password, user.password);
   if (!isMatch)
     return res.status(401).json({ pwdMessage: "비밀번호가 다릅니다." });
-  const token = jwt.sign({ id: user._id }, jwtSecret, { expiresIn: "1h" });
-  const refreshToken = jwt.sign({ id: user._id }, jwtSecret, {
+  const token = jwt.sign({ id: user._id }, jwtSecret, { expiresIn: "1m" });
+  const refreshToken = jwt.sign({ id: user._id }, refreshSecret, {
     expiresIn: "7d",
   });
-  res.cookie("refreshToken", refreshToken, { httpOnly: true, secure: true });
+  user.refreshToken = refreshToken;
+  await user.save();
+  res.cookie("refreshToken", refreshToken, {
+    httpOnly: true,
+    secure: true,
+    expires: new Date(Date.now() + 7 * 24 * 60 * 60 * 1000),
+  });
   res.status(200).json({ message: "로그인 성공", token });
 });
 
@@ -35,11 +43,33 @@ const refreshAccessToken = asynchHandler(async (req, res) => {
   const { refreshToken } = req.cookies;
   if (!refreshToken) return res.status(403).json({ message: "토큰 없음" });
   try {
-    const decoded = jwt.verify(refreshToken, jwtSecret);
+    const decoded = jwt.verify(refreshToken, refreshSecret);
+    const user = await User.findById(decoded.id);
+    if (!user || user.refreshToken !== refreshToken) {
+      return res.status(403).json({ message: "유효하지 않은 토큰입니다." });
+    }
     const newToken = jwt.sign({ id: decoded.id }, jwtSecret, {
       expiresIn: "15m",
     });
     res.status(200).json({ token: newToken });
+  } catch (err) {
+    return res.status(403).json({ message: "유효하지 않은 토큰입니다." });
+  }
+});
+
+//Post logout, /logout 로그아웃 기능
+const logoutUser = asynchHandler(async (req, res) => {
+  const { refreshToken } = req.cookies;
+  if (!refreshToken) return res.status(403).json({ message: "토큰 없음." });
+  try {
+    const decoded = jwt.verify(refreshToken, refreshSecret);
+    const user = await User.findById(decoded.id);
+    if (user) {
+      user.refreshToken = null;
+      await user.save();
+    }
+    res.clearCookie("refreshToken");
+    res.status(200).json({ message: "로그아웃 성공" });
   } catch (err) {
     return res.status(403).json({ message: "유효하지 않은 토큰입니다." });
   }
@@ -142,6 +172,7 @@ module.exports = {
   getUserData,
   loginUser,
   refreshAccessToken,
+  logoutUser,
   findId,
   getUsername,
   findPwd,

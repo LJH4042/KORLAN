@@ -11,9 +11,18 @@ function Home() {
     axios.post("http://localhost:5000/game/reset");
     navigate(`/${link}`);
   };
-  const logout = () => {
-    navigate("/login");
-    localStorage.removeItem("token");
+  const logout = async () => {
+    try {
+      await axios.post(
+        "http://localhost:5000/logout",
+        {},
+        { withCredentials: true }
+      );
+      localStorage.removeItem("token");
+      navigate("/login");
+    } catch (err) {
+      console.error("Logout failed", err);
+    }
   };
 
   return (
