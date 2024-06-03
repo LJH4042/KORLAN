@@ -51,10 +51,10 @@ function MyPage() {
 
   return (
     <div>
-      <div>
+      {/* <div>
         <button onClick={() => navigate("/")}>홈</button>
         <button onClick={logout}>로그아웃</button>
-      </div>
+      </div> */}
       <h1>마이페이지</h1>
       <div>
         <h1>유저 이름 : {userData.username}</h1>
