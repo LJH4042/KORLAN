@@ -16,8 +16,8 @@ import PwdChange from "./page/User/PWD/PwdChange";
 import MyPage from "./page/User/MyPage";
 import IdCheck from "./page/User/ID/IdCheck";
 import LearningPage from "./page/Learn/LearningPage";
-import Nav from "./component/Nav";
 import 'bootstrap/dist/css/bootstrap.min.css';
+import Nav from "./component/Nav";
 
 function App() {
   return (

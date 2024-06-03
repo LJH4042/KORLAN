@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import ControlledCarousel from "../component/Carousel/Carousels";
+// import Nav from "../component/Nav.js";
 
 function Home() {
   const navigate = useNavigate();
