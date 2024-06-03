@@ -18,34 +18,44 @@ function MyPage() {
   };
 
   const logout = () => {
-    navigate("/");
+    navigate("/login");
     localStorage.removeItem("token");
   };
 
   const fetchUserData = async () => {
     const token = localStorage.getItem("token");
-
     const headerData = {
       headers: {
         Authorization: `Bearer ${token}`,
       },
+      withCredentials: true,
     };
-
     try {
       await axios.get("http://localhost:5000/login", headerData).then((res) => {
         setUserData(res.data);
       });
     } catch (err) {
-      console.log(err);
+      if (err.response.status === 401) {
+        try {
+          const refreshRes = await axios.post(
+            "http://localhost:5000/refresh",
+            {},
+            { withCredentials: true }
+          );
+          const newToken = refreshRes.data.token;
+          localStorage.setItem("token", newToken);
+          axios.defaults.headers.common["Authorization"] = `Bearer ${newToken}`;
+          fetchUserData();
+        } catch (err) {
+          console.error(err);
+        }
+      }
     }
   };
 
   useEffect(() => {
-    if (localStorage.getItem("token") === null) {
-      //navigate("/login");
-    } else {
-      fetchUserData();
-    }
+    if (localStorage.getItem("token") === null) navigate("/login");
+    else fetchUserData();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [navigate]);
 
@@ -60,10 +70,8 @@ function MyPage() {
         <h1>유저 이름 : {userData.username}</h1>
         <h1>이미지 게임 점수 : {userData.imageScore}</h1>
         <h1>조합 게임 점수 : {userData.combineScore}</h1>
-      </div>
-      <div>
-        <p>진행 상황: {progress}</p>
-        <p>보상 포인트: {rewards}</p>
+        <h1>진행 상황: {progress}</h1>
+        <h1>보상 포인트: {rewards}</h1>
       </div>
     </div>
   );

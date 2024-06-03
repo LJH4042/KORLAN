@@ -2,59 +2,31 @@ import React, { useEffect, useState } from "react";
 import "../../../css/user.css";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
-import Timer from "../../../component/Timer";
+import AuthInput from "../authInput";
+import IdCheck from "./IdCheck";
 
 function IdFind() {
   const navigate = useNavigate();
 
-  const [isFind, setIsFind] = useState(false);
-
+  const [isAuth, setIsAuth] = useState(false);
+  const [isFind, setIsFind] = useState(true);
+  const [isCheck, setIsCheck] = useState(false);
   const [email, setEmail] = useState("");
-  const [authCode, setAuthCode] = useState("");
-
   const [emailError, setEmailError] = useState("");
-  const [authCodeError, setAuthCodeError] = useState("");
-
-  const changeEmail = (e) => setEmail(e.target.value);
-  const changeAuthCode = (e) => setAuthCode(e.target.value);
 
   const IdFindSubmit = async (e) => {
     e.preventDefault();
-
     const idData = { email: email };
-
-    if (email === "") {
-      alert("빈칸을 입력해주세요.");
-    } else {
+    if (email === "") alert("빈칸을 입력해주세요.");
+    else {
       try {
         await axios
           .post("http://localhost:5000/find_id", idData)
-          .then((res) => {
-            setIsFind(true);
-            alert(res.data.message);
-          });
-        localStorage.setItem("email", email);
+          .then((res) => alert(res.data.message));
+        setIsAuth(true);
+        setIsFind(false);
       } catch (err) {
         setEmailError(err.response.data.message);
-      }
-    }
-  };
-
-  const submitAuthCode = async (e) => {
-    e.preventDefault();
-
-    if (authCode === "") {
-      alert("빈칸을 입력해주세요.");
-    } else {
-      try {
-        await axios
-          .post("http://localhost:5000/authcode", { code: authCode })
-          .then((res) => {
-            alert(res.data.message);
-            navigate("/check_id");
-          });
-      } catch (err) {
-        setAuthCodeError(err.response.data.message);
       }
     }
   };
@@ -66,20 +38,15 @@ function IdFind() {
   return (
     <div className="userContainer">
       <h1>ID 찾기</h1>
-      {isFind ? (
-        <div>
-          <form onSubmit={submitAuthCode}>
-            <div>
-              <label>인증코드(6자리){<Timer setIsFind={setIsFind} />}</label>
-              <input type="text" value={authCode} onChange={changeAuthCode} />
-              <h4>{authCodeError}</h4>
-            </div>
-            <button type="submit" className="submitBtn">
-              인증
-            </button>
-          </form>
-        </div>
-      ) : (
+      {isAuth && (
+        <AuthInput
+          setIsAuth={setIsAuth}
+          setIsFind={setIsFind}
+          setIsCheck={setIsCheck}
+        />
+      )}
+      {isCheck && <IdCheck emailer={email} />}
+      {isFind && (
         <div>
           <form onSubmit={IdFindSubmit}>
             <div>
@@ -87,7 +54,7 @@ function IdFind() {
               <input
                 type="text"
                 value={email}
-                onChange={changeEmail}
+                onChange={(e) => setEmail(e.target.value)}
                 placeholder="ex) admin@aaa.com"
               />
               <h4>{emailError}</h4>

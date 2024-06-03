@@ -9,40 +9,40 @@ import { useNavigate } from "react-router-dom";
 function CombineGame() {
   const navigate = useNavigate();
 
-  const winNum = 1;
-  const [charArray, setCharArray] = useState([]);
+  const winNum = 1; //서버로 보낼 점수 1점
+  const [charArray, setCharArray] = useState([]); //랜덤 문자 배열
+  const [quiz, setQuiz] = useState(""); //제시된 텍스트 퀴즈
+  const [round, setRound] = useState(1); //라운드
+  const [score, setScore] = useState(0); //점수
+  const [gameOver, setGameOver] = useState(false); //게임 끝 여부
+  const [checkQuiz, setCheckQuiz] = useState(false); //정답, 오답 확인
+  const [moreChance, setMoreChance] = useState(0); //재도전 제공
+  const [answerObj, setAnswerObj] = useState(false); //캔버스, 타이핑 변환
+  const [answerObjName, setAnswerObjName] = useState("타이핑"); //캔버스, 타이핑 변환 버튼 이름
+  const [answerObjButton, setAnswerObjButton] = useState(false); //캔버스, 타이핑 변환 버튼
 
-  const [quiz, setQuiz] = useState("");
-  const [count, setCount] = useState(1);
-  const [score, setScore] = useState(0);
-
-  const [gameOver, setGameOver] = useState(false);
-  const [checkQuiz, setCheckQuiz] = useState(false);
-  const [moreChance, setMoreChance] = useState(0);
-
-  const [answerObj, setAnswerObj] = useState(false);
-  const [answerObjName, setAnswerObjName] = useState("타이핑");
-  const [answerObjButton, setAnswerObjButton] = useState(false);
-
+  //초성, 중성, 종성 분리
   const separateText = () => {
     const result = [];
     for (let char of quiz) {
       const unicode = char.charCodeAt(0) - 44032;
-
       const choIndex = parseInt(unicode / 588);
       const jungIndex = parseInt((unicode - choIndex * 588) / 28);
       const jongIndex = parseInt(unicode % 28);
-
       const choChar = CHO[choIndex];
       const jungChar = JUNG[jungIndex];
       const jongChar = JONG[jongIndex];
-
       result.push(choChar, jungChar, jongChar);
     }
     return result;
   };
 
   const resetButton = () => window.location.reload();
+
+  const checkTrue = () => {
+    setCheckQuiz(true);
+    setAnswerObjButton(true);
+  };
 
   const toggleAnswerObj = () => {
     setAnswerObj((answerObj) => !answerObj);
@@ -52,8 +52,7 @@ function CombineGame() {
   const checkAnswer = (text) => {
     if (text === quiz) {
       alert("정답입니다.");
-      setCheckQuiz(true);
-      setAnswerObjButton(true);
+      checkTrue();
       setScore((score) => score + 10);
     } else {
       if (moreChance === 0) {
@@ -62,19 +61,18 @@ function CombineGame() {
       } else if (moreChance === 1) {
         alert("오답입니다. 다음 라운드로 넘어갑니다.");
         setMoreChance(0);
-        setCheckQuiz(true);
-        setAnswerObjButton(true);
+        checkTrue();
       }
     }
   };
 
   const fetchData = async () => {
     try {
-      axios.get("http://localhost:5000/game").then((res) => {
+      await axios.get("http://localhost:5000/game").then((res) => {
         if (res.data.game && res.data.game.length > 0) {
           setQuiz(res.data.game[0].title);
-          setCount(res.data.count);
-          if (count >= 5) {
+          setRound(res.data.count);
+          if (round >= 5) {
             setGameOver(true);
             alert(res.data.message);
           }
@@ -84,19 +82,17 @@ function CombineGame() {
         }
       });
     } catch (err) {
-      console.log(err);
+      console.error(err);
     }
   };
 
   const updateScore = async () => {
     const token = localStorage.getItem("token");
-
     const headerData = {
       headers: {
         Authorization: `Bearer ${token}`,
       },
     };
-
     try {
       await axios.post(
         "http://localhost:5000/combineScore",
@@ -119,7 +115,7 @@ function CombineGame() {
   }, [quiz]);
 
   useEffect(() => {
-    if (score >= 50) updateScore();
+    if (score >= 50 && localStorage.getItem("token")) updateScore();
   }, [score]);
 
   return (
@@ -134,7 +130,7 @@ function CombineGame() {
         ) : (
           <div>
             <div className="roundDiv">
-              <h2>Round: {count} / 5</h2>
+              <h2>Round: {round} / 5</h2>
               <button onClick={toggleAnswerObj} disabled={answerObjButton}>
                 {answerObjName}
               </button>
@@ -150,27 +146,23 @@ function CombineGame() {
       {!gameOver && (
         <div>
           {answerObj ? (
-            <div>
-              <Typing
-                checkAnswer={checkAnswer}
-                fetchData={fetchData}
-                quiz={quiz}
-                checkQuiz={checkQuiz}
-                setCheckQuiz={setCheckQuiz}
-                setAnswerObjButton={setAnswerObjButton}
-              />
-            </div>
+            <Typing
+              checkAnswer={checkAnswer}
+              fetchData={fetchData}
+              quiz={quiz}
+              checkQuiz={checkQuiz}
+              setCheckQuiz={setCheckQuiz}
+              setAnswerObjButton={setAnswerObjButton}
+            />
           ) : (
-            <div>
-              <Canvas
-                checkAnswer={checkAnswer}
-                fetchData={fetchData}
-                quiz={quiz}
-                checkQuiz={checkQuiz}
-                setCheckQuiz={setCheckQuiz}
-                setAnswerObjButton={setAnswerObjButton}
-              />
-            </div>
+            <Canvas
+              checkAnswer={checkAnswer}
+              fetchData={fetchData}
+              quiz={quiz}
+              checkQuiz={checkQuiz}
+              setCheckQuiz={setCheckQuiz}
+              setAnswerObjButton={setAnswerObjButton}
+            />
           )}
         </div>
       )}

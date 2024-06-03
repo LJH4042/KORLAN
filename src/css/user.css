@@ -38,6 +38,10 @@ h2 {
   color: red;
   height: 15px;
 }
+.userContainer span {
+  color: red;
+}
+
 .submitBtn {
   width: 105%;
   padding: 10px;
@@ -50,6 +54,7 @@ h2 {
   background-color: black;
   color: white;
 }
+
 .findDiv {
   display: flex;
   justify-content: space-between;
@@ -73,7 +78,27 @@ h2 {
   color: white;
 }
 
-.timer {
-  margin-left: 320px;
-  color: red;
+.checkUser {
+  display: flex;
+}
+.checkUser input {
+  width: 90%;
+  padding: 10px;
+  margin: 25px 0px 25px 0px;
+  border: none;
+  outline: none;
+  border-bottom: 2px solid gray;
+  font-size: 20px;
+}
+.checkUser button {
+  width: 30%;
+  height: 50px;
+  font-size: 15px;
+  font-weight: bold;
+  border: none;
+  margin: 20px 0px 0px 20px;
+}
+.checkUser button:hover {
+  background-color: black;
+  color: white;
 }

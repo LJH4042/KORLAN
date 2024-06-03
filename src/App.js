@@ -12,9 +12,7 @@ import ImageGame from "./page/Game/ImageGame";
 import CombineGame from "./page/Game/CombineGame";
 import IdFind from "./page/User/ID/IdFind";
 import PwdFind from "./page/User/PWD/PwdFind";
-import PwdChange from "./page/User/PWD/PwdChange";
 import MyPage from "./page/User/MyPage";
-import IdCheck from "./page/User/ID/IdCheck";
 import LearningPage from "./page/Learn/LearningPage";
 
 function App() {
@@ -25,9 +23,7 @@ function App() {
           <Route index element={<Home />} />
           <Route path="/login" element={<Login />} />
           <Route path="/find_id" element={<IdFind />} />
-          <Route path="/check_id" element={<IdCheck />} />
           <Route path="/find_pwd" element={<PwdFind />} />
-          <Route path="/change_pwd" element={<PwdChange />} />
           <Route path="/register" element={<Register />} />
           <Route path="/mypage" element={<MyPage />} />
           <Route path="/post" element={<PostList />} />

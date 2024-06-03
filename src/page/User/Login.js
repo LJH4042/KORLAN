@@ -7,32 +7,27 @@ function Login() {
   const navigate = useNavigate();
 
   const [username, setUsername] = useState("");
-  const [password, setPassword] = useState("");
-
   const [usernameError, setUsernameError] = useState("");
+  const [password, setPassword] = useState("");
   const [passwordError, setPasswordError] = useState("");
-
-  const changeUsername = (e) => setUsername(e.target.value);
-  const changePassword = (e) => setPassword(e.target.value);
 
   const loginSubmit = async (e) => {
     e.preventDefault();
-
-    const loginData = { username: username, password: password };
-
-    if (username === "" || password === "") {
-      alert("빈칸을 입력해주세요.");
-    } else {
+    const loginData = { username, password };
+    if (username === "" || password === "") alert("빈칸을 입력해주세요.");
+    else {
       try {
         await axios
-          .post("http://localhost:5000/login", loginData)
+          .post("http://localhost:5000/login", loginData, {
+            withCredentials: true,
+          })
           .then((res) => {
             alert(res.data.message);
             const { token } = res.data;
             localStorage.setItem("token", token);
-            navigate("/");
           });
-        localStorage.removeItem("email");
+        navigate("/");
+        window.location.reload();
       } catch (err) {
         setUsernameError(err.response.data.nameMessage);
         setPasswordError(err.response.data.pwdMessage);
@@ -41,22 +36,29 @@ function Login() {
   };
 
   useEffect(() => {
-    if (localStorage.getItem("token") !== null) navigate("/");
+    if (localStorage.getItem("token")) navigate("/");
   }, [navigate]);
 
   return (
     <div className="userContainer">
       <h1>로그인</h1>
-      <p></p>
       <form onSubmit={loginSubmit}>
         <div>
           <label>ID</label>
-          <input type="text" value={username} onChange={changeUsername} />
+          <input
+            type="text"
+            value={username}
+            onChange={(e) => setUsername(e.target.value)}
+          />
           <h4>{usernameError}</h4>
         </div>
         <div>
           <label>비밀번호</label>
-          <input type="password" value={password} onChange={changePassword} />
+          <input
+            type="password"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+          />
           <h4>{passwordError}</h4>
         </div>
         <button className="submitBtn" type="submit">

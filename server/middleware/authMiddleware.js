@@ -10,10 +10,15 @@ const authUser = async (req, res, next) => {
       req.user = await User.findById(decoded.id);
       next();
     } catch (err) {
-      console.log(err);
+      if (err.name === "TokenExpiredError") {
+        res.status(401).json({ message: "토큰이 만료되었습니다." });
+      } else {
+        console.log(err);
+        res.status(403).json({ message: "유효한 토큰이 아닙니다." });
+      }
     }
   } else {
-    res.status(401);
+    res.status(401).json({ message: "토큰이 없습니다." });
   }
 };
 

@@ -2,63 +2,34 @@ import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import "../../../css/user.css";
-import Timer from "../../../component/Timer";
+import AuthInput from "../authInput";
+import PwdChange from "./PwdChange";
 
 function PwdFind() {
   const navigate = useNavigate();
 
-  const [isFind, setIsFind] = useState(false);
-
+  const [isAuth, setIsAuth] = useState(false);
+  const [isFind, setIsFind] = useState(true);
+  const [isCheck, setIsCheck] = useState(false);
   const [username, setUsername] = useState("");
-  const [email, setEmail] = useState("");
-  const [authCode, setAuthCode] = useState("");
-
   const [usernameError, setUsernameError] = useState("");
+  const [email, setEmail] = useState("");
   const [emailError, setEmailError] = useState("");
-  const [authCodeError, setAuthCodeError] = useState("");
-
-  const changeUsername = (e) => setUsername(e.target.value);
-  const changeEmail = (e) => setEmail(e.target.value);
-  const changeAuthCode = (e) => setAuthCode(e.target.value);
 
   const pwdFindSubmit = async (e) => {
     e.preventDefault();
-
     const pwdData = { username: username, email: email };
-
-    if (username === "" || email === "") {
-      alert("빈칸을 입력해주세요.");
-    } else {
+    if (username === "" || email === "") alert("빈칸을 입력해주세요.");
+    else {
       try {
         await axios
           .post("http://localhost:5000/find_pwd", pwdData)
-          .then((res) => {
-            alert(res.data.message);
-            setIsFind(true);
-          });
-        localStorage.setItem("username", username);
+          .then((res) => alert(res.data.message));
+        setIsAuth(true);
+        setIsFind(false);
       } catch (err) {
         setUsernameError(err.response.data.nameMessage);
         setEmailError(err.response.data.emailMessage);
-      }
-    }
-  };
-
-  const submitAuthCode = async (e) => {
-    e.preventDefault();
-
-    if (authCode === "") {
-      alert("빈칸을 입력해주세요.");
-    } else {
-      try {
-        await axios
-          .post("http://localhost:5000/authcode", { code: authCode })
-          .then((res) => {
-            alert(res.data.message);
-            navigate("/change_pwd");
-          });
-      } catch (err) {
-        setAuthCodeError(err.response.data.message);
       }
     }
   };
@@ -70,25 +41,24 @@ function PwdFind() {
   return (
     <div className="userContainer">
       <h1>비밀번호 찾기</h1>
-      {isFind ? (
-        <div>
-          <form onSubmit={submitAuthCode}>
-            <div>
-              <label>인증코드(6자리){<Timer setIsFind={setIsFind} />}</label>
-              <input type="text" value={authCode} onChange={changeAuthCode} />
-              <h4>{authCodeError}</h4>
-            </div>
-            <button type="submit" className="submitBtn">
-              인증
-            </button>
-          </form>
-        </div>
-      ) : (
+      {isAuth && (
+        <AuthInput
+          setIsFind={setIsFind}
+          setIsCheck={setIsCheck}
+          setIsAuth={setIsAuth}
+        />
+      )}
+      {isCheck && <PwdChange name={username} />}
+      {isFind && (
         <div>
           <form onSubmit={pwdFindSubmit}>
             <div>
               <label>ID</label>
-              <input type="text" value={username} onChange={changeUsername} />
+              <input
+                type="text"
+                value={username}
+                onChange={(e) => setUsername(e.target.value)}
+              />
               <h4>{usernameError}</h4>
             </div>
             <div>
@@ -96,7 +66,7 @@ function PwdFind() {
               <input
                 type="text"
                 value={email}
-                onChange={changeEmail}
+                onChange={(e) => setEmail(e.target.value)}
                 placeholder="ex) admin@aaa.com"
               />
               <h4>{emailError}</h4>

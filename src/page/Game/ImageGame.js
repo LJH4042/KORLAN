@@ -8,33 +8,34 @@ import { useNavigate } from "react-router-dom";
 function ImageGame() {
   const navigate = useNavigate();
 
-  const winNum = 1;
-  const [imageData, setImagaData] = useState([]);
-
-  const [quiz, setQuiz] = useState("");
-  const [count, setCount] = useState(1);
-  const [score, setScore] = useState(0);
-
-  const [gameOver, setGameOver] = useState(false);
-  const [checkQuiz, setCheckQuiz] = useState(false);
-  const [moreChance, setMoreChance] = useState(0);
-
-  const [answerObj, setAnswerObj] = useState(false);
-  const [answerObjName, setAnswerObjName] = useState("타이핑");
-  const [answerObjButton, setAnswerObjButton] = useState(false);
+  const winNum = 1; //서버로 보낼 점수 1점
+  const [imageData, setImageData] = useState(""); //이미지, 텍스트 데이터
+  const [quiz, setQuiz] = useState(""); //제시된 텍스트 퀴즈
+  const [round, setRound] = useState(1); //라운드
+  const [score, setScore] = useState(0); //점수
+  const [gameOver, setGameOver] = useState(false); //게임 끝 여부
+  const [checkQuiz, setCheckQuiz] = useState(false); //정답, 오답 확인
+  const [moreChance, setMoreChance] = useState(0); //재도전 제공
+  const [answerObj, setAnswerObj] = useState(false); //캔버스, 타이핑 변환
+  const [answerObjName, setAnswerObjName] = useState("타이핑"); //캔버스, 타이핑 변환 버튼 이름
+  const [answerObjButton, setAnswerObjButton] = useState(false); //캔버스, 타이핑 변환 버튼
 
   const resetButton = () => window.location.reload();
+
+  const checkTrue = () => {
+    setCheckQuiz(true);
+    setAnswerObjButton(true);
+  };
 
   const toggleAnswerObj = () => {
     setAnswerObj((answerObj) => !answerObj);
     setAnswerObjName((prev) => (prev === "타이핑" ? "캔버스" : "타이핑"));
   };
 
-  const checkAnswer = async (text) => {
+  const checkAnswer = (text) => {
     if (text === quiz) {
       alert("정답입니다.");
-      setCheckQuiz(true);
-      setAnswerObjButton(true);
+      checkTrue();
       setScore((score) => score + 10);
     } else {
       if (moreChance === 0) {
@@ -43,20 +44,19 @@ function ImageGame() {
       } else if (moreChance === 1) {
         alert("오답입니다. 다음 라운드로 넘어갑니다.");
         setMoreChance(0);
-        setCheckQuiz(true);
-        setAnswerObjButton(true);
+        checkTrue();
       }
     }
   };
 
   const fetchData = async () => {
     try {
-      axios.get("http://localhost:5000/game").then((res) => {
+      await axios.get("http://localhost:5000/game").then((res) => {
         if (res.data.game && res.data.game.length > 0) {
-          setImagaData(res.data.game[0].image);
+          setImageData(res.data.game[0].image);
           setQuiz(res.data.game[0].title);
-          setCount(res.data.count);
-          if (count >= 5) {
+          setRound(res.data.count);
+          if (round >= 5) {
             setGameOver(true);
             alert(res.data.message);
           }
@@ -66,27 +66,25 @@ function ImageGame() {
         }
       });
     } catch (err) {
-      console.log(err);
+      console.error(err);
     }
   };
 
   const updateScore = async () => {
     const token = localStorage.getItem("token");
-
     const headerData = {
       headers: {
         Authorization: `Bearer ${token}`,
       },
     };
-
     try {
       await axios.post(
         "http://localhost:5000/imageScore",
         { imageScore: winNum },
         headerData
       );
-    } catch (error) {
-      console.error(error);
+    } catch (err) {
+      console.log(err);
     }
   };
 
@@ -96,7 +94,7 @@ function ImageGame() {
   }, []);
 
   useEffect(() => {
-    if (score >= 50) updateScore();
+    if (score >= 50 && localStorage.getItem("token")) updateScore();
   }, [score]);
 
   return (
@@ -111,39 +109,42 @@ function ImageGame() {
         ) : (
           <div>
             <div className="roundDiv">
-              <h2>Round: {count} / 5</h2>
+              <h2>Round: {round} / 5</h2>
               <button onClick={toggleAnswerObj} disabled={answerObjButton}>
                 {answerObjName}
               </button>
             </div>
-            <img alt="이미지" src={`http://localhost:5000/file/${imageData}`} />
+            {imageData ? ( //레이아웃 변경을 방지에서 CLS의 성능을 높임
+              <img
+                alt="이미지"
+                src={`http://localhost:5000/file/${imageData}`}
+              />
+            ) : (
+              <div style={{ width: "500px", height: "300px" }}></div>
+            )}
           </div>
         )}
       </div>
       {!gameOver && (
         <div>
           {answerObj ? (
-            <div>
-              <Typing
-                checkAnswer={checkAnswer}
-                fetchData={fetchData}
-                quiz={quiz}
-                checkQuiz={checkQuiz}
-                setCheckQuiz={setCheckQuiz}
-                setAnswerObjButton={setAnswerObjButton}
-              />
-            </div>
+            <Typing
+              checkAnswer={checkAnswer}
+              fetchData={fetchData}
+              quiz={quiz}
+              checkQuiz={checkQuiz}
+              setCheckQuiz={setCheckQuiz}
+              setAnswerObjButton={setAnswerObjButton}
+            />
           ) : (
-            <div>
-              <Canvas
-                checkAnswer={checkAnswer}
-                fetchData={fetchData}
-                quiz={quiz}
-                checkQuiz={checkQuiz}
-                setCheckQuiz={setCheckQuiz}
-                setAnswerObjButton={setAnswerObjButton}
-              />
-            </div>
+            <Canvas
+              checkAnswer={checkAnswer}
+              fetchData={fetchData}
+              quiz={quiz}
+              checkQuiz={checkQuiz}
+              setCheckQuiz={setCheckQuiz}
+              setAnswerObjButton={setAnswerObjButton}
+            />
           )}
         </div>
       )}
