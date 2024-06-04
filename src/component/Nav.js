@@ -1,4 +1,4 @@
-import { Link } from "react-router-dom";
+import { Link, NavLink } from "react-router-dom";
 import React, { useState } from "react";
 import "../css/Nav.css";
 import Logo from "../logo.png";
@@ -6,6 +6,7 @@ import axios from "axios";
 
 function Nav() {
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
   const resetGameData = () => {
     axios.post("http://localhost:5000/game/reset");
@@ -15,22 +16,30 @@ function Nav() {
     setIsDropdownOpen(!isDropdownOpen);
   };
 
+  const toggleMobileMenu = () => {
+    setIsMobileMenuOpen(!isMobileMenuOpen);
+  };
+
   return (
     <div className="navbar">
       <Link to={"/"}>
-        <img className="logo" src={Logo} />
+        <img className="logo" src={Logo} alt="Logo" />
       </Link>
 
-      <div className="menuContainer">
-        <Link className="navbarMenu" to={"/"}>
+      <div className="menuIcon" onClick={toggleMobileMenu}>
+        &#9776;
+      </div>
+
+      <div className={`menuContainer ${isMobileMenuOpen ? 'open' : ''}`}>
+        <NavLink className="navbarMenu" exact to={"/"} activeClassName="active">
           홈
-        </Link>
-        <Link className="navbarMenu" to={"/post"}>
+        </NavLink>
+        <NavLink className="navbarMenu" to={"/post"} activeClassName="active">
           커뮤니티
-        </Link>
-        <Link className="navbarMenu" to={"/learn"}>
+        </NavLink>
+        <NavLink className="navbarMenu" to={"/learn"} activeClassName="active">
           학습하기
-        </Link>
+        </NavLink>
         <div
           className="navbarMenu dropdown"
           onMouseEnter={toggleDropdown}
@@ -39,27 +48,27 @@ function Nav() {
           게임하기
           {isDropdownOpen && (
             <div className="dropdown-content">
-              <Link to={"/imageGame"} onClick={resetGameData}>
+              <NavLink to={"/imageGame"} onClick={resetGameData} activeClassName="active">
                 이미지 게임
-              </Link>
-              <Link to={"/combineGame"} onClick={resetGameData}>
+              </NavLink>
+              <NavLink to={"/combineGame"} onClick={resetGameData} activeClassName="active">
                 낱말 조합
-              </Link>
+              </NavLink>
             </div>
           )}
         </div>
-        <Link className="navbarMenu" to={"/myPage"}>
+        <NavLink className="navbarMenu" to={"/myPage"} activeClassName="active">
           마이페이지
-        </Link>
+        </NavLink>
       </div>
 
-      <div className="authContainer">
-        <Link className="navbarAuth" to={"/login"}>
+      <div className={`authContainer ${isMobileMenuOpen ? 'open' : ''}`}>
+        <NavLink className="navbarAuth" to={"/login"} activeClassName="active">
           로그인
-        </Link>
-        <Link className="navbarAuth" to={"/register"}>
+        </NavLink>
+        <NavLink className="navbarAuth" to={"/register"} activeClassName="active">
           회원가입
-        </Link>
+        </NavLink>
       </div>
     </div>
   );
