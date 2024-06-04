@@ -128,9 +128,7 @@ function Canvas({
     <div className="canvasContainer">
       <canvas
         ref={canvasRef}
-        width={500}
-        height={200}
-        style={{ border: "1px solid black" }}
+        style={{ border: "1px solid black", width: '100%', height: 'auto', maxHeight: '400px' }}
         onMouseDown={drawingCanvas}
         onMouseUp={stopDrawing}
         onMouseOut={canvasOut}
