@@ -6,7 +6,6 @@ import test1 from './img/test1.jpg';
 import test2 from './img/test2.jpg';
 import test3 from './img/test3.jpg';
 
-
 function ControlledCarousel() {
   const [index, setIndex] = useState(0);
 
@@ -15,25 +14,21 @@ function ControlledCarousel() {
   };
 
   return (
-    <Carousel activeIndex={index} onSelect={handleSelect}>
-      <Carousel.Item>
-        {/* <div className="slideContents"> */}
-        <img src={test1} alt='first slide' className="carousel-image" />
-        {/* </div> */}
-      </Carousel.Item>
+    <div className="carousel-container">
+      <Carousel activeIndex={index} onSelect={handleSelect}>
+        <Carousel.Item>
+          <img src={test1} alt='first slide' className="carousel-image" />
+        </Carousel.Item>
 
-      <Carousel.Item>
-        {/* <div className="slideContents"> */}
-        <img src={test2} className="carousel-image" />
-        {/* </div> */}
-      </Carousel.Item>
+        <Carousel.Item>
+          <img src={test2} className="carousel-image" />
+        </Carousel.Item>
 
-      <Carousel.Item>
-        {/* <div className="slideContents"> */}
-        <img src={test3} className="carousel-image" />
-        {/* </div> */}
-      </Carousel.Item>
-    </Carousel>
+        <Carousel.Item>
+          <img src={test3} className="carousel-image" />
+        </Carousel.Item>
+      </Carousel>
+    </div>
   );
 }
 
