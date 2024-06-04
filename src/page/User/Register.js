@@ -126,7 +126,7 @@ function Register() {
               onChange={(e) => setEmail(e.target.value)}
               placeholder="ex) admin@aaa.com"
             />
-            <button onClick={mailSendCode}>인증코드 전송</button>
+            <button className="authBtn" onClick={mailSendCode}>인증코드 전송</button>
           </div>
           <h4>{emailError}</h4>
         </div>
@@ -141,7 +141,7 @@ function Register() {
               value={authCode}
               onChange={(e) => setAuthCode(e.target.value)}
             />
-            <button onClick={submitAuthCode}>인증</button>
+            <button className="authBtn" onClick={submitAuthCode}>인증</button>
           </div>
           <h4>{authCodeError}</h4>
         </div>
