@@ -1,12 +1,18 @@
 import { Link } from "react-router-dom";
-import React from "react";
+import React, { useState } from "react";
 import "../css/Nav.css";
 import Logo from "../logo.png";
 import axios from "axios";
 
 function Nav() {
+  const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+
   const resetGameData = () => {
     axios.post("http://localhost:5000/game/reset");
+  };
+
+  const toggleDropdown = () => {
+    setIsDropdownOpen(!isDropdownOpen);
   };
 
   return (
@@ -19,7 +25,7 @@ function Nav() {
         <Link className="navbarMenu" to={"/"}>
           홈
         </Link>
-        <Link class="navbarMenu" to={"/post"}>
+        <Link className="navbarMenu" to={"/post"}>
           커뮤니티
         </Link>
         <Link className="navbarMenu" to={"/learn"}>
@@ -28,19 +34,30 @@ function Nav() {
         <Link className="navbarMenu" to={"/myPage"}>
           마이페이지
         </Link>
-        <Link class="navbarMenu" to={"/imageGame"}>
-          <span onClick={resetGameData}>이미지 게임</span>
-        </Link>
-        <Link class="navbarMenu" to={"/combineGame"}>
-          <span onClick={resetGameData}>낱말 조합</span>
-        </Link>
+        <div
+          className="navbarMenu dropdown"
+          onMouseEnter={toggleDropdown}
+          onMouseLeave={toggleDropdown}
+        >
+          게임하기
+          {isDropdownOpen && (
+            <div className="dropdown-content">
+              <Link to={"/imageGame"} onClick={resetGameData}>
+                이미지 게임
+              </Link>
+              <Link to={"/combineGame"} onClick={resetGameData}>
+                낱말 조합
+              </Link>
+            </div>
+          )}
+        </div>
       </div>
 
       <div className="authContainer">
-        <Link class="navbarAuth" to={"/login"}>
+        <Link className="navbarAuth" to={"/login"}>
           로그인
         </Link>
-        <Link class="navbarAuth" to={"/register"}>
+        <Link className="navbarAuth" to={"/register"}>
           회원가입
         </Link>
       </div>
