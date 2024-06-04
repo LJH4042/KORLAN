@@ -19,7 +19,6 @@
   font-weight: bold;
   font-size: 17px;
   display: block;
-  margin-bottom: 5px;
   color: #333;
 }
 
@@ -60,7 +59,6 @@ input[type='email']:focus,
   background-color: #5a9bd4;
   color: white;
   cursor: pointer;
-  margin-top: 20px;
 }
 
 .submitBtn:hover {
