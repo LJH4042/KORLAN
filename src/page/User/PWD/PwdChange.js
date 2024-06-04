@@ -1,63 +1,45 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import "../../../css/user.css";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 
-function PwdChange() {
+function PwdChange({ name }) {
   const navigate = useNavigate();
 
-  const username = localStorage.getItem("username");
   const [password, setPassword] = useState("");
   const [password2, setPassword2] = useState("");
-
   const [passwordError, setPasswordError] = useState("");
-
-  const changeNewPassword = (e) => setPassword(e.target.value);
-  const changeNewPassword2 = (e) => setPassword2(e.target.value);
 
   const pwdChangeSubmit = async (e) => {
     e.preventDefault();
-
     const inputs = [password, password2];
-
     const pwdData = {
-      username: username,
+      username: name,
       password: password,
       checkPassword: password2,
     };
-
-    if (inputs.some((input) => input === "")) {
-      alert("빈칸을 입력해주세요.");
-    } else {
+    if (inputs.some((input) => input === "")) alert("빈칸을 입력해주세요.");
+    else {
       try {
         await axios
           .post("http://localhost:5000/change_pwd", pwdData)
-          .then((res) => {
-            alert(res.data.message);
-            navigate("/login");
-          });
-        localStorage.removeItem("username");
+          .then((res) => alert(res.data.message));
+        navigate("/login");
       } catch (err) {
         setPasswordError(err.response.data.message);
       }
     }
   };
 
-  useEffect(() => {
-    if (localStorage.getItem("username") === null) navigate("/login");
-    if (localStorage.getItem("token") !== null) navigate("/");
-  }, [navigate]);
-
   return (
     <div className="userContainer">
-      <h1>비밀번호 변경</h1>
       <form onSubmit={pwdChangeSubmit}>
         <div>
           <label>새 비밀번호</label>
           <input
             type="password"
             value={password}
-            onChange={changeNewPassword}
+            onChange={(e) => setPassword(e.target.value)}
           />
         </div>
         <div>
@@ -65,7 +47,7 @@ function PwdChange() {
           <input
             type="password"
             value={password2}
-            onChange={changeNewPassword2}
+            onChange={(e) => setPassword2(e.target.value)}
           />
           <h4>{passwordError}</h4>
         </div>

@@ -1,7 +1,6 @@
 import React, { useCallback, useEffect, useState } from "react";
-import "../css/user.css";
 
-function Timer({ setIsFind }) {
+function Timer({ setIsAuth, setIsFind }) {
   const [second, setSecond] = useState(0);
   const [minuts, setMinuts] = useState(3);
 
@@ -26,13 +25,14 @@ function Timer({ setIsFind }) {
   useEffect(() => {
     if (minuts === 0 && second === 0) {
       alert("인증코드를 다시 발급해주세요.");
-      setIsFind(false);
+      setIsAuth(false);
+      setIsFind(true);
     } else if (second === 0) {
       timeDelay();
     }
-  }, [minuts, second, timeDelay, setIsFind]);
+  }, [minuts, second, timeDelay, setIsAuth, setIsFind]);
 
-  return <span className="timer">{`${minutsTimer} : ${secondTimer}`}</span>;
+  return <span>{`${minutsTimer} : ${secondTimer}`}</span>;
 }
 
 export default Timer;
