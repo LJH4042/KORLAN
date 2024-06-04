@@ -1,0 +1,79 @@
+.userContainer {
+  width: 500px;
+  margin: 0 auto;
+}
+.userContainer h1,
+h2 {
+  text-align: center;
+  margin-bottom: 60px;
+}
+.userContainer h2 {
+  color: blue;
+}
+.userContainer label {
+  font-weight: bold;
+  font-size: 17px;
+}
+.userContainer input {
+  display: block;
+  width: 100%;
+  padding: 10px;
+  margin: 25px 0px 25px 0px;
+  border: none;
+  outline: none;
+  border-bottom: 2px solid gray;
+  font-size: 20px;
+}
+.userContainer p {
+  color: dodgerblue;
+  text-align: center;
+  margin-top: 50px;
+  font-weight: bold;
+}
+.userContainer p:hover {
+  color: blue;
+  text-decoration: underline;
+}
+.userContainer h4 {
+  color: red;
+  height: 15px;
+}
+.submitBtn {
+  width: 105%;
+  padding: 10px;
+  font-size: 20px;
+  font-weight: bold;
+  border: none;
+  margin-top: 20px;
+}
+.submitBtn:hover {
+  background-color: black;
+  color: white;
+}
+.findDiv {
+  display: flex;
+  justify-content: space-between;
+  width: 105%;
+}
+.findBtn,
+.findBtn2 {
+  width: 70%;
+  padding: 10px;
+  font-size: 20px;
+  font-weight: bold;
+  border: none;
+  margin-top: 20px;
+}
+.findBtn2 {
+  margin-left: 30px;
+}
+.findBtn:hover,
+.findBtn2:hover {
+  background-color: black;
+  color: white;
+}
+
+.timer {
+  margin-left: 320px;
+  color: red;
+}

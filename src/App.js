@@ -1,5 +1,6 @@
 import React from "react";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
+import Nav from "./component/Nav";
 import Login from "./page/User/Login";
 import Register from "./page/User/Register";
 import PostAdd from "./page/Comunity/PostAdd";
@@ -14,11 +15,13 @@ import IdFind from "./page/User/ID/IdFind";
 import PwdFind from "./page/User/PWD/PwdFind";
 import MyPage from "./page/User/MyPage";
 import LearningPage from "./page/Learn/LearningPage";
+import 'bootstrap/dist/css/bootstrap.min.css';
 
 function App() {
   return (
     <div>
       <BrowserRouter>
+        <Nav />
         <Routes>
           <Route index element={<Home />} />
           <Route path="/login" element={<Login />} />

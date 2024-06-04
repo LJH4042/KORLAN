@@ -1,3 +1,5 @@
+/* Register.js */
+
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import "../../css/user.css";
@@ -86,8 +88,8 @@ function Register() {
 
   return (
     <div className="userContainer">
-      <h1>회원가입</h1>
-      <form onSubmit={registerSubmit}>
+      <h3>회원가입</h3>
+      <form onSubmit={registerSubmit} className="formContainer">
         <div>
           <label>ID</label>
           <input
@@ -147,7 +149,8 @@ function Register() {
           회원가입
         </button>
       </form>
-      <p onClick={() => navigate("/login")}>-#로그인-</p>
+      <p onClick={() => navigate("/login")}>로그인</p>
+
     </div>
   );
 }

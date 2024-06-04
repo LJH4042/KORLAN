@@ -75,7 +75,7 @@ function PwdFind() {
               다음
             </button>
           </form>
-          <p onClick={() => navigate("/login")}>-#로그인-</p>
+          <p onClick={() => navigate("/login")}>로그인</p>
         </div>
       )}
     </div>
