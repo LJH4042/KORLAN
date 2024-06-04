@@ -9,7 +9,7 @@ const useGoogleTTS = () => {
 
     const data = {
       input: { text },
-      voice: { languageCode: 'ko-KR', ssmlGender: 'NEUTRAL' },
+      voice: { languageCode: 'ko-KR', name: 'ko-KR-Standard-B' },
       audioConfig: { audioEncoding: 'MP3' },
     };
 
