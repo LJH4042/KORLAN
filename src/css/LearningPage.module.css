@@ -1,4 +1,3 @@
-/* LearningPage.css */
 @import url('https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css');
 
 .pageContainer {
@@ -8,11 +7,13 @@
 h2 {
   text-align: center;
   color: #333;
+  margin-bottom: 20px;
 }
 
 h3 {
   color: #555;
   margin-top: 20px;
+  margin-bottom: 10px;
 }
 
 /* 버튼 컨테이너 */
@@ -41,20 +42,26 @@ h3 {
   background-color: #417a9e;
 }
 
+.selectedLetterContainer {
+  margin-top: 20px;
+}
+
 .selectedLetter {
   font-size: 50px;
   font-weight: bold;
   color: #333;
   text-align: center;
+  margin-top: 20px;
 }
 
 #Canvas {
-  width: 100vh;
+  width: 100%;
   height: 400px;
   margin: auto;
+  margin-top: 20px;
 }
 
-/* 반응형 디자인을 위한 미디어 쿼리 */
+/* 반응형  */
 @media (max-width: 768px) {
   .pageContainer {
     margin: 10px;

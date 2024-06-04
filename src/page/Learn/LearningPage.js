@@ -132,7 +132,7 @@ const LearningPage = () => {
             </>
           )}
           {selectedLetter && (
-            <div>
+            <div className={styles.selectedLetterContainer}>
               <h3>선택한 글자:</h3>
               <p className={styles.selectedLetter}> {selectedLetter}</p>
             </div>
