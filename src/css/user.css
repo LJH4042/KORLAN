@@ -1,76 +1,113 @@
 .userContainer {
-  width: 500px;
+  background-color: white;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  max-width: 400px;
+  width: 100%;
   margin: 0 auto;
 }
+
 .userContainer h1,
-h2 {
+.userContainer h2,
+.userContainer h3 {
   text-align: center;
-  margin-bottom: 60px;
+  color: #333;
 }
-.userContainer h2 {
-  color: blue;
-}
+
 .userContainer label {
   font-weight: bold;
   font-size: 17px;
+  display: block;
+  margin-bottom: 5px;
+  color: #333;
 }
+
 .userContainer input {
   display: block;
   width: 100%;
   padding: 10px;
-  margin: 25px 0px 25px 0px;
-  border: none;
+  margin: 25px 0;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  background-color: #d1ebfc;
+  color: #333;
+  font-size: 16px;
+}
+
+input[type='text']:focus,
+input[type='password']:focus,
+input[type='email']:focus,
+.userContainer input:focus {
+  border-color: #80a5c8;
   outline: none;
-  border-bottom: 2px solid gray;
-  font-size: 20px;
 }
-.userContainer p {
-  color: dodgerblue;
-  text-align: center;
-  margin-top: 50px;
+
+.userContainer h4 {
+  color: red;
+  height: 15px;
+  font-size: 14px;
+  margin: 5px 0 0 0;
+}
+
+.submitBtn {
+  width: 100%;
+  padding: 10px;
+  font-size: 16px;
   font-weight: bold;
+  border: none;
+  border-radius: 4px;
+  background-color: #5a9bd4;
+  color: white;
+  cursor: pointer;
+  margin-top: 20px;
 }
+
+.submitBtn:hover {
+  background-color: #4a8ac2;
+}
+
+.userContainer p {
+  color: #5a9bd4;
+  text-align: center;
+  margin-top: 15px;
+  font-weight: bold;
+  cursor: pointer;
+}
+
 .userContainer p:hover {
   color: blue;
   text-decoration: underline;
 }
-.userContainer h4 {
-  color: red;
-  height: 15px;
-}
-.submitBtn {
-  width: 105%;
-  padding: 10px;
-  font-size: 20px;
-  font-weight: bold;
-  border: none;
-  margin-top: 20px;
-}
-.submitBtn:hover {
-  background-color: black;
-  color: white;
-}
+
 .findDiv {
   display: flex;
   justify-content: space-between;
-  width: 105%;
-}
-.findBtn,
-.findBtn2 {
-  width: 70%;
-  padding: 10px;
-  font-size: 20px;
-  font-weight: bold;
-  border: none;
+  width: 100%;
   margin-top: 20px;
 }
+
+.findBtn,
+.findBtn2 {
+  flex-grow: 1;
+  padding: 10px 0;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  background-color: #5a9bd4;
+  color: white;
+  text-align: center;
+  font-weight: bold;
+  width: auto; /* 70%에서 auto로 변경하여 플렉스 박스에 맞게 조정 */
+}
+
 .findBtn2 {
   margin-left: 30px;
 }
+
 .findBtn:hover,
 .findBtn2:hover {
-  background-color: black;
-  color: white;
+  background-color: #5a9bd4;
 }
 
 .timer {

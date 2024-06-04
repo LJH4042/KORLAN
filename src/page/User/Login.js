@@ -2,7 +2,7 @@
 
 import React, { useEffect, useState } from "react";
 import axios from "axios";
-import "../../css/register.css";
+import "../../css/user.css";
 import { useNavigate } from "react-router-dom";
 
 function Login() {
@@ -48,7 +48,7 @@ function Login() {
 
   return (
     <div className="userContainer">
-      <h2>로그인</h2>
+      <h3>로그인</h3>
       <p></p>
       <form onSubmit={loginSubmit} className="formContainer">
         <div>
