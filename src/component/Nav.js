@@ -31,9 +31,6 @@ function Nav() {
         <Link className="navbarMenu" to={"/learn"}>
           학습하기
         </Link>
-        <Link className="navbarMenu" to={"/myPage"}>
-          마이페이지
-        </Link>
         <div
           className="navbarMenu dropdown"
           onMouseEnter={toggleDropdown}
@@ -51,6 +48,9 @@ function Nav() {
             </div>
           )}
         </div>
+        <Link className="navbarMenu" to={"/myPage"}>
+          마이페이지
+        </Link>
       </div>
 
       <div className="authContainer">
