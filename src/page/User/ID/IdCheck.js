@@ -35,8 +35,7 @@ function IdCheck() {
           navigate("/login");
           localStorage.removeItem("email");
         }}
-      >
-        로그인
+      >로그인
       </button>
     </div>
   );

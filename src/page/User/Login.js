@@ -1,6 +1,8 @@
+/* Login.js */
+
 import React, { useEffect, useState } from "react";
 import axios from "axios";
-import "../../css/user.css";
+import "../../css/register.css";
 import { useNavigate } from "react-router-dom";
 
 function Login() {
@@ -46,9 +48,9 @@ function Login() {
 
   return (
     <div className="userContainer">
-      <h1>로그인</h1>
+      <h2>로그인</h2>
       <p></p>
-      <form onSubmit={loginSubmit}>
+      <form onSubmit={loginSubmit} className="formContainer">
         <div>
           <label>ID</label>
           <input type="text" value={username} onChange={changeUsername} />
@@ -65,13 +67,13 @@ function Login() {
       </form>
       <div className="findDiv">
         <button className="findBtn" onClick={() => navigate("/find_id")}>
-          ID 찾기
+          아이디 찾기
         </button>
         <button className="findBtn2" onClick={() => navigate("/find_pwd")}>
           비밀번호 찾기
         </button>
       </div>
-      <p onClick={() => navigate("/register")}>-#계정 생성-</p>
+      <p onClick={() => navigate("/register")}>계정 생성하기</p>
     </div>
   );
 }
