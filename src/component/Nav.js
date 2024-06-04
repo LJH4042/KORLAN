@@ -41,9 +41,8 @@ function Nav() {
           학습하기
         </NavLink>
         <div
-          className="navbarMenu dropdown"
-          onMouseEnter={toggleDropdown}
-          onMouseLeave={toggleDropdown}
+          className={`navbarMenu dropdown ${isDropdownOpen ? 'open' : ''}`}
+          onClick={toggleDropdown}
         >
           게임하기
           {isDropdownOpen && (
