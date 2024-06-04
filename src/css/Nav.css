@@ -3,6 +3,10 @@
 @import url('https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css');
 /* https://github.com/orioncactus/pretendard */
 
+html {
+  overflow-y: scroll; /* 항상 세로 스크롤바를 보이게 함 */
+}
+
 .navbar {
   display: flex;
   align-items: center; /* 수직 중앙 정렬 */
