@@ -17,15 +17,15 @@ function ControlledCarousel() {
     <div className="carousel-container">
       <Carousel activeIndex={index} onSelect={handleSelect}>
         <Carousel.Item>
-          <img src={test1} alt='first slide' className="carousel-image" />
+          <img src={test1} alt="first slide" className="carousel-image" />
         </Carousel.Item>
 
         <Carousel.Item>
-          <img src={test2} className="carousel-image" />
+          <img src={test2} alt="second slide" className="carousel-image" />
         </Carousel.Item>
 
         <Carousel.Item>
-          <img src={test3} className="carousel-image" />
+          <img src={test3} alt="third slide" className="carousel-image" />
         </Carousel.Item>
       </Carousel>
     </div>
