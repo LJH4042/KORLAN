@@ -7,6 +7,7 @@
 /server/node_modules
 .env
 /service-account.json
+/server/.env
 
 # testing
 /coverage

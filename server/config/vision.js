@@ -1,12 +1,10 @@
 const vision = require("@google-cloud/vision");
-
-const CREDENTIALS = process.env.REACT_APP_GOOGLE_SERVICE_KEY;
-
+require("dotenv").config();
 
 const CONFIG = {
   credentials: {
-    private_key: CREDENTIALS.private_key,
-    client_email: CREDENTIALS.client_email,
+    private_key: process.env.PRIVATE_KEY.split(String.raw`\n`).join("\n"),
+    client_email: process.env.CLIENT_EMAIL,
   },
 };
 
