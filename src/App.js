@@ -3,10 +3,6 @@ import { BrowserRouter, Route, Routes } from "react-router-dom";
 import Nav from "./component/Nav";
 import Login from "./page/User/Login";
 import Register from "./page/User/Register";
-import PostAdd from "./page/Comunity/PostAdd";
-import PostList from "./page/Comunity/PostList";
-import PostDetail from "./page/Comunity/PostDetail";
-import PostUpdate from "./page/Comunity/PostUpdate";
 import Home from "./page/Home";
 import ImageRegist from "./page/Game/ImageRegist";
 import ImageGame from "./page/Game/ImageGame";
@@ -15,7 +11,7 @@ import IdFind from "./page/User/ID/IdFind";
 import PwdFind from "./page/User/PWD/PwdFind";
 import MyPage from "./page/User/MyPage";
 import LearningPage from "./page/Learn/LearningPage";
-import 'bootstrap/dist/css/bootstrap.min.css';
+import "bootstrap/dist/css/bootstrap.min.css";
 
 function App() {
   return (
@@ -29,10 +25,6 @@ function App() {
           <Route path="/find_pwd" element={<PwdFind />} />
           <Route path="/register" element={<Register />} />
           <Route path="/mypage" element={<MyPage />} />
-          <Route path="/post" element={<PostList />} />
-          <Route path="/post/add" element={<PostAdd />} />
-          <Route path="/post/:id" element={<PostDetail />} />
-          <Route path="/post/:id/update" element={<PostUpdate />} />
           <Route path="/image/add" element={<ImageRegist />} />
           <Route path="/imageGame" element={<ImageGame />} />
           <Route path="/combineGame" element={<CombineGame />} />

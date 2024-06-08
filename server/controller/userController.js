@@ -136,7 +136,7 @@ const changePwd = asynchHandler(async (req, res) => {
   res.status(200).json({ message: "비밀번호가 변경되었습니다." });
 });
 
-//Pose AuthCode send to Mail, /mailsend : 이메일 인증 확인
+//Pose AuthCode send to Mail, /mailsend : 회원가입 이메일 인증 확인
 const mailCode = asynchHandler(async (req, res) => {
   const { email } = req.body;
   const emailRegEx =

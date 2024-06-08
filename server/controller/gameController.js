@@ -48,9 +48,9 @@ const resetImageID = asynchHandler(async (req, res) => {
 
 //Post Image, /image : 이미지 데이터 등록
 const postImage = asynchHandler(async (req, res) => {
-  const { title } = req.body;
+  const { title, level, length, hint } = req.body;
   const image = req.file.filename;
-  const game = await Game.create({ title, image });
+  await Game.create({ title, image, level, length, hint });
   res.status(201).send({ message: "등록되었습니다." });
 });
 

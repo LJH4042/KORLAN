@@ -19,9 +19,6 @@ function Nav() {
         <Link className="navbarMenu" to={"/"}>
           홈
         </Link>
-        <Link class="navbarMenu" to={"/post"}>
-          커뮤니티
-        </Link>
         <Link className="navbarMenu" to={"/learn"}>
           학습하기
         </Link>
