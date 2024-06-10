@@ -52,8 +52,8 @@ function Nav() {
         <NavLink className="navbarMenu" exact to={"/"} activeClassName="active" onClick={closeMenusOnMobile}>
           홈
         </NavLink>
-        <NavLink className="navbarMenu" to={"/post"} activeClassName="active" onClick={closeMenusOnMobile}>
-          커뮤니티
+        <NavLink className="navbarMenu" to={"/introduce"} activeClassName="active" onClick={closeMenusOnMobile}>
+          소개하기
         </NavLink>
         <NavLink className="navbarMenu" to={"/learn"} activeClassName="active" onClick={closeMenusOnMobile}>
           학습하기
