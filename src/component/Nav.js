@@ -53,7 +53,7 @@ function Nav() {
           홈
         </NavLink>
         <NavLink className="navbarMenu" to={"/introduce"} activeClassName="active" onClick={closeMenusOnMobile}>
-          소개하기
+          소개
         </NavLink>
         <NavLink className="navbarMenu" to={"/learn"} activeClassName="active" onClick={closeMenusOnMobile}>
           학습하기

@@ -1,0 +1,52 @@
+.footer {
+  background-color: #303030;
+  color: #e1e1e1a7;
+  padding: 20px 0;
+  font-size: 13px;
+}
+
+.footer-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+}
+
+.footer-section {
+  flex: 1;
+  min-width: 200px;
+  padding: 20px;
+}
+
+.footer-section h5 {
+  margin-bottom: 10px;
+  color: #ffffffdf;
+}
+
+.footer-section ul {
+  list-style: none;
+  padding: 0;
+  display: flex; /* 리스트 아이템들을 가로로 배치 */
+  gap: 15px; /* 리스트 아이템 사이의 간격 */
+}
+
+.footer-section ul li {
+  margin-bottom: 5px;
+}
+
+.footer-section ul li a {
+  color: #e1e1e1a7;
+  text-decoration: none;
+}
+
+.footer-section ul li a:hover {
+  color: #ffffff;
+  text-decoration: none;
+}
+
+.footer-bottom {
+  text-align: center;
+  padding: 10px 0;
+  border-top: 1px solid #444;
+}

@@ -17,6 +17,7 @@ import MyPage from "./page/User/MyPage";
 import LearningPage from "./page/Learn/LearningPage";
 import 'bootstrap/dist/css/bootstrap.min.css';
 import Introduce from "./page/introduce";
+import Footer from "./component/footer";
 
 function App() {
   return (
@@ -39,6 +40,7 @@ function App() {
           <Route path="/combineGame" element={<CombineGame />} />
           <Route path="/learn" element={<LearningPage />} />
           <Route path="/introduce" element={<Introduce />} />
+          <Route path="/footer" element={<Footer />} />
         </Routes>
       </BrowserRouter>
     </div>
