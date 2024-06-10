@@ -1,7 +1,7 @@
 import { Link, NavLink } from "react-router-dom";
 import React, { useState, useEffect } from "react";
 import "../css/Nav.css";
-import Logo from "../logo.png";
+import Logo from "../logo.svg";
 import axios from "axios";
 
 function Nav() {

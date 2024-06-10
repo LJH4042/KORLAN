@@ -9,13 +9,13 @@ html {
   align-items: center; /* 수직 중앙 정렬 */
   justify-content: space-between; /* 요소들을 양 끝과 중앙으로 분리 */
   width: 100%;
-  background-color: #a0cbe7;
+  background-color: #ffffff;
   padding: 2% 20px;
   box-sizing: border-box;
 }
 
 .logo {
-  width: 50px;
+  width: 100px;
   height: 50px;
   margin-left: 30px;
 }
@@ -41,32 +41,34 @@ html {
 }
 
 .navbarMenu {
-  color: white;
+  color: rgb(0, 0, 0);
   margin: 0 8px; /* 좌우 여백 */
   font-size: 20px;
+  font-weight: 600;
   text-decoration: none;
   position: relative; /* 드롭다운을 위한 상대 위치 */
 }
 
 .navbarMenu:hover {
-  background-color: #8cb4d6;
+  color: #0088ff;
 }
 
 .navbarAuth {
-  color: white;
+  color: rgb(0, 0, 0);
   margin: 0 30px 0 20px;
   font-size: 20px;
+  font-weight: 600;
   text-decoration: none;
 }
 
 .navbarAuth:hover {
-  background-color: #8cb4d6;
+  color: #0088ff;
 }
 
 .dropdown-content {
   display: none;
   position: absolute;
-  background-color: #92b2c6;
+  background-color: #ffffff;
   min-width: 160px;
   box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
   z-index: 1;
@@ -75,7 +77,7 @@ html {
 
 .dropdown-content a {
   font-size: 18px;
-  color: white;
+  color: rgb(0, 0, 0);
   padding: 12px 16px;
   text-decoration: none;
   display: block;
@@ -83,7 +85,7 @@ html {
 }
 
 .dropdown-content a:hover {
-  background-color: #7b95a5;
+  color: #0088ff;
 }
 
 .dropdown:hover .dropdown-content {
@@ -110,15 +112,21 @@ html {
 
   .navbarMenu,
   .navbarAuth {
-    font-size: 18px;
-    margin: 10px 0;
+    font-size: 16px;
+    margin: 8px 0;
+    text-align: center;
+    width: 100%;
   }
 
   .dropdown-content {
-    position: static;
-    box-shadow: none;
-    width: 100%; /* 드롭다운 너비 조정 */
-    border-radius: 0; /* 드롭다운 테두리 조정 */
+    width: 100%;
+    border-radius: 0;
+    position: relative;
+  }
+
+  .dropdown-content a {
+    font-size: 15px;
+    text-align: center;
   }
 }
 
@@ -128,8 +136,8 @@ html {
   }
 
   .logo {
-    width: 40px;
-    height: 40px;
+    width: 100px;
+    height: 50px;
     margin-left: 10px; /* 왼쪽 마진 추가 */
   }
 
