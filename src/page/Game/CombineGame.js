@@ -166,6 +166,7 @@ function CombineGame() {
       </div>
       {!gameOver && (
         <div>
+          <h2>글자 수: 2, 힌트: 동물</h2>
           {answerObj ? (
             <Typing
               checkAnswer={checkAnswer}

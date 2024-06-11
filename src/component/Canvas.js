@@ -13,47 +13,37 @@ function Canvas({
   const canvasRef = useRef(null);
 
   const [isDrawing, setIsDrawing] = useState(false);
-
+  const [color, setColor] = useState("gray");
   const [lastX, setLastX] = useState(0);
   const [lastY, setLastY] = useState(0);
-
   const [outputImageSrc, setOutputImageSrc] = useState(null);
-
   const [path, setPath] = useState([]);
   const [paths, setPaths] = useState([]);
-
   const [imgText, setImgText] = useState("");
 
   useEffect(() => {
     const canvas = canvasRef.current;
     const ctx = canvas.getContext("2d");
-
     const drawing = (e) => {
       if (!isDrawing) return;
-
       const rect = canvas.getBoundingClientRect();
       const offsetX = e.clientX - rect.left;
       const offsetY = e.clientY - rect.top;
-
       ctx.beginPath();
       ctx.moveTo(lastX, lastY);
       ctx.lineTo(offsetX, offsetY);
-      ctx.strokeStyle = "blue";
+      ctx.strokeStyle = color;
       ctx.lineWidth = 10;
       ctx.stroke();
-
       setLastX(offsetX);
       setLastY(offsetY);
-
       setPath((prevPath) => [...prevPath, { x: offsetX, y: offsetY }]);
     };
-
     canvas.addEventListener("mousemove", drawing);
-
     return () => {
       canvas.removeEventListener("mousemove", drawing);
     };
-  }, [isDrawing, lastX, lastY]);
+  }, [isDrawing, lastX, lastY, color]);
 
   const drawingCanvas = (e) => {
     setIsDrawing(true);
@@ -126,15 +116,24 @@ function Canvas({
 
   return (
     <div className="canvasContainer">
-      <canvas
-        ref={canvasRef}
-        width={500}
-        height={200}
-        style={{ border: "1px solid black" }}
-        onMouseDown={drawingCanvas}
-        onMouseUp={stopDrawing}
-        onMouseOut={canvasOut}
-      />
+      <div>
+        <canvas
+          ref={canvasRef}
+          width={500}
+          height={200}
+          style={{ border: "1px solid black" }}
+          onMouseDown={drawingCanvas}
+          onMouseUp={stopDrawing}
+          onMouseOut={canvasOut}
+        />
+      </div>
+      <div>
+        <button onClick={() => setColor("gray")}>회색</button>
+        <button onClick={() => setColor("blue")}>파랑</button>
+        <button onClick={() => setColor("red")}>빨강</button>
+        <button onClick={() => setColor("green")}>초록</button>
+        <button onClick={() => setColor("purple")}>보라</button>
+      </div>
       <div className="canvasButtonDiv">
         {checkQuiz ? (
           <div>

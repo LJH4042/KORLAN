@@ -44,13 +44,17 @@ const getImage = asynchHandler(async (req, res) => {
 //Post reset Image ID, /image/reset : 게임 초기화
 const resetImageID = asynchHandler(async (req, res) => {
   imageID = [];
+  res.status(200).send({ message: "게임 데이터가 초기화되었습니다." });
 });
 
 //Post Image, /image : 이미지 데이터 등록
 const postImage = asynchHandler(async (req, res) => {
   const { title, level, length, hint } = req.body;
+  const existingTitle = await User.findOne({ title });
+  if (existingTitle)
+    return res.status(401).json({ message: "이미 저장된 데이터입니다." });
   const image = req.file.filename;
-  await Game.create({ title, image, level, length, hint });
+  await Game.create({ _id: title, title, image, level, length, hint });
   res.status(201).send({ message: "등록되었습니다." });
 });
 
