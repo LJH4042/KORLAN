@@ -124,13 +124,30 @@ function Canvas({
     setAnswerObjButton(false);
   };
 
+  const setCanvasSize = () => {
+    const canvas = canvasRef.current;
+    const container = canvas.parentElement;
+    canvas.width = container.clientWidth;
+    canvas.height = container.clientHeight;
+  };
+
+  useEffect(() => {
+    setCanvasSize();
+    window.addEventListener('resize', setCanvasSize);
+    return () => window.removeEventListener('resize', setCanvasSize);
+  }, []);
+
+
   return (
     <div className="canvasContainer">
       <canvas
         ref={canvasRef}
-        width={500}
-        height={200}
-        style={{ border: "1px solid black" }}
+        style={{
+          border: "2px solid black",
+          width: '100%',
+          height: '100%',
+          borderRadius: '10%'
+        }}
         onMouseDown={drawingCanvas}
         onMouseUp={stopDrawing}
         onMouseOut={canvasOut}
@@ -151,7 +168,6 @@ function Canvas({
           </div>
         )}
       </div>
-      {/*outputImageSrc && <img src={outputImageSrc} alt="분석된 이미지" />*/}
     </div>
   );
 }
