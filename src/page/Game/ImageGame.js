@@ -11,6 +11,8 @@ function ImageGame() {
   const winNum = 1; //서버로 보낼 점수 1점
   const [imageData, setImageData] = useState(""); //이미지, 텍스트 데이터
   const [quiz, setQuiz] = useState(""); //제시된 텍스트 퀴즈
+  const [hint, setHint] = useState(""); //힌트
+  const [length, setLength] = useState(""); //글자 수
   const [round, setRound] = useState(1); //라운드
   const [score, setScore] = useState(0); //점수
   const [gameOver, setGameOver] = useState(false); //게임 끝 여부
@@ -56,7 +58,9 @@ function ImageGame() {
           setImageData(res.data.game[0].image);
           setQuiz(res.data.game[0].title);
           setRound(res.data.count);
-          if (round >= 5) {
+          setHint(res.data.game[0].hint);
+          setLength(res.data.game[0].length);
+          if (round >= 10) {
             setGameOver(true);
             alert(res.data.message);
           }
@@ -113,7 +117,7 @@ function ImageGame() {
   }, [winNum]);
 
   useEffect(() => {
-    if (score >= 50 && localStorage.getItem("token")) updateScore();
+    if (score >= 100 && localStorage.getItem("token")) updateScore();
   }, [score, updateScore]);
 
   return (
@@ -121,14 +125,14 @@ function ImageGame() {
       <div className="imageDiv">
         {gameOver ? (
           <div>
-            <h1>Game Over, 점수: {score} / 50</h1>
+            <h1>Game Over, 점수: {score} / 100</h1>
             <button onClick={resetButton}>다시하기</button>
             <button onClick={() => navigate("/")}>홈으로</button>
           </div>
         ) : (
           <div>
             <div className="roundDiv">
-              <h2>Round: {round} / 5</h2>
+              <h2>Round: {round} / 10</h2>
               <button onClick={toggleAnswerObj} disabled={answerObjButton}>
                 {answerObjName}
               </button>
@@ -146,7 +150,9 @@ function ImageGame() {
       </div>
       {!gameOver && (
         <div>
-          <h2>글자 수: 2, 힌트: 동물</h2>
+          <h2>
+            글자 수: {length}, 힌트: {hint}
+          </h2>
           {answerObj ? (
             <Typing
               checkAnswer={checkAnswer}
