@@ -1,70 +1,139 @@
+/* game.css */
+
+@import url('https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css');
+
 .imageGameContainer,
 .combineGameContainer {
-  width: 500px;
-  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+  background-color: #f0f8ff;
+  margin-bottom: 100px;
 }
+
 .imageDiv,
 .combineDiv {
-  text-align: center;
-  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  margin: 20px 20px;
 }
+
 .imageDiv h2,
 .combineDiv h2 {
-  margin-left: 100px;
-  margin-right: 50px;
+  margin: 0;
+  color: #333;
 }
+
 .imageDiv img {
-  border: 1px solid black;
-  width: 500px;
-  height: 350px;
-  object-fit: fill;
+  max-width: 100%;
+  height: auto;
+  border: 2px solid #a0cbe7;
+  border-radius: 8px;
+  margin-bottom: 10px;
 }
+
+button,
 .imageDiv button,
-.combineDiv button {
-  width: 100px;
-  height: 30px;
-  font-size: 15px;
-  font-weight: bold;
-  border: 1px solid black;
-  background-color: white;
-  margin-right: 10px;
-}
-.imageDiv button:hover,
-.combineDiv button:hover {
+.combineDiv button,
+.canvasContainer button,
+.typingContainer button {
+  background-color: #a0cbe7;
   color: white;
-  background-color: black;
+  border: none;
+  border-radius: 4px;
+  padding: 10px 20px;
+  cursor: pointer;
+  font-size: 16px;
+  margin: 5px;
 }
+
+button:hover,
+.imageDiv button:hover,
+.combineDiv button:hover,
+.canvasContainer button:hover,
+.typingContainer button:hover {
+  background-color: #8cb4d6;
+}
+
+button:disabled,
+.imageDiv button:disabled,
+.combineDiv button:disabled,
+.canvasContainer button:disabled,
+.typingContainer button:disabled {
+  background-color: #cccccc;
+  cursor: not-allowed;
+}
+
 .roundDiv {
   display: flex;
+  justify-content: center;
   align-items: center;
-  height: 100px;
+  width: 500px;
+  margin: 0 auto;
+  padding: 10px;
+  background-color: #ffffff;
+  border-radius: 8px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  margin-bottom: 20px;
 }
+
 .roundDiv h2 {
-  padding-top: 35px;
+  color: #333;
+  text-align: left;
+  margin: auto;
 }
+
+.roundDiv button {
+  background-color: #a0cbe7;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  padding: 10px 20px;
+  cursor: pointer;
+  font-size: 16px;
+}
+
+.roundDiv button:disabled {
+  background-color: #cccccc;
+  cursor: not-allowed;
+}
+
 .combineDiv span {
   font-size: 40px;
   font-weight: bold;
 }
+
 .textQuizDiv {
   border: 1px solid black;
   padding: 10px;
   margin-bottom: 10px;
 }
 
+.canvasContainer {
+  width: 100vh;
+  height: 400px;
+  margin: auto;
+}
+
 .canvasContainer button {
-  width: 100px;
-  height: 30px;
-  font-size: 15px;
-  font-weight: bold;
-  border: 1px solid black;
-  background-color: white;
-  margin-right: 10px;
-}
-.canvasContainer button:hover {
+  background-color: #a0cbe7;
   color: white;
-  background-color: black;
+  border: none;
+  border-radius: 4px;
+  padding: 10px 20px;
+  cursor: pointer;
+  font-size: 16px;
+  margin: 5px;
 }
+
+.canvasContainer button:hover {
+  background-color: #8cb4d6;
+}
+
 .canvasButtonDiv {
   width: 100%;
   text-align: center;
@@ -77,21 +146,63 @@
   margin-top: 10px;
   margin-left: 5px;
 }
+
 .typingContainer input {
   width: 370px;
   height: 28px;
   margin-right: 10px;
 }
+
 .typingContainer button {
-  width: 100px;
-  height: 30px;
-  font-size: 15px;
-  font-weight: bold;
-  border: 1px solid black;
-  background-color: white;
-  margin-right: 10px;
-}
-.typingContainer button:hover {
+  background-color: #a0cbe7;
   color: white;
-  background-color: black;
+  border: none;
+  border-radius: 4px;
+  padding: 10px 20px;
+  cursor: pointer;
+  font-size: 16px;
+  margin: 5px;
+}
+
+.typingContainer button:hover {
+  background-color: #8cb4d6;
+}
+
+h1,
+h2 {
+  color: #333;
+}
+
+@media (max-width: 768px) {
+  .roundDiv,
+  .imageDiv img,
+  .canvasContainer {
+    width: 95%; /* 컨테이너 너비를 화면에 맞게 조정 */
+    max-width: none; /* 최대 너비 제한 해제 */
+  }
+
+  .roundDiv h2,
+  .imageDiv h2,
+  .combineDiv h2 {
+    font-size: 16px; /* 텍스트 크기 조정 */
+  }
+
+  .typingContainer input {
+    width: 90%; /* 입력 필드 너비 조정 */
+  }
+
+  button,
+  .imageDiv button,
+  .combineDiv button,
+  .canvasContainer button,
+  .typingContainer button {
+    padding: 8px 16px; /* 버튼 크기 조정 */
+    font-size: 14px; /* 버튼 내 텍스트 크기 조정 */
+  }
+}
+
+@media (max-width: 480px) {
+  .combineDiv span {
+    font-size: 24px; /* 더 작은 화면에서는 span의 폰트 크기 줄임 */
+  }
 }

@@ -6,6 +6,7 @@ import ConsonantList from "./ConsonantList";
 import VowelList from "./VowelList";
 import styles from "../../css/LearningPage.module.css";
 import Canvas from "../../component/Canvas";
+import useGoogleTTS from "./useGoogleTTS";
 
 const consonants = [
   // 자음 목록
@@ -72,11 +73,14 @@ const LearningPage = () => {
     // completeStudy,
   } = useLearning();
 
+  const speak = useGoogleTTS();
+
   const [letterType, setLetterType] = useState("consonant"); // 'consonant', 'vowel', 'doubleConsonant', 'doubleVowel'
 
   const toggleLetterType = (type) => {
     setLetterType(type);
   };
+
 
   return (
     <div className={styles.pageContainer}>
@@ -132,7 +136,7 @@ const LearningPage = () => {
             </>
           )}
           {selectedLetter && (
-            <div>
+            <div className={styles.selectedLetterContainer}>
               <h3>선택한 글자:</h3>
               <p className={styles.selectedLetter}> {selectedLetter}</p>
             </div>

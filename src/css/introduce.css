@@ -1,0 +1,30 @@
+/* introduce.css */
+.introduce {
+  text-align: center;
+  margin: 20px;
+}
+
+.team-members {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.team-member {
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  padding: 20px;
+  margin: 10px;
+  width: 200px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.team-member h2 {
+  margin: 0;
+  font-size: 1.5em;
+}
+
+.team-member p {
+  margin: 5px 0 0;
+  color: #555;
+}

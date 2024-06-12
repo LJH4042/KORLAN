@@ -1,39 +1,32 @@
 // useLearning.js
-import { useState } from 'react';
-import useSpeechSynthesis from './useSpeechSynthesis';
+import { useState, useEffect } from 'react';
+import useGoogleTTS from './useGoogleTTS';
 
 const useLearning = () => {
   const [selectedLetter, setSelectedLetter] = useState('');
-  const [progress, setProgress] = useState(0);
-  const [rewards, setRewards] = useState(0);
-  const [studyImage, setStudyImage] = useState('');
-  const [isStudyComplete, setIsStudyComplete] = useState(false);
+  const speak = useGoogleTTS();
 
-  const speak = useSpeechSynthesis();
+  useEffect(() => {
+    const playSpeech = async () => {
+      if (selectedLetter) {
+        try {
+          await speak(selectedLetter);
+        } catch (error) {
+          console.error('문자 선택 시 오류 발생:', error);
+        }
+      }
+    };
+
+    playSpeech();
+  }, [selectedLetter, speak]);
 
   const handleLetterSelection = (letter) => {
     setSelectedLetter(letter);
-    speak(letter);
-  };
-
-  const completeStudy = () => {
-    setProgress((prevProgress) => prevProgress + 10);
-    setRewards((prevRewards) => prevRewards + 1);
-    const canvas = document.getElementById('studyCanvas');
-    if (canvas) {
-      setStudyImage(canvas.toDataURL());
-    }
-    setIsStudyComplete(true);
   };
 
   return {
     selectedLetter,
-    progress,
-    rewards,
-    studyImage,
-    isStudyComplete,
     handleLetterSelection,
-    completeStudy,
   };
 };
 

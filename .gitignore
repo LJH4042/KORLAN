@@ -5,8 +5,9 @@
 /.pnp
 .pnp.js
 /server/node_modules
-/server/.env
+.env
 /server/service-account-key.json
+/server/.env
 
 # testing
 /coverage
