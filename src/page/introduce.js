@@ -4,8 +4,8 @@ import '../css/introduce.css';
 
 const teamMembers = [
   { name: '박유진', role: '프론트엔드 개발자' },
-  { name: '신윤호', role: '프론트엔드 개발자' },
-  { name: '이정호', role: '백엔드 개발자' },
+  { name: '신윤호', role: '백엔드 개발자' },
+  { name: '이정호', role: '프론트엔드 개발자' },
   { name: '최하은', role: '프론트엔드 개발자' },
 ];
 

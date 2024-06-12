@@ -42,7 +42,9 @@ function App() {
           <Route path="/introduce" element={<Introduce />} />
           <Route path="/footer" element={<Footer />} />
         </Routes>
+
       </BrowserRouter>
+      <Footer />
     </div>
   );
 }

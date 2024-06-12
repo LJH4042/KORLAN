@@ -142,7 +142,12 @@ function Canvas({
     <div className="canvasContainer">
       <canvas
         ref={canvasRef}
-        style={{ border: "1px solid black", width: '100%', height: '100%' }}
+        style={{
+          border: "2px solid black",
+          width: '100%',
+          height: '100%',
+          borderRadius: '10%'
+        }}
         onMouseDown={drawingCanvas}
         onMouseUp={stopDrawing}
         onMouseOut={canvasOut}
@@ -163,7 +168,6 @@ function Canvas({
           </div>
         )}
       </div>
-      {/*outputImageSrc && <img src={outputImageSrc} alt="분석된 이미지" />*/}
     </div>
   );
 }

@@ -1,12 +1,24 @@
+html,
+body {
+  height: 100%;
+  margin: 0;
+}
+
+body {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
 .footer {
   background-color: #303030;
-  color: #e1e1e1a7;
   padding: 20px 0;
-  font-size: 13px;
+  font-size: 15px;
+  width: 100%;
+  margin-top: auto;
 }
 
 .footer-container {
-  max-width: 1200px;
   margin: 0 auto;
   display: flex;
   justify-content: space-between;
@@ -16,19 +28,23 @@
 .footer-section {
   flex: 1;
   min-width: 200px;
-  padding: 20px;
+  padding: 2%;
 }
 
-.footer-section h5 {
+.footer-section h4 {
   margin-bottom: 10px;
-  color: #ffffffdf;
+  color: #ffffffc5;
+}
+
+.footer-section p {
+  color: #e1e1e1a7;
 }
 
 .footer-section ul {
   list-style: none;
   padding: 0;
-  display: flex; /* 리스트 아이템들을 가로로 배치 */
-  gap: 15px; /* 리스트 아이템 사이의 간격 */
+  display: flex;
+  gap: 15px;
 }
 
 .footer-section ul li {
@@ -46,7 +62,15 @@
 }
 
 .footer-bottom {
-  text-align: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
   padding: 10px 0;
   border-top: 1px solid #444;
+  height: 50px;
+}
+
+.footer-bottom p {
+  color: #ffffffc5;
+  margin: 0;
 }
