@@ -27,7 +27,7 @@ const postCanvas = asynchHandler(async (req, res) => {
 let imageID = [];
 
 const getImage = asynchHandler(async (req, res) => {
-  if (imageID.length >= 5) {
+  if (imageID.length >= 10) {
     imageID = [];
     res.send({ message: "게임이 종료되었습니다." });
   } else {
