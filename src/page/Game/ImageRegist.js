@@ -62,6 +62,7 @@ function ImageRegist() {
             <option value="2">2글자</option>
             <option value="3">3글자</option>
             <option value="4">4글자</option>
+            <option value="5">5글자</option>
           </select>
         </div>
         <div>
