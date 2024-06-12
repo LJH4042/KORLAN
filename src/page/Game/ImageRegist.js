@@ -58,11 +58,12 @@ function ImageRegist() {
           <label>글자 수</label>
           <select value={length} onChange={(e) => setLength(e.target.value)}>
             <option value="none">--------</option>
-            <option value="1글자">1글자</option>
-            <option value="2글자">2글자</option>
-            <option value="3글자">3글자</option>
-            <option value="4글자">4글자</option>
-            <option value="5글자">5글자</option>
+
+            <option value="1">1글자</option>
+            <option value="2">2글자</option>
+            <option value="3">3글자</option>
+            <option value="4">4글자</option>
+            <option value="5">5글자</option>
           </select>
         </div>
         <div>
