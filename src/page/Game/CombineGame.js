@@ -129,7 +129,11 @@ function CombineGame() {
   }, []);
 
   useEffect(() => {
-    setCharArray(separateText().sort(() => Math.random() - 0.5));
+    setCharArray(
+      separateText()
+        .sort(() => Math.random() - 0.5)
+        .filter((char) => char !== "")
+    );
     //eslint-disable-next-line react-hooks/exhaustive-deps
   }, [quiz]);
 
@@ -155,15 +159,14 @@ function CombineGame() {
               </button>
             </div>
             <div className="textQuizDiv">
-              {charArray.map((char, index) => (
-                <span key={index}>{char}</span>
-              ))}
+              <span>{charArray.join(" , ")}</span>
             </div>
           </div>
         )}
       </div>
       {!gameOver && (
         <div>
+          <h2>글자 수: 2, 힌트: 동물</h2>
           {answerObj ? (
             <Typing
               checkAnswer={checkAnswer}

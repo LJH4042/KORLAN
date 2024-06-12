@@ -1,5 +1,3 @@
-/* Register.js */
-
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import "../../css/user.css";
@@ -150,7 +148,6 @@ function Register() {
         </button>
       </form>
       <p onClick={() => navigate("/login")}>로그인</p>
-
     </div>
   );
 }
