@@ -119,15 +119,18 @@ function Canvas({
       <div>
         <canvas
           ref={canvasRef}
-          width={500}
-          height={200}
-          style={{ border: "1px solid black" }}
+          width={750}
+          height={300}
+          style={{
+            border: "2px solid black",
+            borderRadius: "10%",
+          }}
           onMouseDown={drawingCanvas}
           onMouseUp={stopDrawing}
           onMouseOut={canvasOut}
         />
       </div>
-      <div>
+      <div className="canvasButtonDiv">
         <button onClick={() => setColor("gray")}>회색</button>
         <button onClick={() => setColor("blue")}>파랑</button>
         <button onClick={() => setColor("red")}>빨강</button>
