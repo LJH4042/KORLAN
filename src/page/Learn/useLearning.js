@@ -1,4 +1,3 @@
-// useLearning.js
 import { useState, useEffect } from 'react';
 import useGoogleTTS from './useGoogleTTS';
 
@@ -24,9 +23,14 @@ const useLearning = () => {
     setSelectedLetter(letter);
   };
 
+  const resetSelectedLetter = () => {
+    setSelectedLetter('');
+  };
+
   return {
     selectedLetter,
     handleLetterSelection,
+    resetSelectedLetter,
   };
 };
 

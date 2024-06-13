@@ -14,7 +14,11 @@ const useGoogleTTS = () => {
     };
 
     try {
-      const response = await axios.post(url, data);
+      const response = await axios.post(url, data, {
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      });
       const audioContent = response.data.audioContent;
       const audio = new Audio(`data:audio/mp3;base64,${audioContent}`);
       audio.play();
