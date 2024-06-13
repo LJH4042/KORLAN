@@ -1,6 +1,6 @@
 // LearningPage.js
 
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import useLearning from "./useLearning";
 import ConsonantList from "./ConsonantList";
 import VowelList from "./VowelList";
@@ -68,11 +68,20 @@ const LearningPage = () => {
   } = useLearning();
 
   const [letterType, setLetterType] = useState("consonant");
+  const [lastSelectedLetter, setLastSelectedLetter] = useState(null);
+  const speak = useGoogleTTS();
 
   const toggleLetterType = (type) => {
     setLetterType(type);
     resetSelectedLetter(); // 글자 초기화 함수 호출
   };
+
+  useEffect(() => {
+    if (selectedLetter) {
+      setLastSelectedLetter(selectedLetter);
+      speak(selectedLetter);
+    }
+  }, [selectedLetter]);
 
   return (
     <div className={styles.pageContainer}>
@@ -123,11 +132,12 @@ const LearningPage = () => {
           )}
           {selectedLetter && (
             <div className={styles.selectedLetterContainer}>
-              <h3>선택한 글자:</h3>
+              <h3>선택한 글자: </h3>
               <p className={styles.selectedLetter}> {selectedLetter}</p>
+              <button onClick={() => lastSelectedLetter && speak(lastSelectedLetter)}>다시 듣기</button>
             </div>
           )}
-          <Canvas letter={selectedLetter.letter} />
+          <Canvas />
         </div>
       </div>
     </div>
