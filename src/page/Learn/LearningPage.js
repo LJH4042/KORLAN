@@ -1,6 +1,4 @@
-// LearningPage.js
-
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import useLearning from "./useLearning";
 import ConsonantList from "./ConsonantList";
 import VowelList from "./VowelList";
@@ -76,12 +74,11 @@ const LearningPage = () => {
     resetSelectedLetter(); // 글자 초기화 함수 호출
   };
 
-  useEffect(() => {
-    if (selectedLetter) {
-      setLastSelectedLetter(selectedLetter);
-      speak(selectedLetter);
-    }
-  }, [selectedLetter]);
+  const handleLetterSelectionWithTTS = (letter) => {
+    handleLetterSelection(letter);
+    setLastSelectedLetter(letter);
+    speak(letter);
+  };
 
   return (
     <div className={styles.pageContainer}>
@@ -99,7 +96,7 @@ const LearningPage = () => {
               <h3>자음 학습하기</h3>
               <ConsonantList
                 consonants={consonants}
-                onLetterSelect={handleLetterSelection}
+                onLetterSelect={handleLetterSelectionWithTTS}
               />
             </>
           )}
@@ -108,7 +105,7 @@ const LearningPage = () => {
               <h3>모음 학습하기</h3>
               <VowelList
                 vowels={vowels}
-                onLetterSelect={handleLetterSelection}
+                onLetterSelect={handleLetterSelectionWithTTS}
               />
             </>
           )}
@@ -117,7 +114,7 @@ const LearningPage = () => {
               <h3>쌍자음 학습하기</h3>
               <ConsonantList
                 consonants={doubleCons}
-                onLetterSelect={handleLetterSelection}
+                onLetterSelect={handleLetterSelectionWithTTS}
               />
             </>
           )}
@@ -126,7 +123,7 @@ const LearningPage = () => {
               <h3>쌍모음 학습하기</h3>
               <VowelList
                 vowels={doubleVow}
-                onLetterSelect={handleLetterSelection}
+                onLetterSelect={handleLetterSelectionWithTTS}
               />
             </>
           )}
