@@ -1,4 +1,4 @@
-import { Link, NavLink } from "react-router-dom";
+import { Link, NavLink, useNavigate } from "react-router-dom";
 import React, { useState, useEffect } from "react";
 import "../css/Nav.css";
 import Logo from "../logo.svg";
@@ -7,6 +7,8 @@ import axios from "axios";
 function Nav() {
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const navigate = useNavigate();
 
   const resetGameData = () => {
     axios.post("http://localhost:5000/game/reset");
@@ -37,6 +39,19 @@ function Nav() {
     window.addEventListener("resize", handleResize);
     return () => window.removeEventListener("resize", handleResize);
   }, []);
+
+  useEffect(() => {
+    const token = localStorage.getItem("token");
+    if (token) {
+      setIsLoggedIn(true);
+    }
+  }, []);
+
+  const handleLogout = () => {
+    localStorage.removeItem("token");
+    setIsLoggedIn(false);
+    navigate("/"); // 로그아웃 후 홈으로 리디렉션
+  };
 
   return (
     <div className="navbar">
@@ -80,15 +95,23 @@ function Nav() {
       </div>
 
       <div className={`authContainer ${isMobileMenuOpen ? 'open' : ''}`}>
-        <NavLink className="navbarAuth" to={"/login"} activeClassName="active" onClick={closeMenusOnMobile}>
-          로그인
-        </NavLink>
-        <NavLink className="navbarAuth" to={"/register"} activeClassName="active" onClick={closeMenusOnMobile}>
-          회원가입
-        </NavLink>
+        {isLoggedIn ? (
+          <div className="navbarAuth" onClick={() => { handleLogout(); closeMenusOnMobile(); }}>
+            로그아웃
+          </div>
+        ) : (
+          <>
+            <NavLink className="navbarAuth" to={"/login"} activeClassName="active" onClick={closeMenusOnMobile}>
+              로그인
+            </NavLink>
+            <NavLink className="navbarAuth" to={"/register"} activeClassName="active" onClick={closeMenusOnMobile}>
+              회원가입
+            </NavLink>
+          </>
+        )}
       </div>
     </div>
   );
 }
 
-export default Nav;
+export default Nav;;
