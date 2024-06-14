@@ -2,15 +2,10 @@ import { Link, NavLink } from "react-router-dom";
 import React, { useState, useEffect } from "react";
 import "../css/Nav.css";
 import Logo from "../logo.svg";
-import axios from "axios";
 
 function Nav() {
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
-
-  const resetGameData = () => {
-    axios.post("http://localhost:5000/game/reset");
-  };
 
   const toggleDropdown = () => {
     setIsDropdownOpen(!isDropdownOpen);
@@ -48,42 +43,81 @@ function Nav() {
         &#9776;
       </div>
 
-      <div className={`menuContainer ${isMobileMenuOpen ? 'open' : ''}`}>
-        <NavLink className="navbarMenu" exact to={"/"} activeClassName="active" onClick={closeMenusOnMobile}>
+      <div className={`menuContainer ${isMobileMenuOpen ? "open" : ""}`}>
+        <NavLink
+          className="navbarMenu"
+          exact
+          to={"/"}
+          activeClassName="active"
+          onClick={closeMenusOnMobile}
+        >
           홈
         </NavLink>
-        <NavLink className="navbarMenu" to={"/introduce"} activeClassName="active" onClick={closeMenusOnMobile}>
+        <NavLink
+          className="navbarMenu"
+          to={"/introduce"}
+          activeClassName="active"
+          onClick={closeMenusOnMobile}
+        >
           소개
         </NavLink>
-        <NavLink className="navbarMenu" to={"/learn"} activeClassName="active" onClick={closeMenusOnMobile}>
+        <NavLink
+          className="navbarMenu"
+          to={"/learn"}
+          activeClassName="active"
+          onClick={closeMenusOnMobile}
+        >
           학습하기
         </NavLink>
         <div
-          className={`navbarMenu dropdown ${isDropdownOpen ? 'open' : ''}`}
+          className={`navbarMenu dropdown ${isDropdownOpen ? "open" : ""}`}
           onClick={toggleDropdown}
         >
           게임하기
           {isDropdownOpen && (
             <div className="dropdown-content">
-              <NavLink to={"/imageGame"} onClick={(e) => { resetGameData(); closeMenusOnMobile(); }} activeClassName="active">
+              <NavLink
+                to={"/imageGame"}
+                onClick={(e) => closeMenusOnMobile()}
+                activeClassName="active"
+              >
                 이미지 게임
               </NavLink>
-              <NavLink to={"/combineGame"} onClick={(e) => { resetGameData(); closeMenusOnMobile(); }} activeClassName="active">
+              <NavLink
+                to={"/combineGame"}
+                onClick={(e) => closeMenusOnMobile()}
+                activeClassName="active"
+              >
                 낱말 조합
               </NavLink>
             </div>
           )}
         </div>
-        <NavLink className="navbarMenu" to={"/myPage"} activeClassName="active" onClick={closeMenusOnMobile}>
+        <NavLink
+          className="navbarMenu"
+          to={"/myPage"}
+          activeClassName="active"
+          onClick={closeMenusOnMobile}
+        >
           마이페이지
         </NavLink>
       </div>
 
-      <div className={`authContainer ${isMobileMenuOpen ? 'open' : ''}`}>
-        <NavLink className="navbarAuth" to={"/login"} activeClassName="active" onClick={closeMenusOnMobile}>
+      <div className={`authContainer ${isMobileMenuOpen ? "open" : ""}`}>
+        <NavLink
+          className="navbarAuth"
+          to={"/login"}
+          activeClassName="active"
+          onClick={closeMenusOnMobile}
+        >
           로그인
         </NavLink>
-        <NavLink className="navbarAuth" to={"/register"} activeClassName="active" onClick={closeMenusOnMobile}>
+        <NavLink
+          className="navbarAuth"
+          to={"/register"}
+          activeClassName="active"
+          onClick={closeMenusOnMobile}
+        >
           회원가입
         </NavLink>
       </div>

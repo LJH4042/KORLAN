@@ -5,7 +5,7 @@ import Canvas from "../../component/Canvas";
 import Typing from "../../component/Typing";
 import { useNavigate } from "react-router-dom";
 
-function ImageGame() {
+function ImageGame({ gameLevel }) {
   const navigate = useNavigate();
 
   const winNum = 1; //서버로 보낼 점수 1점
@@ -22,12 +22,12 @@ function ImageGame() {
   const [answerObjName, setAnswerObjName] = useState("타이핑"); //캔버스, 타이핑 변환 버튼 이름
   const [answerObjButton, setAnswerObjButton] = useState(false); //캔버스, 타이핑 변환 버튼
 
-  const resetButton = () => window.location.reload();
-
   const checkTrue = () => {
     setCheckQuiz(true);
     setAnswerObjButton(true);
   };
+
+  const resetGame = () => window.location.reload();
 
   const toggleAnswerObj = () => {
     setAnswerObj((answerObj) => !answerObj);
@@ -53,22 +53,24 @@ function ImageGame() {
 
   const fetchData = async () => {
     try {
-      await axios.get("http://localhost:5000/game").then((res) => {
-        if (res.data.game && res.data.game.length > 0) {
-          setImageData(res.data.game[0].image);
-          setQuiz(res.data.game[0].title);
-          setRound(res.data.count);
-          setHint(res.data.game[0].hint);
-          setLength(res.data.game[0].length);
-          if (round >= 10) {
+      await axios
+        .post("http://localhost:5000/gameData", { level: gameLevel })
+        .then((res) => {
+          if (res.data.game && res.data.game.length > 0) {
+            setImageData(res.data.game[0].image);
+            setQuiz(res.data.game[0].title);
+            setRound(res.data.count);
+            setHint(res.data.game[0].hint);
+            setLength(res.data.game[0].length);
+            if (round >= 10) {
+              setGameOver(true);
+              alert(res.data.message);
+            }
+          } else {
             setGameOver(true);
             alert(res.data.message);
           }
-        } else {
-          setGameOver(true);
-          alert(res.data.message);
-        }
-      });
+        });
     } catch (err) {
       console.error(err);
     }
@@ -126,7 +128,7 @@ function ImageGame() {
         {gameOver ? (
           <div>
             <h1>Game Over, 점수: {score} / 100</h1>
-            <button onClick={resetButton}>다시하기</button>
+            <button onClick={resetGame}>난이도 선택</button>
             <button onClick={() => navigate("/")}>홈으로</button>
           </div>
         ) : (

@@ -6,7 +6,7 @@ import Typing from "../../component/Typing";
 import { CHO, JUNG, JONG } from "../../component/Word";
 import { useNavigate } from "react-router-dom";
 
-function CombineGame() {
+function CombineGame({ gameLevel }) {
   const navigate = useNavigate();
 
   const winNum = 1; //서버로 보낼 점수 1점
@@ -70,21 +70,23 @@ function CombineGame() {
 
   const fetchData = async () => {
     try {
-      await axios.get("http://localhost:5000/game").then((res) => {
-        if (res.data.game && res.data.game.length > 0) {
-          setQuiz(res.data.game[0].title);
-          setRound(res.data.count);
-          setHint(res.data.game[0].hint);
-          setLength(res.data.game[0].length);
-          if (round >= 10) {
+      await axios
+        .post("http://localhost:5000/gameData", { level: gameLevel })
+        .then((res) => {
+          if (res.data.game && res.data.game.length > 0) {
+            setQuiz(res.data.game[0].title);
+            setRound(res.data.count);
+            setHint(res.data.game[0].hint);
+            setLength(res.data.game[0].length);
+            if (round >= 10) {
+              setGameOver(true);
+              alert(res.data.message);
+            }
+          } else {
             setGameOver(true);
             alert(res.data.message);
           }
-        } else {
-          setGameOver(true);
-          alert(res.data.message);
-        }
-      });
+        });
     } catch (err) {
       console.error(err);
     }

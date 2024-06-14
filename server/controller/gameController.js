@@ -27,12 +27,13 @@ const postCanvas = asynchHandler(async (req, res) => {
 let imageID = [];
 
 const getImage = asynchHandler(async (req, res) => {
+  const { level } = req.body;
   if (imageID.length >= 10) {
     imageID = [];
     res.send({ message: "게임이 종료되었습니다." });
   } else {
     const game = await Game.aggregate([
-      { $match: { _id: { $nin: imageID } } },
+      { $match: { _id: { $nin: imageID }, level: level } },
       { $sample: { size: 1 } },
     ]);
     imageID.push(game[0]._id);
