@@ -6,11 +6,11 @@ html {
 
 .navbar {
   display: flex;
+  justify-content: space-between;
   align-items: center; /* 수직 중앙 정렬 */
-  justify-content: space-between; /* 요소들을 양 끝과 중앙으로 분리 */
   width: 100%;
   background-color: #ffffff;
-  padding: 2% 20px;
+  padding: 10px 20px;
   box-sizing: border-box;
 }
 
@@ -26,18 +26,17 @@ html {
   cursor: pointer;
 }
 
-.menuContainer,
-.authContainer {
+.menuContainer {
   display: flex;
+  flex: 1;
+  justify-content: center; /* 중앙 정렬 */
   align-items: center;
 }
 
-.menuContainer {
-  justify-content: center; /* 중앙 정렬 */
-}
-
 .authContainer {
+  display: flex;
   justify-content: flex-end; /* 오른쪽 정렬 */
+  align-items: center;
 }
 
 .navbarMenu {
@@ -47,6 +46,7 @@ html {
   font-weight: 600;
   text-decoration: none;
   position: relative; /* 드롭다운을 위한 상대 위치 */
+  white-space: nowrap; /* 텍스트가 줄 바꿈되지 않도록 */
 }
 
 .navbarMenu:hover {
@@ -55,10 +55,11 @@ html {
 
 .navbarAuth {
   color: rgb(0, 0, 0);
-  margin: 0 30px 0 20px;
+  margin: 0 30px;
   font-size: 20px;
   font-weight: 600;
   text-decoration: none;
+  white-space: nowrap; /* 텍스트가 줄 바꿈되지 않도록 */
 }
 
 .navbarAuth:hover {

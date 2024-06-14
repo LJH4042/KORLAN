@@ -104,9 +104,6 @@ function Nav() {
             <NavLink className="navbarAuth" to={"/login"} activeClassName="active" onClick={closeMenusOnMobile}>
               로그인
             </NavLink>
-            <NavLink className="navbarAuth" to={"/register"} activeClassName="active" onClick={closeMenusOnMobile}>
-              회원가입
-            </NavLink>
           </>
         )}
       </div>
