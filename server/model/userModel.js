@@ -6,8 +6,12 @@ const UserSchema = new Schema({
   username: { type: String, require: true, unique: true },
   password: { type: String, require: true },
   email: { type: String, require: true },
-  imageScore: { type: Number, default: 0 },
-  combineScore: { type: Number, default: 0 },
+  imageScoreLow: { type: Number, default: 0 },
+  imageScoreMiddle: { type: Number, default: 0 },
+  imageScoreHigh: { type: Number, default: 0 },
+  combineScoreLow: { type: Number, default: 0 },
+  combineScoreMiddle: { type: Number, default: 0 },
+  combineScoreHigh: { type: Number, default: 0 },
   refreshToken: { type: String },
 });
 

@@ -9,19 +9,19 @@ import { useNavigate } from "react-router-dom";
 function CombineGame({ gameLevel }) {
   const navigate = useNavigate();
 
-  const winNum = 1; //서버로 보낼 점수 1점
-  const [charArray, setCharArray] = useState([]); //랜덤 문자 배열
-  const [quiz, setQuiz] = useState(""); //제시된 텍스트 퀴즈
-  const [hint, setHint] = useState(""); //힌트
-  const [length, setLength] = useState(""); //글자 수
-  const [round, setRound] = useState(1); //라운드
-  const [score, setScore] = useState(0); //점수
-  const [gameOver, setGameOver] = useState(false); //게임 끝 여부
-  const [checkQuiz, setCheckQuiz] = useState(false); //정답, 오답 확인
-  const [moreChance, setMoreChance] = useState(0); //재도전 제공
-  const [answerObj, setAnswerObj] = useState(false); //캔버스, 타이핑 변환
-  const [answerObjName, setAnswerObjName] = useState("타이핑"); //캔버스, 타이핑 변환 버튼 이름
-  const [answerObjButton, setAnswerObjButton] = useState(false); //캔버스, 타이핑 변환 버튼
+  const winNum = 1;
+  const [charArray, setCharArray] = useState([]);
+  const [quiz, setQuiz] = useState("");
+  const [hint, setHint] = useState("");
+  const [length, setLength] = useState("");
+  const [round, setRound] = useState(1);
+  const [score, setScore] = useState(0);
+  const [gameOver, setGameOver] = useState(false);
+  const [checkQuiz, setCheckQuiz] = useState(false);
+  const [moreChance, setMoreChance] = useState(0);
+  const [answerObj, setAnswerObj] = useState(false);
+  const [answerObjName, setAnswerObjName] = useState("타이핑");
+  const [answerObjButton, setAnswerObjButton] = useState(false);
 
   //초성, 중성, 종성 분리
   const separateText = () => {
@@ -56,6 +56,7 @@ function CombineGame({ gameLevel }) {
       alert("정답입니다.");
       checkTrue();
       setScore((score) => score + 10);
+      setMoreChance(0);
     } else {
       if (moreChance === 0) {
         alert("오답입니다. 한 번 더 시도해보세요.");
@@ -103,7 +104,7 @@ function CombineGame({ gameLevel }) {
     try {
       await axios.post(
         "http://localhost:5000/combineScore",
-        { combineScore: winNum },
+        { combineScore: winNum, level: gameLevel },
         headerData
       );
     } catch (err) {
@@ -153,7 +154,7 @@ function CombineGame({ gameLevel }) {
         {gameOver ? (
           <div>
             <h1>Game Over, 점수: {score} / 100</h1>
-            <button onClick={resetButton}>다시하기</button>
+            <button onClick={resetButton}>난이도 선택</button>
             <button onClick={() => navigate("/")}>홈으로</button>
           </div>
         ) : (

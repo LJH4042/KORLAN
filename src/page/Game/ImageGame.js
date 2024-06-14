@@ -8,19 +8,19 @@ import { useNavigate } from "react-router-dom";
 function ImageGame({ gameLevel }) {
   const navigate = useNavigate();
 
-  const winNum = 1; //서버로 보낼 점수 1점
-  const [imageData, setImageData] = useState(""); //이미지, 텍스트 데이터
-  const [quiz, setQuiz] = useState(""); //제시된 텍스트 퀴즈
-  const [hint, setHint] = useState(""); //힌트
-  const [length, setLength] = useState(""); //글자 수
-  const [round, setRound] = useState(1); //라운드
-  const [score, setScore] = useState(0); //점수
-  const [gameOver, setGameOver] = useState(false); //게임 끝 여부
-  const [checkQuiz, setCheckQuiz] = useState(false); //정답, 오답 확인
-  const [moreChance, setMoreChance] = useState(0); //재도전 제공
-  const [answerObj, setAnswerObj] = useState(false); //캔버스, 타이핑 변환
-  const [answerObjName, setAnswerObjName] = useState("타이핑"); //캔버스, 타이핑 변환 버튼 이름
-  const [answerObjButton, setAnswerObjButton] = useState(false); //캔버스, 타이핑 변환 버튼
+  const winNum = 1;
+  const [imageData, setImageData] = useState("");
+  const [quiz, setQuiz] = useState("");
+  const [hint, setHint] = useState("");
+  const [length, setLength] = useState("");
+  const [round, setRound] = useState(1);
+  const [score, setScore] = useState(0);
+  const [gameOver, setGameOver] = useState(false);
+  const [checkQuiz, setCheckQuiz] = useState(false);
+  const [moreChance, setMoreChance] = useState(0);
+  const [answerObj, setAnswerObj] = useState(false);
+  const [answerObjName, setAnswerObjName] = useState("타이핑");
+  const [answerObjButton, setAnswerObjButton] = useState(false);
 
   const checkTrue = () => {
     setCheckQuiz(true);
@@ -39,6 +39,7 @@ function ImageGame({ gameLevel }) {
       alert("정답입니다.");
       checkTrue();
       setScore((score) => score + 10);
+      setMoreChance(0);
     } else {
       if (moreChance === 0) {
         alert("오답입니다. 한 번 더 시도해보세요.");
@@ -87,7 +88,7 @@ function ImageGame({ gameLevel }) {
     try {
       await axios.post(
         "http://localhost:5000/imageScore",
-        { imageScore: winNum },
+        { imageScore: winNum, level: gameLevel },
         headerData
       );
     } catch (err) {
@@ -111,7 +112,7 @@ function ImageGame({ gameLevel }) {
         localStorage.removeItem("token");
       }
     }
-  }, []);
+  }, [gameLevel]);
 
   useEffect(() => {
     fetchData();

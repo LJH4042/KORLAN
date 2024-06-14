@@ -61,17 +61,33 @@ const postImage = asynchHandler(async (req, res) => {
 
 //Post ImageGame Score Add, /imageScore : 이미지 게임 점수
 const addImageScore = asynchHandler(async (req, res) => {
-  const { imageScore } = req.body;
+  const { imageScore, level } = req.body;
   const user = await User.findById(req.user._id);
-  user.imageScore += parseInt(imageScore);
+  if (level === "하") {
+    if (user.imageScoreLow < 10) user.imageScoreLow += parseInt(imageScore);
+  } else if (level === "중") {
+    if (user.imageScoreMiddle < 10)
+      user.imageScoreMiddle += parseInt(imageScore);
+  } else if (level === "상") {
+    if (user.imageScoreHigh < 10) user.imageScoreHigh += parseInt(imageScore);
+  }
   await user.save();
 });
 
 //Post CombineGame Score Add, /CombineScore : 조합 게임 점수
 const addCombineScore = asynchHandler(async (req, res) => {
-  const { combineScore } = req.body;
+  const { combineScore, level } = req.body;
   const user = await User.findById(req.user._id);
-  user.combineScore += parseInt(combineScore);
+  if (level === "하") {
+    if (user.combineScoreLow < 10)
+      user.combineScoreLow += parseInt(combineScore);
+  } else if (level === "중") {
+    if (user.combineScoreMiddle < 10)
+      user.combineScoreMiddle += parseInt(combineScore);
+  } else if (level === "상") {
+    if (user.combineScoreHigh < 10)
+      user.combineScoreHigh += parseInt(combineScore);
+  }
   await user.save();
 });
 

@@ -78,8 +78,18 @@ function MyPage() {
       <h1>마이페이지</h1>
       <div>
         <h1>유저 이름 : {userData.username}</h1>
-        <h1>이미지 게임 점수 : {userData.imageScore}</h1>
-        <h1>조합 게임 점수 : {userData.combineScore}</h1>
+        <h1>
+          이미지 게임 점수 :{" "}
+          {userData.imageScoreLow +
+            userData.imageScoreMiddle +
+            userData.imageScoreHigh}
+        </h1>
+        <h1>
+          낱말 조합 점수 :{" "}
+          {userData.combineScoreLow +
+            userData.combineScoreMiddle +
+            userData.combineScoreHigh}
+        </h1>
         <h1>진행 상황: {progress}</h1>
         <h1>보상 포인트: {rewards}</h1>
       </div>
