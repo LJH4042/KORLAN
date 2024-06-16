@@ -16,9 +16,6 @@ const UserSchema = new Schema({
     middle: { type: Number, default: 0 },
     high: { type: Number, default: 0 },
   },
-  /*combineScoreLow: { type: Number, default: 0 },
-  combineScoreMiddle: { type: Number, default: 0 },
-  combineScoreHigh: { type: Number, default: 0 },*/
   refreshToken: { type: String },
 });
 
