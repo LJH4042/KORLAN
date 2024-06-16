@@ -135,6 +135,7 @@ function ImageGame({ gameLevel }) {
         ) : (
           <div>
             <div className="roundDiv">
+              <button onClick={resetGame}>난이도 선택</button>
               <h2>Round: {round} / 10</h2>
               <button onClick={toggleAnswerObj} disabled={answerObjButton}>
                 {answerObjName}

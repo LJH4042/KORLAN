@@ -39,7 +39,7 @@ function CombineGame({ gameLevel }) {
     return result;
   };
 
-  const resetButton = () => window.location.reload();
+  const resetGame = () => window.location.reload();
 
   const checkTrue = () => {
     setCheckQuiz(true);
@@ -154,12 +154,13 @@ function CombineGame({ gameLevel }) {
         {gameOver ? (
           <div>
             <h1>Game Over, 점수: {score} / 100</h1>
-            <button onClick={resetButton}>난이도 선택</button>
+            <button onClick={resetGame}>난이도 선택</button>
             <button onClick={() => navigate("/")}>홈으로</button>
           </div>
         ) : (
           <div>
             <div className="roundDiv">
+              <button onClick={resetGame}>난이도 선택</button>
               <h2>Round: {round} / 10</h2>
               <button onClick={toggleAnswerObj} disabled={answerObjButton}>
                 {answerObjName}

@@ -64,12 +64,12 @@ const addImageScore = asynchHandler(async (req, res) => {
   const { imageScore, level } = req.body;
   const user = await User.findById(req.user._id);
   if (level === "하") {
-    if (user.imageScoreLow < 10) user.imageScoreLow += parseInt(imageScore);
+    if (user.imageScore.low < 10) user.imageScore.low += parseInt(imageScore);
   } else if (level === "중") {
-    if (user.imageScoreMiddle < 10)
-      user.imageScoreMiddle += parseInt(imageScore);
+    if (user.imageScore.middle < 10)
+      user.imageScore.middle += parseInt(imageScore);
   } else if (level === "상") {
-    if (user.imageScoreHigh < 10) user.imageScoreHigh += parseInt(imageScore);
+    if (user.imageScore.high < 10) user.imageScore.high += parseInt(imageScore);
   }
   await user.save();
 });
@@ -79,14 +79,14 @@ const addCombineScore = asynchHandler(async (req, res) => {
   const { combineScore, level } = req.body;
   const user = await User.findById(req.user._id);
   if (level === "하") {
-    if (user.combineScoreLow < 10)
-      user.combineScoreLow += parseInt(combineScore);
+    if (user.combineScore.low < 10)
+      user.combineScore.low += parseInt(combineScore);
   } else if (level === "중") {
-    if (user.combineScoreMiddle < 10)
-      user.combineScoreMiddle += parseInt(combineScore);
+    if (user.combineScore.middle < 10)
+      user.combineScore.middle += parseInt(combineScore);
   } else if (level === "상") {
-    if (user.combineScoreHigh < 10)
-      user.combineScoreHigh += parseInt(combineScore);
+    if (user.combineScore.high < 10)
+      user.combineScore.high += parseInt(combineScore);
   }
   await user.save();
 });
