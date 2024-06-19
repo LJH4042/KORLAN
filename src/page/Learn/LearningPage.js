@@ -85,6 +85,7 @@ const LearningPage = () => {
     );
     setExampleWord(selected ? selected.example : "");
   };
+  
   const renderHighlightedExample = (word, letter) => {
     return word.split("").map((char, index) => (
       <span key={index} className={char === letter ? styles.highlight : ""}>
