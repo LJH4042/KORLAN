@@ -2,6 +2,7 @@ import { Link, NavLink, useNavigate } from "react-router-dom";
 import React, { useState, useEffect } from "react";
 import "../css/Nav.css";
 import Logo from "../logo.svg";
+import axios from "axios";
 
 function Nav() {
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
@@ -42,10 +43,19 @@ function Nav() {
     }
   }, []);
 
-  const handleLogout = () => {
-    localStorage.removeItem("token");
-    setIsLoggedIn(false);
-    navigate("/"); // 로그아웃 후 홈으로 리디렉션
+  const handleLogout = async () => {
+    try {
+      await axios.post(
+        "http://localhost:5000/logout",
+        {},
+        { withCredentials: true } //withCredentials 허용
+      );
+      localStorage.removeItem("token"); //accessToken 삭제
+      navigate("/login"); //로그인 페이지로 이동
+      window.location.reload();
+    } catch (err) {
+      console.error("Logout failed", err);
+    }
   };
 
   return (
@@ -117,14 +127,25 @@ function Nav() {
           마이페이지
         </NavLink>
       </div>
-      <div className={`authContainer ${isMobileMenuOpen ? 'open' : ''}`}>
+      <div className={`authContainer ${isMobileMenuOpen ? "open" : ""}`}>
         {isLoggedIn ? (
-          <div className="navbarAuth" onClick={() => { handleLogout(); closeMenusOnMobile(); }}>
+          <div
+            className="navbarAuth"
+            onClick={() => {
+              handleLogout();
+              closeMenusOnMobile();
+            }}
+          >
             로그아웃
           </div>
         ) : (
           <>
-            <NavLink className="navbarAuth" to={"/login"} activeClassName="active" onClick={closeMenusOnMobile}>
+            <NavLink
+              className="navbarAuth"
+              to={"/login"}
+              activeClassName="active"
+              onClick={closeMenusOnMobile}
+            >
               로그인
             </NavLink>
           </>

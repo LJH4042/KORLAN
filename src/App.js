@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import Nav from "./component/Nav";
 import Login from "./page/User/Login";
@@ -14,8 +14,33 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import Introduce from "./page/introduce";
 import ImageLevel from "./page/Game/ImageLevel";
 import CombineLevel from "./page/Game/CombineLevel";
+import axios from "axios";
 
 function App() {
+  const checkToken = async () => {
+    if (localStorage.getItem("token") === null) {
+      try {
+        const refreshRes = await axios.post(
+          "http://localhost:5000/refresh",
+          {},
+          { withCredentials: true }
+        );
+        const newToken = refreshRes.data.token;
+        localStorage.setItem("token", newToken);
+        axios.defaults.headers.common["Authorization"] = `Bearer ${newToken}`;
+      } catch (err) {
+        if (err.response.status === 403) {
+          return null;
+        }
+        localStorage.removeItem("token");
+      }
+    }
+  };
+
+  useEffect(() => {
+    checkToken();
+  }, []);
+
   return (
     <div>
       <BrowserRouter>
