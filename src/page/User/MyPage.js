@@ -1,14 +1,23 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
-import './MyPage.css';
+import "../../css/MyPage.css";
 
 function MyPage() {
   const navigate = useNavigate();
   const [userData, setUserData] = useState({});
+  const [username, setUsername] = useState();
   const [selectedContent, setSelectedContent] = useState(null);
-  const [imageScore, setImageScore] = useState(0); // 이미지 게임 점수 추가
-  const [combineScore, setCombineScore] = useState(0); // 조합 게임 점수 추가
+  const [imageLow, setImageLow] = useState(0);
+  const [imageMiddle, setImageMiddle] = useState(0);
+  const [imageHigh, setImageHigh] = useState(0);
+  const [combineLow, setCombineLow] = useState(0);
+  const [combineMiddle, setCombineMiddle] = useState(0);
+  const [combineHigh, setCombineHigh] = useState(0);
+  const [learnCon, setLearnCon] = useState([]);
+  const [learnVow, setLearnVow] = useState([]);
+  const [learnDouCon, setLearnDouCon] = useState([]);
+  const [learnDouVow, setLearnDouVow] = useState([]);
 
   // 사용자 데이터를 가져오는 함수
   const fetchUserData = async () => {
@@ -22,8 +31,17 @@ function MyPage() {
     try {
       const res = await axios.get("http://localhost:5000/login", headerData);
       setUserData(res.data);
-      setImageScore(res.data.imageScore); // 이미지 게임 점수 설정
-      setCombineScore(res.data.combineScore); // 조합 게임 점수 설정
+      setUsername(res.data.username);
+      setImageLow(res.data.imageScore.low);
+      setImageMiddle(res.data.imageScore.middle);
+      setImageHigh(res.data.imageScore.high);
+      setCombineLow(res.data.combineScore.low);
+      setCombineMiddle(res.data.combineScore.middle);
+      setCombineHigh(res.data.combineScore.high);
+      setLearnCon(res.data.learnPoint.consonant);
+      setLearnVow(res.data.learnPoint.vowel);
+      setLearnDouCon(res.data.learnPoint.doubleConsonant);
+      setLearnDouVow(res.data.learnPoint.doubleVowel);
     } catch (err) {
       if (err.response && err.response.status === 401) {
         try {
@@ -67,9 +85,25 @@ function MyPage() {
       case "내 정보":
         return <UserInfo userData={userData} navigate={navigate} />;
       case "도장판":
-        return <StampBoard imageScore={imageScore} combineScore={combineScore} />;
+        return (
+          <StampBoard
+            imageLow={imageLow}
+            imageMiddle={imageMiddle}
+            imageHigh={imageHigh}
+            combineLow={combineLow}
+            combineMiddle={combineMiddle}
+            combineHigh={combineHigh}
+          />
+        );
       case "학습 진행률":
-        return <LearningProgress userData={userData} imageScore={imageScore} />;
+        return (
+          <LearningProgress
+            learnCon={learnCon.length}
+            learnVow={learnVow.length}
+            learnDouCon={learnDouCon.length}
+            learnDouVow={learnDouVow.length}
+          />
+        );
       case "오답 앨범":
         return <WrongAnswerAlbum />;
       default:
@@ -81,10 +115,18 @@ function MyPage() {
     <div className="container pullDown">
       <div>
         <h1>마이페이지</h1>
-        <a href="#" onClick={() => handleLinkClick('내 정보')}>내 정보</a>
-        <a href="#" onClick={() => handleLinkClick('도장판')}>도장판</a>
-        <a href="#" onClick={() => handleLinkClick('학습 진행률')}>학습 진행률</a>
-        <a href="#" onClick={() => handleLinkClick('오답 앨범')}>오답 앨범</a>
+        <a href="#" onClick={() => handleLinkClick("내 정보")}>
+          내 정보
+        </a>
+        <a href="#" onClick={() => handleLinkClick("도장판")}>
+          도장판
+        </a>
+        <a href="#" onClick={() => handleLinkClick("학습 진행률")}>
+          학습 진행률
+        </a>
+        <a href="#" onClick={() => handleLinkClick("오답 앨범")}>
+          오답 앨범
+        </a>
       </div>
       <div className="divider"></div>
       {selectedContent && (
@@ -98,6 +140,7 @@ function MyPage() {
 }
 
 function UserInfo({ userData, navigate }) {
+  const username = userData.username;
   const handleDeleteAccount = async () => {
     if (window.confirm("정말 탈퇴하시겠습니까?")) {
       const token = localStorage.getItem("token");
@@ -108,7 +151,13 @@ function UserInfo({ userData, navigate }) {
         withCredentials: true,
       };
       try {
-        await axios.delete("http://localhost:5000/delete-account", headerData);
+        await axios
+          .post(
+            "http://localhost:5000/delete-account",
+            { username: username },
+            headerData
+          )
+          .then((res) => alert(res.data.message));
         localStorage.removeItem("token");
         navigate("/login");
       } catch (err) {
@@ -119,35 +168,97 @@ function UserInfo({ userData, navigate }) {
 
   return (
     <div>
-      <p>이름: {userData.username}</p>
+      <p>이름: {username}</p>
       <p>이메일: {userData.email}</p>
       <button onClick={handleDeleteAccount}>탈퇴하기</button>
     </div>
   );
 }
 
-function StampBoard({ imageScore, combineScore }) {
-  const primaryStamps = Math.min(imageScore, 10);
-  const secondaryStamps = Math.min(combineScore, 10);
+function StampBoard({
+  imageLow,
+  imageMiddle,
+  imageHigh,
+  combineLow,
+  combineMiddle,
+  combineHigh,
+}) {
+  const imageLowStamps = Math.min(imageLow, 10);
+  const imageMiddleStamps = Math.min(imageMiddle, 10);
+  const imageHighStamps = Math.min(imageHigh, 10);
+  const combineLowStamps = Math.min(combineLow, 10);
+  const combineMiddleStamps = Math.min(combineMiddle, 10);
+  const combineHighStamps = Math.min(combineHigh, 10);
 
-  const stamps = Array(10).fill(false).map((_, index) => index < primaryStamps);
-  const secondaryStampsArray = Array(10).fill(false).map((_, index) => index < secondaryStamps);
+  const i_StampsLow = Array(10)
+    .fill(false)
+    .map((_, index) => index < imageLowStamps);
+  const i_StampsMiddle = Array(10)
+    .fill(false)
+    .map((_, index) => index < imageMiddleStamps);
+  const i_StampsHigh = Array(10)
+    .fill(false)
+    .map((_, index) => index < imageHighStamps);
+  const c_StampsLow = Array(10)
+    .fill(false)
+    .map((_, index) => index < combineLowStamps);
+  const c_StampsMiddle = Array(10)
+    .fill(false)
+    .map((_, index) => index < combineMiddleStamps);
+  const c_StampsHigh = Array(10)
+    .fill(false)
+    .map((_, index) => index < combineHighStamps);
 
   return (
     <div className="stamp-board-container">
       <div className="stamp-board">
         <p>이미지 게임</p>
-        {stamps.map((stamped, index) => (
-          <div key={index} className={`stamp ${stamped ? 'stamped' : ''}`}>
-            {stamped ? '🌞' : '⬜'}
+        <p>(하)</p>
+        {i_StampsLow.map((stamped, index) => (
+          <div key={index} className={`stamp ${stamped ? "stamped" : ""}`}>
+            {stamped ? "🌞" : "⬜"}
+          </div>
+        ))}
+        <p>(중)</p>
+        {i_StampsMiddle.map((stamped, index) => (
+          <div key={index} className={`stamp ${stamped ? "stamped" : ""}`}>
+            {stamped ? "🌞" : "⬜"}
+          </div>
+        ))}
+        <p>(상)</p>
+        {i_StampsHigh.map((stamped, index) => (
+          <div key={index} className={`stamp ${stamped ? "stamped" : ""}`}>
+            {stamped ? "🌞" : "⬜"}
           </div>
         ))}
       </div>
       <div className="stamp-board">
         <p>조합 게임</p>
-        {secondaryStampsArray.map((stamped, index) => (
-          <div key={index} className={`stamp ${stamped ? 'stamped-secondary' : ''}`}>
-            {stamped ? '🌟' : '⬜'}
+        <p>(하)</p>
+        {c_StampsLow.map((stamped, index) => (
+          <div
+            key={index}
+            className={`stamp ${stamped ? "stamped-secondary" : ""}`}
+          >
+            {stamped ? "🌟" : "⬜"}
+          </div>
+        ))}
+        <p>(중)</p>
+        {c_StampsMiddle.map((stamped, index) => (
+          <div
+            key={index}
+            className={`stamp ${stamped ? "stamped-secondary" : ""}`}
+          >
+            {stamped ? "🌟" : "⬜"}
+          </div>
+        ))}
+        <p>(상)</p>
+        {c_StampsHigh.map((stamped, index) => (
+          <div
+            key={index}
+            className={`stamp ${stamped ? "stamped-secondary" : ""}`}
+          >
+            {stamped ? "🌟" : "⬜"}
           </div>
         ))}
       </div>
@@ -155,31 +266,31 @@ function StampBoard({ imageScore, combineScore }) {
   );
 }
 
-function LearningProgress({ userData, imageScore }) {
+function LearningProgress({ learnCon, learnVow, learnDouCon, learnDouVow }) {
   return (
     <div>
       <p>자음 학습하기</p>
       <div className="bar-graph">
-        <div className="bar" style={{ width: `${imageScore}%` }}>
-          <span className="bar-text">{`${imageScore}%`}</span>
+        <div className="bar" style={{ width: `${learnCon}%` }}>
+          <span className="bar-text">{`${learnCon}%`}</span>
         </div>
       </div>
       <p>모음 학습하기</p>
       <div className="bar-graph">
-        <div className="bar" style={{ width: `${userData.combineScore}%` }}>
-          <span className="bar-text">{`${userData.combineScore}%`}</span>
+        <div className="bar" style={{ width: `${learnVow}%` }}>
+          <span className="bar-text">{`${learnVow}%`}</span>
         </div>
       </div>
       <p>쌍자음 학습하기</p>
       <div className="bar-graph">
-        <div className="bar" style={{ width: `${imageScore}%` }}>
-          <span className="bar-text">{`${imageScore}%`}</span>
+        <div className="bar" style={{ width: `${learnDouCon}%` }}>
+          <span className="bar-text">{`${learnDouCon}%`}</span>
         </div>
       </div>
       <p>쌍모음 학습하기</p>
       <div className="bar-graph">
-        <div className="bar" style={{ width: `${userData.combineScore}%` }}>
-          <span className="bar-text">{`${userData.combineScore}%`}</span>
+        <div className="bar" style={{ width: `${learnDouVow}%` }}>
+          <span className="bar-text">{`${learnDouVow}%`}</span>
         </div>
       </div>
     </div>

@@ -168,6 +168,12 @@ const registerUser = asynchHandler(async (req, res) => {
   }
 });
 
+const deleteUser = asynchHandler(async (req, res) => {
+  const { username } = req.body;
+  await User.findOneAndDelete({ username });
+  res.status(200).json({ message: "탈퇴되었습니다." });
+});
+
 module.exports = {
   getUserData,
   loginUser,
@@ -180,4 +186,5 @@ module.exports = {
   mailCode,
   checkAuthCode,
   registerUser,
+  deleteUser,
 };

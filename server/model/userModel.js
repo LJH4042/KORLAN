@@ -16,6 +16,12 @@ const UserSchema = new Schema({
     middle: { type: Number, default: 0 },
     high: { type: Number, default: 0 },
   },
+  learnPoint: {
+    consonant: { type: [String], default: [] },
+    vowel: { type: [String], default: [] },
+    doubleConsonant: { type: [String], default: [] },
+    doubleVowel: { type: [String], default: [] },
+  },
   refreshToken: { type: String },
 });
 
