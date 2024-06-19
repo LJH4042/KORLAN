@@ -27,12 +27,13 @@ const postCanvas = asynchHandler(async (req, res) => {
 let imageID = [];
 
 const getImage = asynchHandler(async (req, res) => {
+  const { level } = req.body;
   if (imageID.length >= 10) {
     imageID = [];
     res.send({ message: "게임이 종료되었습니다." });
   } else {
     const game = await Game.aggregate([
-      { $match: { _id: { $nin: imageID } } },
+      { $match: { _id: { $nin: imageID }, level: level } },
       { $sample: { size: 1 } },
     ]);
     imageID.push(game[0]._id);
@@ -60,17 +61,33 @@ const postImage = asynchHandler(async (req, res) => {
 
 //Post ImageGame Score Add, /imageScore : 이미지 게임 점수
 const addImageScore = asynchHandler(async (req, res) => {
-  const { imageScore } = req.body;
+  const { imageScore, level } = req.body;
   const user = await User.findById(req.user._id);
-  user.imageScore += parseInt(imageScore);
+  if (level === "하") {
+    if (user.imageScore.low < 10) user.imageScore.low += parseInt(imageScore);
+  } else if (level === "중") {
+    if (user.imageScore.middle < 10)
+      user.imageScore.middle += parseInt(imageScore);
+  } else if (level === "상") {
+    if (user.imageScore.high < 10) user.imageScore.high += parseInt(imageScore);
+  }
   await user.save();
 });
 
 //Post CombineGame Score Add, /CombineScore : 조합 게임 점수
 const addCombineScore = asynchHandler(async (req, res) => {
-  const { combineScore } = req.body;
+  const { combineScore, level } = req.body;
   const user = await User.findById(req.user._id);
-  user.combineScore += parseInt(combineScore);
+  if (level === "하") {
+    if (user.combineScore.low < 10)
+      user.combineScore.low += parseInt(combineScore);
+  } else if (level === "중") {
+    if (user.combineScore.middle < 10)
+      user.combineScore.middle += parseInt(combineScore);
+  } else if (level === "상") {
+    if (user.combineScore.high < 10)
+      user.combineScore.high += parseInt(combineScore);
+  }
   await user.save();
 });
 
