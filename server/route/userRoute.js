@@ -12,6 +12,7 @@ const {
   mailCode,
   checkAuthCode,
   registerUser,
+  deleteUser,
 } = require("../controller/userController");
 const { authUser } = require("../middleware/authMiddleware");
 
@@ -25,5 +26,6 @@ router.route("/change_pwd").post(changePwd);
 router.route("/mailsend").post(mailCode);
 router.route("/authcode").post(checkAuthCode);
 router.route("/register").post(registerUser);
+router.route("/delete-account").post(authUser, deleteUser);
 
 module.exports = router;

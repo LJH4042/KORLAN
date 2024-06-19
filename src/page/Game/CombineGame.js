@@ -128,7 +128,7 @@ function CombineGame({ gameLevel }) {
         localStorage.removeItem("token");
       }
     }
-  }, [winNum]);
+  }, [winNum, gameLevel]);
 
   useEffect(() => {
     fetchData();

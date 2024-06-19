@@ -91,6 +91,30 @@ const addCombineScore = asynchHandler(async (req, res) => {
   await user.save();
 });
 
+const learnData = asynchHandler(async (req, res) => {
+  const { learnWord, letterType } = req.body;
+  const user = await User.findById(req.user._id);
+  if (letterType === "consonant") {
+    if (!user.learnPoint.consonant.includes(learnWord)) {
+      user.learnPoint.consonant.push(learnWord);
+    }
+  } else if (letterType === "vowel") {
+    if (!user.learnPoint.vowel.includes(learnWord)) {
+      user.learnPoint.vowel.push(learnWord);
+    }
+  } else if (letterType === "doubleConsonant") {
+    if (!user.learnPoint.doubleConsonant.includes(learnWord)) {
+      user.learnPoint.doubleConsonant.push(learnWord);
+    }
+  } else if (letterType === "doubleVowel") {
+    if (!user.learnPoint.doubleVowel.includes(learnWord)) {
+      user.learnPoint.doubleVowel.push(learnWord);
+    }
+  }
+  await user.save();
+  res.status(200).json({ message: "데이터가 저장되었습니다." });
+});
+
 module.exports = {
   postCanvas,
   getImage,
@@ -98,4 +122,5 @@ module.exports = {
   postImage,
   addImageScore,
   addCombineScore,
+  learnData,
 };

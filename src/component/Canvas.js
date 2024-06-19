@@ -76,6 +76,7 @@ function Canvas({
         checkAnswer(res.data.text);
       });
     console.log(outputImageSrc);
+    clearCanvas();
   };
 
   const clearCanvas = () => {

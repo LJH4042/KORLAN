@@ -54,7 +54,7 @@ div.pullDown a:before {
   height: 2px;
   left: 0px;
   top: 0px;
-  content: '';
+  content: "";
   background: #ecbfbf;
   opacity: 0.3;
   transition: all 0.3s;
@@ -145,4 +145,8 @@ div.pullDown a:hover:before {
   transform: translateX(10%);
   font-size: 1.2em;
   color: #fff;
+}
+
+.highlight {
+  color: #555;
 }
