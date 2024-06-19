@@ -1,4 +1,4 @@
-import { Link, NavLink } from "react-router-dom";
+import { Link, NavLink, useNavigate } from "react-router-dom";
 import React, { useState, useEffect } from "react";
 import "../css/Nav.css";
 import Logo from "../logo.svg";
@@ -6,6 +6,8 @@ import Logo from "../logo.svg";
 function Nav() {
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const navigate = useNavigate();
 
   const toggleDropdown = () => {
     setIsDropdownOpen(!isDropdownOpen);
@@ -32,6 +34,19 @@ function Nav() {
     window.addEventListener("resize", handleResize);
     return () => window.removeEventListener("resize", handleResize);
   }, []);
+
+  useEffect(() => {
+    const token = localStorage.getItem("token");
+    if (token) {
+      setIsLoggedIn(true);
+    }
+  }, []);
+
+  const handleLogout = () => {
+    localStorage.removeItem("token");
+    setIsLoggedIn(false);
+    navigate("/"); // 로그아웃 후 홈으로 리디렉션
+  };
 
   return (
     <div className="navbar">
@@ -102,24 +117,18 @@ function Nav() {
           마이페이지
         </NavLink>
       </div>
-
-      <div className={`authContainer ${isMobileMenuOpen ? "open" : ""}`}>
-        <NavLink
-          className="navbarAuth"
-          to={"/login"}
-          activeClassName="active"
-          onClick={closeMenusOnMobile}
-        >
-          로그인
-        </NavLink>
-        <NavLink
-          className="navbarAuth"
-          to={"/register"}
-          activeClassName="active"
-          onClick={closeMenusOnMobile}
-        >
-          회원가입
-        </NavLink>
+      <div className={`authContainer ${isMobileMenuOpen ? 'open' : ''}`}>
+        {isLoggedIn ? (
+          <div className="navbarAuth" onClick={() => { handleLogout(); closeMenusOnMobile(); }}>
+            로그아웃
+          </div>
+        ) : (
+          <>
+            <NavLink className="navbarAuth" to={"/login"} activeClassName="active" onClick={closeMenusOnMobile}>
+              로그인
+            </NavLink>
+          </>
+        )}
       </div>
     </div>
   );

@@ -1,5 +1,3 @@
-// LearningPage.js
-
 import React, { useState } from "react";
 import useLearning from "./useLearning";
 import ConsonantList from "./ConsonantList";
@@ -9,7 +7,6 @@ import Canvas from "../../component/Canvas";
 import useGoogleTTS from "./useGoogleTTS";
 
 const consonants = [
-  // 자음 목록
   { id: 1, letter: "ㄱ", sound: "ㄱ" },
   { id: 2, letter: "ㄴ", sound: "ㄴ" },
   { id: 3, letter: "ㄷ", sound: "ㄷ" },
@@ -27,7 +24,6 @@ const consonants = [
 ];
 
 const vowels = [
-  // 모음 목록
   { id: 1, letter: "ㅏ", sound: "ㅏ" },
   { id: 2, letter: "ㅑ", sound: "ㅑ" },
   { id: 3, letter: "ㅓ", sound: "ㅓ" },
@@ -66,36 +62,32 @@ const LearningPage = () => {
   const {
     selectedLetter,
     handleLetterSelection,
-    // progress,
-    // rewards,
-    // studyImage,
-    // isStudyComplete,
-    // completeStudy,
+    resetSelectedLetter
   } = useLearning();
 
+  const [letterType, setLetterType] = useState("consonant");
+  const [lastSelectedLetter, setLastSelectedLetter] = useState(null);
   const speak = useGoogleTTS();
-
-  const [letterType, setLetterType] = useState("consonant"); // 'consonant', 'vowel', 'doubleConsonant', 'doubleVowel'
 
   const toggleLetterType = (type) => {
     setLetterType(type);
+    resetSelectedLetter(); // 글자 초기화 함수 호출
   };
 
+  const handleLetterSelectionWithTTS = (letter) => {
+    handleLetterSelection(letter);
+    setLastSelectedLetter(letter);
+    speak(letter);
+  };
 
   return (
     <div className={styles.pageContainer}>
       <h2>한글 깨우치기</h2>
       <div className={styles.buttonContainer}>
-        <button onClick={() => toggleLetterType("consonant")}>
-          자음 학습하기
-        </button>
+        <button onClick={() => toggleLetterType("consonant")}>자음 학습하기</button>
         <button onClick={() => toggleLetterType("vowel")}>모음 학습하기</button>
-        <button onClick={() => toggleLetterType("doubleConsonant")}>
-          쌍자음 학습하기
-        </button>
-        <button onClick={() => toggleLetterType("doubleVowel")}>
-          쌍모음 학습하기
-        </button>
+        <button onClick={() => toggleLetterType("doubleConsonant")}>쌍자음 학습하기</button>
+        <button onClick={() => toggleLetterType("doubleVowel")}>쌍모음 학습하기</button>
       </div>
       <div className={styles.buttonContainer}>
         <div className={styles.flexContainer}>
@@ -104,7 +96,7 @@ const LearningPage = () => {
               <h3>자음 학습하기</h3>
               <ConsonantList
                 consonants={consonants}
-                onLetterSelect={handleLetterSelection}
+                onLetterSelect={handleLetterSelectionWithTTS}
               />
             </>
           )}
@@ -113,7 +105,7 @@ const LearningPage = () => {
               <h3>모음 학습하기</h3>
               <VowelList
                 vowels={vowels}
-                onLetterSelect={handleLetterSelection}
+                onLetterSelect={handleLetterSelectionWithTTS}
               />
             </>
           )}
@@ -122,7 +114,7 @@ const LearningPage = () => {
               <h3>쌍자음 학습하기</h3>
               <ConsonantList
                 consonants={doubleCons}
-                onLetterSelect={handleLetterSelection}
+                onLetterSelect={handleLetterSelectionWithTTS}
               />
             </>
           )}
@@ -131,17 +123,17 @@ const LearningPage = () => {
               <h3>쌍모음 학습하기</h3>
               <VowelList
                 vowels={doubleVow}
-                onLetterSelect={handleLetterSelection}
+                onLetterSelect={handleLetterSelectionWithTTS}
               />
             </>
           )}
           {selectedLetter && (
             <div className={styles.selectedLetterContainer}>
-              <h3>선택한 글자:</h3>
+              <h3>선택한 글자: </h3>
               <p className={styles.selectedLetter}> {selectedLetter}</p>
+              <button onClick={() => lastSelectedLetter && speak(lastSelectedLetter)}>다시 듣기</button>
             </div>
           )}
-          <br />
           <Canvas />
         </div>
       </div>
