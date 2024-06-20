@@ -7,12 +7,6 @@ function MyPage() {
   const navigate = useNavigate();
   const [userData, setUserData] = useState({});
   const [selectedContent, setSelectedContent] = useState(null);
-  const [imageLow, setImageLow] = useState(0);
-  const [imageMiddle, setImageMiddle] = useState(0);
-  const [imageHigh, setImageHigh] = useState(0);
-  const [combineLow, setCombineLow] = useState(0);
-  const [combineMiddle, setCombineMiddle] = useState(0);
-  const [combineHigh, setCombineHigh] = useState(0);
   const [learnCon, setLearnCon] = useState([]);
   const [learnVow, setLearnVow] = useState([]);
   const [learnDouCon, setLearnDouCon] = useState([]);
@@ -30,12 +24,6 @@ function MyPage() {
     try {
       const res = await axios.get("http://localhost:5000/login", headerData);
       setUserData(res.data);
-      setImageLow(res.data.imageScore.low);
-      setImageMiddle(res.data.imageScore.middle);
-      setImageHigh(res.data.imageScore.high);
-      setCombineLow(res.data.combineScore.low);
-      setCombineMiddle(res.data.combineScore.middle);
-      setCombineHigh(res.data.combineScore.high);
       setLearnCon(res.data.learnPoint.consonant);
       setLearnVow(res.data.learnPoint.vowel);
       setLearnDouCon(res.data.learnPoint.doubleConsonant);
@@ -83,16 +71,7 @@ function MyPage() {
       case "내 정보":
         return <UserInfo userData={userData} navigate={navigate} />;
       case "도장판":
-        return (
-          <StampBoard
-            imageLow={imageLow}
-            imageMiddle={imageMiddle}
-            imageHigh={imageHigh}
-            combineLow={combineLow}
-            combineMiddle={combineMiddle}
-            combineHigh={combineHigh}
-          />
-        );
+        return <StampBoard userData={userData} />;
       case "학습 진행률":
         return (
           <LearningProgress
@@ -173,20 +152,13 @@ function UserInfo({ userData, navigate }) {
   );
 }
 
-function StampBoard({
-  imageLow,
-  imageMiddle,
-  imageHigh,
-  combineLow,
-  combineMiddle,
-  combineHigh,
-}) {
-  const imageLowStamps = Math.min(imageLow, 10);
-  const imageMiddleStamps = Math.min(imageMiddle, 10);
-  const imageHighStamps = Math.min(imageHigh, 10);
-  const combineLowStamps = Math.min(combineLow, 10);
-  const combineMiddleStamps = Math.min(combineMiddle, 10);
-  const combineHighStamps = Math.min(combineHigh, 10);
+function StampBoard({ userData }) {
+  const imageLowStamps = Math.min(userData.imageScore.low, 10);
+  const imageMiddleStamps = Math.min(userData.imageScore.middle, 10);
+  const imageHighStamps = Math.min(userData.imageScore.high, 10);
+  const combineLowStamps = Math.min(userData.combineScore.low, 10);
+  const combineMiddleStamps = Math.min(userData.combineScore.middle, 10);
+  const combineHighStamps = Math.min(userData.combineScore.high, 10);
 
   const i_StampsLow = Array(10)
     .fill(false)
