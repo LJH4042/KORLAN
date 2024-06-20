@@ -183,10 +183,10 @@ const LearningPage = () => {
   const { selectedLetter, handleLetterSelection, resetSelectedLetter } =
     useLearning();
 
-  const [learnCon, setLearnCon] = useState([]);
-  const [learnVow, setLearnVow] = useState([]);
-  const [learnDoubleCon, setLearnDoubleCon] = useState([]);
-  const [learnDoubleVow, setLearnDoubleVow] = useState([]);
+  //const [learnCon, setLearnCon] = useState([]);
+  //const [learnVow, setLearnVow] = useState([]);
+  //const [learnDoubleCon, setLearnDoubleCon] = useState([]);
+  //const [learnDoubleVow, setLearnDoubleVow] = useState([]);
   const [letterType, setLetterType] = useState("consonant");
   const [lastSelectedLetter, setLastSelectedLetter] = useState(null);
   const [exampleWord, setExampleWord] = useState("");
@@ -257,7 +257,6 @@ const LearningPage = () => {
         alert("정답입니다!");
         setCurrentNum((prevNum) => prevNum + 1);
         if (currentNum === 3) {
-          alert("완벽합니다.");
           setCurrentNum(1);
           updateWord(trimmedUserAnswer);
         }
@@ -323,30 +322,12 @@ const LearningPage = () => {
     };
     try {
       const res = await axios.get("http://localhost:5000/login", headerData);
-      setLearnCon(res.data.learnPoint.consonant.join(" "));
-      setLearnVow(res.data.learnPoint.vowel.join(" "));
-      setLearnDoubleCon(res.data.learnPoint.doubleConsonant.join(" "));
-      setLearnDoubleVow(res.data.learnPoint.doubleVowel.join(" "));
+      //setLearnCon(res.data.learnPoint.consonant.join(" "));
+      //setLearnVow(res.data.learnPoint.vowel.join(" "));
+      //setLearnDoubleCon(res.data.learnPoint.doubleConsonant.join(" "));
+      //setLearnDoubleVow(res.data.learnPoint.doubleVowel.join(" "));
     } catch (err) {
-      if (err.response && err.response.status === 401) {
-        try {
-          const refreshRes = await axios.post(
-            "http://localhost:5000/refresh",
-            {},
-            { withCredentials: true }
-          );
-          const newToken = refreshRes.data.token;
-          localStorage.setItem("token", newToken);
-          headerData.headers.Authorization = `Bearer ${newToken}`;
-          fetchUserData(); // 데이터를 다시 가져오기 시도
-        } catch (err) {
-          console.error(err);
-          localStorage.removeItem("token");
-        }
-      } else {
-        console.error(err);
-        localStorage.removeItem("token");
-      }
+      console.error(err);
     }
   };
 
