@@ -24,7 +24,7 @@ const loginUser = asynchHandler(async (req, res) => {
   const isMatch = await bcrypt.compare(password, user.password);
   if (!isMatch)
     return res.status(401).json({ pwdMessage: "비밀번호가 다릅니다." });
-  const token = jwt.sign({ id: user._id }, jwtSecret, { expiresIn: "1m" });
+  const token = jwt.sign({ id: user._id }, jwtSecret, { expiresIn: "1h" });
   const refreshToken = jwt.sign({ id: user._id }, refreshSecret, {
     expiresIn: "7d",
   });
@@ -49,7 +49,7 @@ const refreshAccessToken = asynchHandler(async (req, res) => {
       return res.status(403).json({ message: "유효하지 않은 토큰입니다." });
     }
     const newToken = jwt.sign({ id: decoded.id }, jwtSecret, {
-      expiresIn: "15m",
+      expiresIn: "1h",
     });
     res.status(200).json({ token: newToken });
   } catch (err) {
