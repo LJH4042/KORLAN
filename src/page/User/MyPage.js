@@ -6,7 +6,6 @@ import "../../css/MyPage.css";
 function MyPage() {
   const navigate = useNavigate();
   const [userData, setUserData] = useState({});
-  const [username, setUsername] = useState();
   const [selectedContent, setSelectedContent] = useState(null);
   const [imageLow, setImageLow] = useState(0);
   const [imageMiddle, setImageMiddle] = useState(0);
@@ -31,7 +30,6 @@ function MyPage() {
     try {
       const res = await axios.get("http://localhost:5000/login", headerData);
       setUserData(res.data);
-      setUsername(res.data.username);
       setImageLow(res.data.imageScore.low);
       setImageMiddle(res.data.imageScore.middle);
       setImageHigh(res.data.imageScore.high);
@@ -43,25 +41,7 @@ function MyPage() {
       setLearnDouCon(res.data.learnPoint.doubleConsonant);
       setLearnDouVow(res.data.learnPoint.doubleVowel);
     } catch (err) {
-      if (err.response && err.response.status === 401) {
-        try {
-          const refreshRes = await axios.post(
-            "http://localhost:5000/refresh",
-            {},
-            { withCredentials: true }
-          );
-          const newToken = refreshRes.data.token;
-          localStorage.setItem("token", newToken);
-          headerData.headers.Authorization = `Bearer ${newToken}`;
-          fetchUserData(); // 데이터를 다시 가져오기 시도
-        } catch (err) {
-          console.error(err);
-          localStorage.removeItem("token");
-        }
-      } else {
-        console.error(err);
-        localStorage.removeItem("token");
-      }
+      console.error(err);
     }
   };
 
@@ -115,16 +95,16 @@ function MyPage() {
     <div className="container pullDown">
       <div>
         <h1>마이페이지</h1>
-        <a href="#" onClick={() => handleLinkClick("내 정보")}>
+        <a href="#info" onClick={() => handleLinkClick("내 정보")}>
           내 정보
         </a>
-        <a href="#" onClick={() => handleLinkClick("도장판")}>
+        <a href="#stamp" onClick={() => handleLinkClick("도장판")}>
           도장판
         </a>
-        <a href="#" onClick={() => handleLinkClick("학습 진행률")}>
+        <a href="#learn" onClick={() => handleLinkClick("학습 진행률")}>
           학습 진행률
         </a>
-        <a href="#" onClick={() => handleLinkClick("오답 앨범")}>
+        <a href="#album" onClick={() => handleLinkClick("오답 앨범")}>
           오답 앨범
         </a>
       </div>
@@ -168,7 +148,7 @@ function UserInfo({ userData, navigate }) {
 
   return (
     <div>
-      <p>이름: {username}</p>
+      <p>이름: {userData.username}</p>
       <p>이메일: {userData.email}</p>
       <button onClick={handleDeleteAccount}>탈퇴하기</button>
     </div>
@@ -269,28 +249,36 @@ function StampBoard({
 function LearningProgress({ learnCon, learnVow, learnDouCon, learnDouVow }) {
   return (
     <div>
-      <p>자음 학습하기</p>
+      <p>자음 학습하기 ({learnCon} / 90)</p>
       <div className="bar-graph">
-        <div className="bar" style={{ width: `${learnCon}%` }}>
-          <span className="bar-text">{`${learnCon}%`}</span>
+        <div className="bar" style={{ width: `${(learnCon / 90) * 100}%` }}>
+          <span className="bar-text">{`${Math.floor(
+            (learnCon / 90) * 100
+          )}%`}</span>
         </div>
       </div>
-      <p>모음 학습하기</p>
+      <p>모음 학습하기 ({learnVow} / 50)</p>
       <div className="bar-graph">
-        <div className="bar" style={{ width: `${learnVow}%` }}>
-          <span className="bar-text">{`${learnVow}%`}</span>
+        <div className="bar" style={{ width: `${(learnVow / 50) * 100}%` }}>
+          <span className="bar-text">{`${Math.floor(
+            (learnVow / 50) * 100
+          )}%`}</span>
         </div>
       </div>
-      <p>쌍자음 학습하기</p>
+      <p>쌍자음 학습하기 ({learnDouCon} / 26)</p>
       <div className="bar-graph">
-        <div className="bar" style={{ width: `${learnDouCon}%` }}>
-          <span className="bar-text">{`${learnDouCon}%`}</span>
+        <div className="bar" style={{ width: `${(learnDouCon / 26) * 100}%` }}>
+          <span className="bar-text">{`${Math.floor(
+            (learnDouCon / 26) * 100
+          )}%`}</span>
         </div>
       </div>
-      <p>쌍모음 학습하기</p>
+      <p>쌍모음 학습하기 ({learnDouVow} / 37)</p>
       <div className="bar-graph">
-        <div className="bar" style={{ width: `${learnDouVow}%` }}>
-          <span className="bar-text">{`${learnDouVow}%`}</span>
+        <div className="bar" style={{ width: `${(learnDouVow / 37) * 100}%` }}>
+          <span className="bar-text">{`${Math.floor(
+            (learnDouVow / 37) * 100
+          )}%`}</span>
         </div>
       </div>
     </div>

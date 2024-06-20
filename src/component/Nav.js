@@ -70,26 +70,28 @@ function Nav() {
 
       <div className={`menuContainer ${isMobileMenuOpen ? "open" : ""}`}>
         <NavLink
-          className="navbarMenu"
-          exact
+          className={({ isActive }) =>
+            isActive ? "navbarMenu active" : "navbarMenu"
+          }
           to={"/"}
-          activeClassName="active"
           onClick={closeMenusOnMobile}
         >
           홈
         </NavLink>
         <NavLink
-          className="navbarMenu"
+          className={({ isActive }) =>
+            isActive ? "navbarMenu active" : "navbarMenu"
+          }
           to={"/introduce"}
-          activeClassName="active"
           onClick={closeMenusOnMobile}
         >
           소개
         </NavLink>
         <NavLink
-          className="navbarMenu"
+          className={({ isActive }) =>
+            isActive ? "navbarMenu active" : "navbarMenu"
+          }
           to={"/learn"}
-          activeClassName="active"
           onClick={closeMenusOnMobile}
         >
           학습하기
@@ -104,14 +106,18 @@ function Nav() {
               <NavLink
                 to={"/imageGame"}
                 onClick={(e) => closeMenusOnMobile()}
-                activeClassName="active"
+                className={({ isActive }) =>
+                  isActive ? "navbarMenu active" : "navbarMenu"
+                }
               >
                 이미지 게임
               </NavLink>
               <NavLink
                 to={"/combineGame"}
                 onClick={(e) => closeMenusOnMobile()}
-                activeClassName="active"
+                className={({ isActive }) =>
+                  isActive ? "navbarMenu active" : "navbarMenu"
+                }
               >
                 낱말 조합
               </NavLink>
@@ -119,9 +125,10 @@ function Nav() {
           )}
         </div>
         <NavLink
-          className="navbarMenu"
+          className={({ isActive }) =>
+            isActive ? "navbarMenu active" : "navbarMenu"
+          }
           to={"/myPage"}
-          activeClassName="active"
           onClick={closeMenusOnMobile}
         >
           마이페이지
@@ -141,9 +148,10 @@ function Nav() {
         ) : (
           <>
             <NavLink
-              className="navbarAuth"
               to={"/login"}
-              activeClassName="active"
+              className={({ isActive }) =>
+                isActive ? "navbarAuth active" : "navbarAuth"
+              }
               onClick={closeMenusOnMobile}
             >
               로그인
