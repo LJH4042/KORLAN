@@ -41,7 +41,25 @@ function MyPage() {
       setLearnDouCon(res.data.learnPoint.doubleConsonant);
       setLearnDouVow(res.data.learnPoint.doubleVowel);
     } catch (err) {
-      console.error(err);
+      if (err.response && err.response.status === 401) {
+        try {
+          const refreshRes = await axios.post(
+            "http://localhost:5000/refresh",
+            {},
+            { withCredentials: true }
+          );
+          const newToken = refreshRes.data.token;
+          localStorage.setItem("token", newToken);
+          headerData.headers.Authorization = `Bearer ${newToken}`;
+          fetchUserData(); // 데이터를 다시 가져오기 시도
+        } catch (err) {
+          console.error(err);
+          localStorage.removeItem("token");
+        }
+      } else {
+        console.error(err);
+        localStorage.removeItem("token");
+      }
     }
   };
 
