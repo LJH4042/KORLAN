@@ -123,7 +123,7 @@ function Canvas({
           width={750}
           height={300}
           style={{
-            border: "2px solid black",
+            border: "5px solid #a0cbe7",
             borderRadius: "10%",
           }}
           onMouseDown={drawingCanvas}
@@ -132,23 +132,38 @@ function Canvas({
         />
       </div>
       <div className="canvasButtonDiv">
-        <button onClick={() => setColor("gray")}>회색</button>
-        <button onClick={() => setColor("blue")}>파랑</button>
-        <button onClick={() => setColor("red")}>빨강</button>
-        <button onClick={() => setColor("green")}>초록</button>
-        <button onClick={() => setColor("purple")}>보라</button>
+        <button
+          style={{ backgroundColor: "gray", padding: "15px" }}
+          onClick={() => setColor("gray")}
+        />
+        <button
+          style={{ backgroundColor: "blue", padding: "15px" }}
+          onClick={() => setColor("blue")}
+        />
+        <button
+          style={{ backgroundColor: "red", padding: "15px" }}
+          onClick={() => setColor("red")}
+        />
+        <button
+          style={{ backgroundColor: "green", padding: "15px" }}
+          onClick={() => setColor("green")}
+        />
+        <button
+          style={{ backgroundColor: "purple", padding: "15px" }}
+          onClick={() => setColor("purple")}
+        />
       </div>
       <div className="canvasButtonDiv">
         {checkQuiz ? (
           <div>
             <h3>
-              정답: [{quiz}], 제출한 답: [{imgText}]
+              정답: {quiz}, 제출한 답: {imgText}
             </h3>
             <button onClick={nextLevel}>다음 레벨</button>
           </div>
         ) : (
           <div>
-            <button onClick={outputCanvasImage}>제출</button>
+            <button onClick={outputCanvasImage}>확인</button>
             <button onClick={clearCanvas}>다시 쓰기</button>
             <button onClick={returnCurrentLine}>한 획 지우기</button>
           </div>
