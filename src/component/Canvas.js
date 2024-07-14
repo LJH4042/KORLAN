@@ -1,6 +1,5 @@
 import React, { useEffect, useRef, useState } from "react";
 import axios from "axios";
-import "../css/game.css";
 
 function Canvas({
   checkAnswer,
@@ -76,7 +75,6 @@ function Canvas({
         checkAnswer(res.data.text);
       });
     console.log(outputImageSrc);
-    clearCanvas();
   };
 
   const clearCanvas = () => {

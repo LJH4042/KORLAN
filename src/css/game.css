@@ -30,12 +30,18 @@
 }
 
 .imageDiv img {
-  max-width: 75%;
+  max-width: 70%;
   height: auto;
-  border: 5px solid #a0cbe7;
+  border: 3px solid rgb(146, 146, 146);
   border-radius: 8px;
-  margin: 0px 0px 10px 85px;
-  padding: 30px;
+  margin: 0px 0px 10px 135px;
+  padding: 30px 150px 30px 150px;
+}
+
+.textQuizDiv img {
+  max-width: 60%;
+  height: auto;
+  margin: 0px 0px 0px 115px;
 }
 
 button,
@@ -159,8 +165,7 @@ button:disabled,
 }
 
 .canvasContainer {
-  width: 100vh;
-  height: 400px;
+  width: 100%;
   margin: auto;
 }
 
@@ -183,6 +188,7 @@ button:disabled,
   width: 100%;
   text-align: center;
   margin: 0 auto;
+  margin-bottom: 20px;
 }
 
 .canvasButtonDiv h3,
@@ -207,7 +213,8 @@ button:disabled,
   margin: 10px 10px 0px 0px;
 }
 
-.typingContainer button {
+.typingContainer button,
+.canvasButtonDiv button {
   background-color: #a0cbe7;
   color: white;
   border: none;
