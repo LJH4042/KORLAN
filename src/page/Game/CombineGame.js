@@ -23,6 +23,7 @@ function CombineGame({ gameLevel }) {
   const [answerObjName, setAnswerObjName] = useState("키보드");
   const [answerObjButton, setAnswerObjButton] = useState(false);
   const [gameoverText, setGameOverText] = useState(null);
+  const [imageData, setImageData] = useState("");
 
   //초성, 중성, 종성 분리
   const separateText = () => {
@@ -81,6 +82,7 @@ function CombineGame({ gameLevel }) {
             setRound(res.data.count);
             setHint(res.data.game[0].hint);
             setLength(res.data.game[0].length);
+            setImageData(res.data.game[0].image);
             if (round >= 10) {
               setGameOver(true);
               alert(res.data.message);
@@ -186,7 +188,22 @@ function CombineGame({ gameLevel }) {
               </button>
             </div>
             <div className="textQuizDiv">
-              <span>{charArray.join(" , ")}</span>
+              {!checkQuiz ? (
+                <div>
+                  <span>{charArray.join(" , ")}</span>
+                </div>
+              ) : (
+                <div>
+                  {imageData ? ( //레이아웃 변경을 방지에서 CLS의 성능을 높임
+                    <img
+                      alt="이미지"
+                      src={`http://localhost:5000/file/${imageData}`}
+                    />
+                  ) : (
+                    <div style={{ width: "500px", height: "300px" }}></div>
+                  )}
+                </div>
+              )}
             </div>
           </div>
         )}

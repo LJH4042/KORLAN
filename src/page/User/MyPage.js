@@ -239,11 +239,11 @@ function StampBoard({ userData }) {
 function LearningProgress({ learnCon, learnVow, learnDouCon, learnDouVow }) {
   return (
     <div>
-      <p>자음 학습하기 ({learnCon} / 90)</p>
+      <p>자음 학습하기 ({learnCon} / 70)</p>
       <div className="bar-graph">
-        <div className="bar" style={{ width: `${(learnCon / 90) * 100}%` }}>
+        <div className="bar" style={{ width: `${(learnCon / 70) * 100}%` }}>
           <span className="bar-text">{`${Math.floor(
-            (learnCon / 90) * 100
+            (learnCon / 70) * 100
           )}%`}</span>
         </div>
       </div>
@@ -255,19 +255,19 @@ function LearningProgress({ learnCon, learnVow, learnDouCon, learnDouVow }) {
           )}%`}</span>
         </div>
       </div>
-      <p>쌍자음 학습하기 ({learnDouCon} / 26)</p>
+      <p>쌍자음 학습하기 ({learnDouCon} / 25)</p>
       <div className="bar-graph">
-        <div className="bar" style={{ width: `${(learnDouCon / 26) * 100}%` }}>
+        <div className="bar" style={{ width: `${(learnDouCon / 25) * 100}%` }}>
           <span className="bar-text">{`${Math.floor(
-            (learnDouCon / 26) * 100
+            (learnDouCon / 25) * 100
           )}%`}</span>
         </div>
       </div>
-      <p>쌍모음 학습하기 ({learnDouVow} / 37)</p>
+      <p>쌍모음 학습하기 ({learnDouVow} / 55)</p>
       <div className="bar-graph">
-        <div className="bar" style={{ width: `${(learnDouVow / 37) * 100}%` }}>
+        <div className="bar" style={{ width: `${(learnDouVow / 55) * 100}%` }}>
           <span className="bar-text">{`${Math.floor(
-            (learnDouVow / 37) * 100
+            (learnDouVow / 55) * 100
           )}%`}</span>
         </div>
       </div>
