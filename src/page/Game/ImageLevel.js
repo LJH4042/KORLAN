@@ -27,17 +27,48 @@ function ImageLevel() {
 
   return (
     <div className="imageGameContainer">
-      <h1>이미지 게임</h1>
-      {levelList && (
-        <div className="levelBtn">
-          <button onClick={highGame}>상</button>
-          <button onClick={middleGame}>중</button>
-          <button onClick={lowGame}>하</button>
-        </div>
-      )}
-      {high && <ImageGame gameLevel={"상"} />}
-      {middle && <ImageGame gameLevel={"중"} />}
-      {low && <ImageGame gameLevel={"하"} />}
+      <div className="gameContainer">
+        {levelList ? (
+          <div className="levelContainer">
+            <h1>이미지 게임</h1>
+            <div className="levelBtn">
+              <button style={{ backgroundColor: "red" }} onClick={lowGame}>
+                초급
+              </button>
+              <button style={{ backgroundColor: "gold" }} onClick={middleGame}>
+                중급
+              </button>
+              <button
+                style={{ backgroundColor: "limegreen" }}
+                onClick={highGame}
+              >
+                고급
+              </button>
+            </div>
+            <div className="ruleDiv">
+              <p>-한 게임 당 총 10라운드로 진행됩니다.</p>
+              <p>
+                -상단에 나오는 이미지의 이름을 마우스 혹은 키보드로 적어 확인
+                버튼을 누르면 정답을 확인합니다.
+              </p>
+              <p>
+                -정답일 시 다음 라운드로 넘어가고, 오답일 시 다시 한번 더 답을
+                적을 수 있습니다.
+              </p>
+              <p>
+                -게임이 끝난 후 100점을 받으면 마이페이지에 스티커를 하나 받을
+                수 있습니다.
+              </p>
+            </div>
+          </div>
+        ) : (
+          <div>
+            {high && <ImageGame gameLevel={"상"} />}
+            {middle && <ImageGame gameLevel={"중"} />}
+            {low && <ImageGame gameLevel={"하"} />}
+          </div>
+        )}
+      </div>
     </div>
   );
 }

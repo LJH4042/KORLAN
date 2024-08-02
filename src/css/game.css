@@ -8,9 +8,9 @@
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  min-height: 100vh;
-  background-color: #f0f8ff;
-  padding-bottom: 50px;
+  min-height: 70vh;
+  padding: 50px;
+  background-color: #a0cbe7;
 }
 
 .imageDiv,
@@ -19,7 +19,8 @@
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  margin: 20px 20px;
+  margin: 10px 20px;
+  background-color: white;
 }
 
 .imageDiv h2,
@@ -29,11 +30,18 @@
 }
 
 .imageDiv img {
-  max-width: 100%;
+  max-width: 70%;
   height: auto;
-  border: 2px solid #a0cbe7;
+  border: 3px solid rgb(146, 146, 146);
   border-radius: 8px;
-  margin-bottom: 10px;
+  margin: 0px 0px 10px 135px;
+  padding: 30px 150px 30px 150px;
+}
+
+.textQuizDiv img {
+  max-width: 60%;
+  height: auto;
+  margin: 0px 0px 0px 115px;
 }
 
 button,
@@ -68,18 +76,45 @@ button:disabled,
   cursor: not-allowed;
 }
 
+.gameContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  border: 10px solid rgb(34, 153, 185);
+  border-radius: 20px;
+  width: 1100px;
+  background-color: white;
+}
+
+.gameContainer div {
+  background-color: white;
+}
+
+.levelContainer {
+  padding: 50px 100px 50px 100px;
+  margin-top: 10px;
+}
+
+.levelContainer h1 {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.levelBtn {
+  margin-left: 130px;
+  margin-bottom: 20px;
+}
 .levelBtn button {
-  background-color: #a0cbe7;
   color: white;
   border: none;
-  border-radius: 4px;
-  padding: 10px 30px;
+  border-radius: 10px;
+  padding: 40px;
   cursor: pointer;
-  font-size: 16px;
-  margin: 5px;
-}
-.levelBtn button:hover {
-  background-color: #8cb4d6;
+  font-size: 30px;
+  margin: 20px;
 }
 
 .roundDiv {
@@ -96,7 +131,6 @@ button:disabled,
 }
 
 .roundDiv h2 {
-  color: #333;
   text-align: left;
   margin: auto;
 }
@@ -119,17 +153,19 @@ button:disabled,
 .combineDiv span {
   font-size: 40px;
   font-weight: bold;
+  display: flex;
+  justify-content: center;
 }
 
 .textQuizDiv {
-  border: 1px solid black;
+  border: 3px solid rgb(146, 146, 146);
+  border-radius: 20px;
   padding: 10px;
   margin-bottom: 10px;
 }
 
 .canvasContainer {
-  width: 100vh;
-  height: 400px;
+  width: 100%;
   margin: auto;
 }
 
@@ -152,6 +188,14 @@ button:disabled,
   width: 100%;
   text-align: center;
   margin: 0 auto;
+  margin-bottom: 20px;
+}
+
+.canvasButtonDiv h3,
+.typingContainer h3 {
+  border: 3px solid rgb(146, 146, 146);
+  border-radius: 20px;
+  padding: 10px 80px 10px 80px;
 }
 
 .typingContainer {
@@ -162,19 +206,22 @@ button:disabled,
 }
 
 .typingContainer input {
-  width: 370px;
-  height: 28px;
-  margin-right: 10px;
+  border: 2px solid rgb(114, 112, 112);
+  border-radius: 10px;
+  width: 420px;
+  padding: 9px;
+  margin: 10px 10px 0px 0px;
 }
 
-.typingContainer button {
+.typingContainer button,
+.canvasButtonDiv button {
   background-color: #a0cbe7;
   color: white;
   border: none;
   border-radius: 4px;
   padding: 10px 20px;
   cursor: pointer;
-  font-size: 16px;
+  font-size: 20px;
   margin: 5px;
 }
 
@@ -182,9 +229,26 @@ button:disabled,
   background-color: #8cb4d6;
 }
 
-h1,
-h2 {
-  color: #333;
+.gameoverDiv div {
+  margin: 30px 0px 0px 0px;
+  text-align: center;
+}
+.gameoverDiv h1 {
+  text-align: center;
+  font-size: 50px;
+}
+.gameoverTextDiv {
+  border: 3px solid rgb(146, 146, 146);
+  border-radius: 20px;
+  padding: 10px 100px 10px 100px;
+  margin: 50px 0px 50px 0px;
+  text-align: center;
+}
+
+.ruleDiv {
+  border: 3px solid rgb(146, 146, 146);
+  border-radius: 20px;
+  padding: 25px 80px 10px 80px;
 }
 
 @media (max-width: 768px) {

@@ -2,6 +2,7 @@ import { Link, NavLink, useNavigate } from "react-router-dom";
 import React, { useState, useEffect } from "react";
 import "../css/Nav.css";
 import Logo from "../logo.svg";
+import axios from "axios";
 
 function Nav() {
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
@@ -42,10 +43,19 @@ function Nav() {
     }
   }, []);
 
-  const handleLogout = () => {
-    localStorage.removeItem("token");
-    setIsLoggedIn(false);
-    navigate("/"); // 로그아웃 후 홈으로 리디렉션
+  const handleLogout = async () => {
+    try {
+      await axios.post(
+        "http://localhost:5000/logout",
+        {},
+        { withCredentials: true } //withCredentials 허용
+      );
+      localStorage.removeItem("token"); //accessToken 삭제
+      navigate("/login"); //로그인 페이지로 이동
+      window.location.reload();
+    } catch (err) {
+      console.error("Logout failed", err);
+    }
   };
 
   return (
@@ -60,26 +70,28 @@ function Nav() {
 
       <div className={`menuContainer ${isMobileMenuOpen ? "open" : ""}`}>
         <NavLink
-          className="navbarMenu"
-          exact
+          className={({ isActive }) =>
+            isActive ? "navbarMenu active" : "navbarMenu"
+          }
           to={"/"}
-          activeClassName="active"
           onClick={closeMenusOnMobile}
         >
           홈
         </NavLink>
         <NavLink
-          className="navbarMenu"
+          className={({ isActive }) =>
+            isActive ? "navbarMenu active" : "navbarMenu"
+          }
           to={"/introduce"}
-          activeClassName="active"
           onClick={closeMenusOnMobile}
         >
           소개
         </NavLink>
         <NavLink
-          className="navbarMenu"
+          className={({ isActive }) =>
+            isActive ? "navbarMenu active" : "navbarMenu"
+          }
           to={"/learn"}
-          activeClassName="active"
           onClick={closeMenusOnMobile}
         >
           학습하기
@@ -94,14 +106,18 @@ function Nav() {
               <NavLink
                 to={"/imageGame"}
                 onClick={(e) => closeMenusOnMobile()}
-                activeClassName="active"
+                className={({ isActive }) =>
+                  isActive ? "navbarMenu active" : "navbarMenu"
+                }
               >
                 이미지 게임
               </NavLink>
               <NavLink
                 to={"/combineGame"}
                 onClick={(e) => closeMenusOnMobile()}
-                activeClassName="active"
+                className={({ isActive }) =>
+                  isActive ? "navbarMenu active" : "navbarMenu"
+                }
               >
                 낱말 조합
               </NavLink>
@@ -109,22 +125,35 @@ function Nav() {
           )}
         </div>
         <NavLink
-          className="navbarMenu"
+          className={({ isActive }) =>
+            isActive ? "navbarMenu active" : "navbarMenu"
+          }
           to={"/myPage"}
-          activeClassName="active"
           onClick={closeMenusOnMobile}
         >
           마이페이지
         </NavLink>
       </div>
-      <div className={`authContainer ${isMobileMenuOpen ? 'open' : ''}`}>
+      <div className={`authContainer ${isMobileMenuOpen ? "open" : ""}`}>
         {isLoggedIn ? (
-          <div className="navbarAuth" onClick={() => { handleLogout(); closeMenusOnMobile(); }}>
+          <div
+            className="navbarAuth"
+            onClick={() => {
+              handleLogout();
+              closeMenusOnMobile();
+            }}
+          >
             로그아웃
           </div>
         ) : (
           <>
-            <NavLink className="navbarAuth" to={"/login"} activeClassName="active" onClick={closeMenusOnMobile}>
+            <NavLink
+              to={"/login"}
+              className={({ isActive }) =>
+                isActive ? "navbarAuth active" : "navbarAuth"
+              }
+              onClick={closeMenusOnMobile}
+            >
               로그인
             </NavLink>
           </>

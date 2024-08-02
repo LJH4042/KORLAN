@@ -20,8 +20,10 @@ function CombineGame({ gameLevel }) {
   const [checkQuiz, setCheckQuiz] = useState(false);
   const [moreChance, setMoreChance] = useState(0);
   const [answerObj, setAnswerObj] = useState(false);
-  const [answerObjName, setAnswerObjName] = useState("타이핑");
+  const [answerObjName, setAnswerObjName] = useState("키보드");
   const [answerObjButton, setAnswerObjButton] = useState(false);
+  const [gameoverText, setGameOverText] = useState(null);
+  const [imageData, setImageData] = useState("");
 
   //초성, 중성, 종성 분리
   const separateText = () => {
@@ -48,11 +50,12 @@ function CombineGame({ gameLevel }) {
 
   const toggleAnswerObj = () => {
     setAnswerObj((answerObj) => !answerObj);
-    setAnswerObjName((prev) => (prev === "타이핑" ? "캔버스" : "타이핑"));
+    setAnswerObjName((prev) => (prev === "키보드" ? "마우스" : "키보드"));
   };
 
   const checkAnswer = (text) => {
-    if (text === quiz) {
+    if (text === "") alert("정답을 입력해주세요.");
+    else if (text === quiz) {
       alert("정답입니다.");
       checkTrue();
       setScore((score) => score + 10);
@@ -79,6 +82,7 @@ function CombineGame({ gameLevel }) {
             setRound(res.data.count);
             setHint(res.data.game[0].hint);
             setLength(res.data.game[0].length);
+            setImageData(res.data.game[0].image);
             if (round >= 10) {
               setGameOver(true);
               alert(res.data.message);
@@ -128,7 +132,7 @@ function CombineGame({ gameLevel }) {
         localStorage.removeItem("token");
       }
     }
-  }, [winNum]);
+  }, [winNum, gameLevel]);
 
   useEffect(() => {
     fetchData();
@@ -148,14 +152,31 @@ function CombineGame({ gameLevel }) {
     if (score >= 100 && localStorage.getItem("token")) updateScore();
   }, [score, updateScore]);
 
+  useEffect(() => {
+    if (score === 100) setGameOverText("★★★완벽해요!★★★");
+    else if (score === 90) setGameOverText("★이 정도면 잘했어요!★");
+    else if (score === 80) setGameOverText("★이 정도면 잘했어요!★");
+    else if (score === 70) setGameOverText("●아쉽네요. 다시 도전해보세요.●");
+    else if (score === 60) setGameOverText("●아쉽네요. 다시 도전해보세요.●");
+    else if (score === 50) setGameOverText("◆기죽지 말고 열심히 해봐요.◆");
+    else if (score === 40) setGameOverText("◆기죽지 말고 열심히 해봐요.◆");
+    else if (30 >= score) setGameOverText("▼이건 좀.. 더 열심히 해봐요.▼");
+  }, [score]);
+
   return (
     <div className="combineGameContainer">
       <div className="combineDiv">
         {gameOver ? (
-          <div>
-            <h1>Game Over, 점수: {score} / 100</h1>
-            <button onClick={resetGame}>난이도 선택</button>
-            <button onClick={() => navigate("/")}>홈으로</button>
+          <div className="gameoverDiv">
+            <h1>게임 종료</h1>
+            <div className="gameoverTextDiv">
+              <h2>점수 : {score} / 100</h2>
+              <h3 style={{ marginTop: "30px" }}>{gameoverText}</h3>
+            </div>
+            <div>
+              <button onClick={resetGame}>난이도 선택</button>
+              <button onClick={() => navigate("/")}>홈으로</button>
+            </div>
           </div>
         ) : (
           <div>
@@ -167,14 +188,29 @@ function CombineGame({ gameLevel }) {
               </button>
             </div>
             <div className="textQuizDiv">
-              <span>{charArray.join(" , ")}</span>
+              {!checkQuiz ? (
+                <div>
+                  <span>{charArray.join(" , ")}</span>
+                </div>
+              ) : (
+                <div>
+                  {imageData ? ( //레이아웃 변경을 방지에서 CLS의 성능을 높임
+                    <img
+                      alt="이미지"
+                      src={`http://localhost:5000/file/${imageData}`}
+                    />
+                  ) : (
+                    <div style={{ width: "500px", height: "300px" }}></div>
+                  )}
+                </div>
+              )}
             </div>
           </div>
         )}
       </div>
       {!gameOver && (
         <div>
-          <h2>
+          <h2 style={{ fontSize: "20px", marginBottom: "20px" }}>
             글자 수: {length}, 힌트: {hint}
           </h2>
           {answerObj ? (

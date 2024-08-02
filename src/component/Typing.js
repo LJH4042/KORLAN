@@ -28,14 +28,14 @@ function Typing({
       {checkQuiz ? (
         <div>
           <h3>
-            정답: [{quiz}], 제출한 답: [{typing}]
+            정답: {quiz}, 제출한 답: {typing}
           </h3>
           <button onClick={nextLevel}>다음 레벨</button>
         </div>
       ) : (
         <div>
           <input value={typing} onChange={changeTyping} />
-          <button onClick={sumbitAnswer}>제출</button>
+          <button onClick={sumbitAnswer}>확인</button>
         </div>
       )}
     </div>
