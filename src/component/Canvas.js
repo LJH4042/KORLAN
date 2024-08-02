@@ -73,6 +73,7 @@ function Canvas({
       .then((res) => {
         setImgText(res.data.text);
         checkAnswer(res.data.text);
+        clearCanvas();
       });
     console.log(outputImageSrc);
   };
@@ -83,7 +84,6 @@ function Canvas({
     ctx.clearRect(0, 0, canvas.width, canvas.height);
     setOutputImageSrc(null);
     setPaths([]);
-    setImgText("");
   };
 
   const returnCurrentLine = () => {
@@ -111,6 +111,7 @@ function Canvas({
     clearCanvas();
     setCheckQuiz(false);
     setAnswerObjButton(false);
+    setImgText("");
   };
 
   return (
