@@ -42,21 +42,15 @@ function FormPanel({ signIn, handleLoginSubmit }) {
       placeholder: '비밀번호 확인하기',
       name: 'confirmPassword',
     });
-  }
-
-  if (!signIn) {
     inputs.push({
       type: 'text',
       placeholder: '이메일',
       name: 'email',
     });
-  }
-
-  if (!signIn) {
     inputs.push({
       type: 'text',
       placeholder: '인증번호',
-      name: 'authBtn',
+      name: 'authCode',
     });
   }
 
@@ -72,6 +66,7 @@ function FormPanel({ signIn, handleLoginSubmit }) {
     password: '',
     email: '',
     confirmPassword: '',
+    authCode: '',
   });
 
   const handleChange = (e) => {
@@ -87,20 +82,71 @@ function FormPanel({ signIn, handleLoginSubmit }) {
     handleLoginSubmit(formValues);
   };
 
+  const sendAuthCode = async () => {
+    const { email } = formValues;
+    if (!email) {
+      alert('이메일을 입력해 주세요.');
+      return;
+    }
+
+    try {
+      const response = await axios.post('http://localhost:5000/send-auth-code', { email });
+      alert(response.data.message);
+    } catch (err) {
+      console.error('Error sending auth code:', err);
+      alert('인증번호 전송에 실패했습니다.');
+    }
+  };
+
+  const verifyAuthCode = async () => {
+    const { authCode } = formValues;
+    if (!authCode) {
+      alert('인증번호를 입력해 주세요.');
+      return;
+    }
+
+    try {
+      const response = await axios.post('http://localhost:5000/verify-auth-code', { authCode });
+      alert(response.data.message);
+    } catch (err) {
+      console.error('Error verifying auth code:', err);
+      alert('인증번호 확인에 실패했습니다.');
+    }
+  };
+
   return (
     <div className="Panel FormPanel">
       <h2>{heading}</h2>
 
       <form onSubmit={handleSubmit}>
         {inputs.map(({ type, placeholder, name }) => (
-          <input
-            type={type}
-            key={placeholder}
-            placeholder={placeholder}
-            name={name}
-            value={formValues[name]}
-            onChange={handleChange}
-          />
+          <div key={name} className="input-container">
+            <input
+              type={type}
+              placeholder={placeholder}
+              name={name}
+              value={formValues[name]}
+              onChange={handleChange}
+            />
+            {name === 'email' && !signIn && (
+              <button
+                type="button"
+                onClick={sendAuthCode}
+                className="auth-button"
+              >
+                전송
+              </button>
+            )}
+            {name === 'authCode' && !signIn && (
+              <button
+                type="button"
+                onClick={verifyAuthCode}
+                className="auth-button"
+              >
+                확인
+              </button>
+            )}
+          </div>
         ))}
         <button type="submit">{button}</button>
       </form>
@@ -213,7 +259,6 @@ function Login() {
       navigate('/');
       window.location.reload();
     } catch (err) {
-      // 오류를 무시하고 최소한의 작업만 수행합니다.
       console.error('Error:', err);
       if (err.response) {
         console.error('Error response:', err.response);
