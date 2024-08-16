@@ -3,6 +3,7 @@ const fs = require("fs");
 const detectText = require("../config/vision");
 const Game = require("../model/gameModel");
 const User = require("../model/userModel");
+const WrongAnswer = require("../model/WrongAnswer");
 
 //Post canvas, /canvas : 캔버스 텍스트 추출
 const postCanvas = asynchHandler(async (req, res) => {
@@ -153,5 +154,6 @@ module.exports = {
   addImageScore,
   addCombineScore,
   learnData,
+  submitAnswer,
   getWrongAnswers
 };
