@@ -275,8 +275,52 @@ function LearningProgress({ learnCon, learnVow, learnDouCon, learnDouVow }) {
   );
 }
 
-function WrongAnswerAlbum() {
-  return <div>오답 앨범 페이지</div>;
+function WrongAnswerAlbum({userData}) {
+  const [wrongAnswers, setWrongAnswers] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+
+  useEffect(() => {
+    const fetchWrongAnswers = async () => {
+      try {
+        const token = localStorage.getItem('token');
+        const response = await axios.get('http://localhost:5000/api/wrong-answers', {
+          headers: { Authorization: `Bearer ${token}` }
+        });
+        setWrongAnswers(response.data);
+        setLoading(false);
+      } catch (err) {
+        console.error('Error fetching wrong answers:', err);
+        setError('오답을 불러오는 데 실패했습니다.'+ err.message);
+        setLoading(false);
+      }
+    };
+
+    fetchWrongAnswers();
+  }, []);
+
+if (loading) return <div className="loading">로딩 중...</div>;
+if (error) return <div className="error">{error}</div>;
+
+return (
+  <div className="wrong-answer-album">
+    <h2>{userData.username}님의 오답 앨범</h2>
+    {wrongAnswers.length === 0 ? (
+      <p>아직 오답이 없습니다.</p>
+    ) : (
+      <ul className="wrong-answer-list">
+        {wrongAnswers.map((answer, index) => (
+          <li key={index} className="wrong-answer-item">
+            <h3>문제: {answer.question}</h3>
+            <p className="given-answer">내가 쓴 답: {answer.givenAnswer}</p>
+            <p className="correct-answer">정답: {answer.correctAnswer}</p>
+            <p className="timestamp">풀이날짜: {new Date(answer.timestamp).toLocaleString()}</p>
+          </li>
+        ))}
+      </ul>
+    )}
+  </div>
+);
 }
 
 export default MyPage;
