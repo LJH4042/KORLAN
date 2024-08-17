@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from "react";
-import "../css/notebook.css"; 
+import "../css/notebook.css";
 
 function Notebook({
   fetchData,
@@ -98,14 +98,12 @@ function Notebook({
   return (
     <div className="notebookContainer">
       <h1 className="notebookTitle">연습장</h1>
-      <p className="notebookDescription">
-        
-      </p>
+      <p className="notebookDescription"></p>
       <div className="canvasWrapper">
         <canvas
           ref={canvasRef}
-          width={1400}
-          height={550}
+          width={750}
+          height={300}
           className="canvas"
           onMouseDown={drawingCanvas}
           onMouseUp={stopDrawing}
@@ -142,9 +140,7 @@ function Notebook({
       <div className="canvasButtonDiv">
         {checkQuiz ? (
           <div>
-            <h3>
-              정답: {quiz}
-            </h3>
+            <h3>정답: {quiz}</h3>
             <button className="actionButton" onClick={nextLevel}>
               다음 레벨
             </button>
