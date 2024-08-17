@@ -50,8 +50,8 @@ const LearningPage = () => {
     setExampleWord(selected ? selected.example : "");
   };
 
+  // 예시 단어를 클릭하면 TTS로 발음되도록 수정
   const renderHighlightedExample = (word, letter) => {
-    // Split the word by comma to handle each word separately
     const words = word.split(", ");
     return words.map((word, index) => (
       <React.Fragment key={index}>
@@ -59,6 +59,7 @@ const LearningPage = () => {
           className={
             savedWords[letterType].includes(word) ? styles.savedWord : ""
           }
+          onClick={() => speak(word)} // 예시 단어 클릭 시 TTS 발음
         >
           {word}
         </span>
@@ -68,7 +69,6 @@ const LearningPage = () => {
   };
 
   const checkAnswer = async (userAnswer) => {
-    //선택된 글자 유형(letterType)에 따라 예시 단어들을 allExampleWords 배열에 할당
     let allExampleWords = [];
     switch (letterType) {
       case "consonant":
@@ -96,6 +96,10 @@ const LearningPage = () => {
     }
     const trimmedUserAnswer = userAnswer.trim();
     const isCorrect = allExampleWords.includes(trimmedUserAnswer);
+
+    // 모든 경우에 TTS로 사용자가 입력한 단어 발음
+    speak(trimmedUserAnswer); // 사용자가 입력한 단어를 TTS로 발음
+
     if (isCorrect) {
       if (trimmedUserAnswer === previousAnswer) {
         alert("정답입니다!");
