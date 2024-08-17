@@ -4,9 +4,11 @@ import Card from "../component/card";
 
 function Home() {
   return (
-    <div>
+    <div className="home-container">
       <ControlledCarousel />
+      <br />
       <Card />
+      <br />
     </div>
   );
 }
