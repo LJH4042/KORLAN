@@ -82,7 +82,7 @@ function MyPage() {
           />
         );
       case "오답 앨범":
-        return <WrongAnswerAlbum />;
+        return <WrongAnswerAlbum userData={userData} />;
       default:
         return null;
     }
