@@ -133,6 +133,15 @@ function Nav() {
         >
           마이페이지
         </NavLink>
+        <NavLink
+          className={({ isActive }) =>
+            isActive ? "navbarMenu active" : "navbarMenu"
+          }
+          to={"/notebook"}
+          onClick={closeMenusOnMobile}
+        >
+          연습장
+        </NavLink>
       </div>
       <div className={`authContainer ${isMobileMenuOpen ? "open" : ""}`}>
         {isLoggedIn ? (

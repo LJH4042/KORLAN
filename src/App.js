@@ -12,7 +12,7 @@ import LearningPage from "./page/Learn/LearningPage";
 import Footer from "./component/footer";
 import "bootstrap/dist/css/bootstrap.min.css";
 import Introduce from "./page/introduce";
-import Introduce from "./page/notebook";
+import Notebook from "./page/notebook";
 import ImageLevel from "./page/Game/ImageLevel";
 import CombineLevel from "./page/Game/CombineLevel";
 import axios from "axios";

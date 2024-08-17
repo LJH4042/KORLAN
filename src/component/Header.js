@@ -1,12 +1,7 @@
-/* Headers.js  */
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect, useRef } from "react";
 
 function Header() {
-  return (
-    <div>
-
-    </div>
-  );
+  return <div></div>;
 }
 
 export default Header;
