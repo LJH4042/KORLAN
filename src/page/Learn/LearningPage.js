@@ -117,6 +117,23 @@ const LearningPage = () => {
     } else {
       alert("오답입니다.");
       setCurrentNum(1);
+      try {
+        const token = localStorage.getItem("token");
+        await axios.post(
+          "http://localhost:5000/wrong-answers",
+          {
+            question: selectedLetter,
+            givenAnswer: trimmedUserAnswer,
+            correctAnswer: allExampleWords.join(', ')
+          },
+          {
+            headers: { Authorization: `Bearer ${token}` },
+            withCredentials: true
+          }
+        );
+      } catch (error) {
+        console.error("오답 저장 실패:", error);
+      }
     }
     setPreviousAnswer(trimmedUserAnswer);
   };
