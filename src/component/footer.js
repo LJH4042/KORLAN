@@ -15,7 +15,7 @@ const Footer = () => {
             <li><a href="/">홈</a></li>
             <li><a href="/introduce">소개</a></li>
             <li><a href="/learn">학습하기</a></li>
-            <li><a href="/game">게임하기</a></li>
+            <li><a href="/combineGame">게임하기</a></li>
           </ul>
         </div>
       </div>
