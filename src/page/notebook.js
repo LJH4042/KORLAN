@@ -1,8 +1,7 @@
 import React, { useEffect, useRef, useState } from "react";
-import axios from "axios";
+import "../css/notebook.css"; 
 
-function Canvas({
-  checkAnswer,
+function Notebook({
   fetchData,
   quiz,
   checkQuiz,
@@ -15,12 +14,8 @@ function Canvas({
   const [color, setColor] = useState("gray");
   const [lastX, setLastX] = useState(0);
   const [lastY, setLastY] = useState(0);
-  const [outputImageSrc, setOutputImageSrc] = useState(null);
   const [path, setPath] = useState([]);
   const [paths, setPaths] = useState([]);
-  const [imgText, setImgText] = useState("");
-  const [wrongAnswers, setWrongAnswers] = useState([]);
-
 
   useEffect(() => {
     const canvas = canvasRef.current;
@@ -66,52 +61,10 @@ function Canvas({
     setIsDrawing(false);
   };
 
-  const outputCanvasImage = async () => {
-    const canvas = canvasRef.current;
-    setOutputImageSrc(canvas.toDataURL());
-    const dataURL = canvas.toDataURL("image/png");
-    try {
-      const res = await axios.post("http://localhost:5000/canvas", { dataURL: dataURL });
-      setImgText(res.data.text);
-      const isCorrect = checkAnswer(res.data.text);
-      if (!isCorrect) {
-        // 오답인 경우 wrongAnswers 배열에 추가
-        const newWrongAnswer = {
-          question: quiz,
-          givenAnswer: res.data.text,
-          correctAnswer: quiz,
-          timestamp: new Date()
-        };
-        setWrongAnswers(prevWrongAnswers => [...prevWrongAnswers, newWrongAnswer]);
-        
-        // 서버에 오답 정보 저장
-        await saveWrongAnswer(newWrongAnswer);
-      }
-    } catch (error) {
-      console.error("Error processing canvas image:", error);
-    }
-    console.log(outputImageSrc);
-    clearCanvas();
-  };
-
-  const saveWrongAnswer = async (wrongAnswer) => {
-    try {
-      await axios.post("http://localhost:5000/api/wrong-answers", wrongAnswer, {
-        headers: {
-          Authorization: `Bearer ${localStorage.getItem('token')}`
-        }
-      });
-    } catch (error) {
-      console.error("Error saving wrong answer:", error);
-    }
-  };
-
-
   const clearCanvas = () => {
     const canvas = canvasRef.current;
     const ctx = canvas.getContext("2d");
     ctx.clearRect(0, 0, canvas.width, canvas.height);
-    setOutputImageSrc(null);
     setPaths([]);
   };
 
@@ -140,20 +93,20 @@ function Canvas({
     clearCanvas();
     setCheckQuiz(false);
     setAnswerObjButton(false);
-    setImgText("");
   };
 
   return (
-    <div className="canvasContainer">
-      <div>
+    <div className="notebookContainer">
+      <h1 className="notebookTitle">연습장</h1>
+      <p className="notebookDescription">
+        
+      </p>
+      <div className="canvasWrapper">
         <canvas
           ref={canvasRef}
-          width={750}
-          height={300}
-          style={{
-            border: "5px solid #a0cbe7",
-            borderRadius: "10%",
-          }}
+          width={1400}
+          height={550}
+          className="canvas"
           onMouseDown={drawingCanvas}
           onMouseUp={stopDrawing}
           onMouseOut={canvasOut}
@@ -161,23 +114,28 @@ function Canvas({
       </div>
       <div className="canvasButtonDiv">
         <button
-          style={{ backgroundColor: "gray", padding: "15px" }}
+          className="colorButton"
+          style={{ backgroundColor: "gray" }}
           onClick={() => setColor("gray")}
         />
         <button
-          style={{ backgroundColor: "blue", padding: "15px" }}
+          className="colorButton"
+          style={{ backgroundColor: "blue" }}
           onClick={() => setColor("blue")}
         />
         <button
-          style={{ backgroundColor: "red", padding: "15px" }}
+          className="colorButton"
+          style={{ backgroundColor: "red" }}
           onClick={() => setColor("red")}
         />
         <button
-          style={{ backgroundColor: "green", padding: "15px" }}
+          className="colorButton"
+          style={{ backgroundColor: "green" }}
           onClick={() => setColor("green")}
         />
         <button
-          style={{ backgroundColor: "purple", padding: "15px" }}
+          className="colorButton"
+          style={{ backgroundColor: "purple" }}
           onClick={() => setColor("purple")}
         />
       </div>
@@ -185,21 +143,25 @@ function Canvas({
         {checkQuiz ? (
           <div>
             <h3>
-              정답: {quiz}, 제출한 답: {imgText}
+              정답: {quiz}
             </h3>
-            <button onClick={nextLevel}>다음 레벨</button>
+            <button className="actionButton" onClick={nextLevel}>
+              다음 레벨
+            </button>
           </div>
         ) : (
           <div>
-            <button onClick={outputCanvasImage}>확인</button>
-            <button onClick={clearCanvas}>다시 쓰기</button>
-            <button onClick={returnCurrentLine}>한 획 지우기</button>
+            <button className="actionButton" onClick={clearCanvas}>
+              모두 지우기
+            </button>
+            <button className="actionButton" onClick={returnCurrentLine}>
+              이전으로
+            </button>
           </div>
         )}
       </div>
-      {/*outputImageSrc && <img src={outputImageSrc} alt="분석된 이미지" />*/}
     </div>
   );
 }
 
-export default Canvas;
+export default Notebook;

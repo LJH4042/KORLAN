@@ -3,6 +3,7 @@ const fs = require("fs");
 const detectText = require("../config/vision");
 const Game = require("../model/gameModel");
 const User = require("../model/userModel");
+const WrongAnswer = require("../model/WrongAnswer");
 
 //Post canvas, /canvas : 캔버스 텍스트 추출
 const postCanvas = asynchHandler(async (req, res) => {
@@ -115,6 +116,36 @@ const learnData = asynchHandler(async (req, res) => {
   res.status(200).json({ message: "데이터가 저장되었습니다." });
 });
 
+const getWrongAnswers = async (req, res) => {
+  const userId = req.params.userId;
+
+  try {
+    const WrongAnswers = await WrongAnswer.find({ userId });
+    res.status(200).json(WrongAnswers);
+  } catch (error) {
+    res.status(500).json({ message: "오답불러오기에 실패했습니다.", error });
+  }
+};
+
+const submitAnswer = asynchHandler(async (req, res) => {
+  const { question, givenAnswer, correctAnswer } = req.body;
+  const userId = req.user.id;
+
+  const wrongAnswer = new WrongAnswer({
+    userId,
+    question,
+    givenAnswer,
+    correctAnswer
+  });
+
+  try {
+    await wrongAnswer.save();
+    res.status(201).json({ message: '오답이 저장되었습니다.' });
+  } catch (error) {
+    res.status(500).json({ error: '오답 저장에 실패했습니다.' });
+  }
+});
+
 module.exports = {
   postCanvas,
   getImage,
@@ -123,4 +154,6 @@ module.exports = {
   addImageScore,
   addCombineScore,
   learnData,
+  submitAnswer,
+  getWrongAnswers
 };
