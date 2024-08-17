@@ -15,6 +15,7 @@ import Introduce from "./page/introduce";
 import Notebook from "./page/notebook";
 import ImageLevel from "./page/Game/ImageLevel";
 import CombineLevel from "./page/Game/CombineLevel";
+import Header from "./component/Header";
 import axios from "axios";
 
 function App() {
@@ -45,6 +46,7 @@ function App() {
   return (
     <div>
       <BrowserRouter>
+        <Header />
         <Nav />
         <Routes>
           <Route index element={<Home />} />

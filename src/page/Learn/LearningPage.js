@@ -55,7 +55,6 @@ const LearningPage = () => {
     const words = word.split(", ");
     return words.map((word, index) => (
       <React.Fragment key={index}>
-        {/* Wrap each word in a span */}
         <span
           className={
             savedWords[letterType].includes(word) ? styles.savedWord : ""
@@ -63,7 +62,6 @@ const LearningPage = () => {
         >
           {word}
         </span>
-        {/* Add comma after each word except the last one */}
         {index < words.length - 1 && ", "}
       </React.Fragment>
     ));
@@ -124,11 +122,11 @@ const LearningPage = () => {
           {
             question: selectedLetter,
             givenAnswer: trimmedUserAnswer,
-            correctAnswer: allExampleWords.join(', ')
+            correctAnswer: allExampleWords.join(", "),
           },
           {
             headers: { Authorization: `Bearer ${token}` },
-            withCredentials: true
+            withCredentials: true,
           }
         );
       } catch (error) {
