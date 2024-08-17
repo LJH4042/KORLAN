@@ -2,9 +2,9 @@ import { useState } from 'react';
 import Carousel from 'react-bootstrap/Carousel';
 import '../../css/carousel.css';
 
-import test1 from './img/test1.jpg';
-import test2 from './img/test2.jpg';
-import test3 from './img/test3.jpg';
+import test1 from './img/1.png';
+import test2 from './img/2.png';
+import test3 from './img/3.png';
 
 function ControlledCarousel() {
   const [index, setIndex] = useState(0);
