@@ -97,64 +97,68 @@ function Notebook({
 
   return (
     <div className="notebookContainer">
-      <h1 className="notebookTitle">연습장</h1>
-      <p className="notebookDescription"></p>
-      <div className="canvasWrapper">
-        <canvas
-          ref={canvasRef}
-          width={750}
-          height={300}
-          className="canvas"
-          onMouseDown={drawingCanvas}
-          onMouseUp={stopDrawing}
-          onMouseOut={canvasOut}
-        />
-      </div>
-      <div className="canvasButtonDiv">
-        <button
-          className="colorButton"
-          style={{ backgroundColor: "gray" }}
-          onClick={() => setColor("gray")}
-        />
-        <button
-          className="colorButton"
-          style={{ backgroundColor: "blue" }}
-          onClick={() => setColor("blue")}
-        />
-        <button
-          className="colorButton"
-          style={{ backgroundColor: "red" }}
-          onClick={() => setColor("red")}
-        />
-        <button
-          className="colorButton"
-          style={{ backgroundColor: "green" }}
-          onClick={() => setColor("green")}
-        />
-        <button
-          className="colorButton"
-          style={{ backgroundColor: "purple" }}
-          onClick={() => setColor("purple")}
-        />
-      </div>
-      <div className="canvasButtonDiv">
-        {checkQuiz ? (
-          <div>
-            <h3>정답: {quiz}</h3>
-            <button className="actionButton" onClick={nextLevel}>
-              다음 레벨
-            </button>
-          </div>
-        ) : (
-          <div>
-            <button className="actionButton" onClick={clearCanvas}>
-              모두 지우기
-            </button>
-            <button className="actionButton" onClick={returnCurrentLine}>
-              이전으로
-            </button>
-          </div>
-        )}
+      <div className="notebookDiv">
+        <h1 className="notebookTitle">연습장</h1>
+        <p className="notebookDescription">
+          -연습장에 글씨를 쓰며 한글 실력을 키워보세요!-
+        </p>
+        <div className="canvasWrapper">
+          <canvas
+            ref={canvasRef}
+            width={750}
+            height={300}
+            className="canvas"
+            onMouseDown={drawingCanvas}
+            onMouseUp={stopDrawing}
+            onMouseOut={canvasOut}
+          />
+        </div>
+        <div className="canvasButtonDiv">
+          <button
+            className="colorButton"
+            style={{ backgroundColor: "gray", padding: "15px" }}
+            onClick={() => setColor("gray")}
+          />
+          <button
+            className="colorButton"
+            style={{ backgroundColor: "blue", padding: "15px" }}
+            onClick={() => setColor("blue")}
+          />
+          <button
+            className="colorButton"
+            style={{ backgroundColor: "red", padding: "15px" }}
+            onClick={() => setColor("red")}
+          />
+          <button
+            className="colorButton"
+            style={{ backgroundColor: "green", padding: "15px" }}
+            onClick={() => setColor("green")}
+          />
+          <button
+            className="colorButton"
+            style={{ backgroundColor: "purple", padding: "15px" }}
+            onClick={() => setColor("purple")}
+          />
+        </div>
+        <div className="canvasButtonDiv">
+          {checkQuiz ? (
+            <div>
+              <h3>정답: {quiz}</h3>
+              <button className="actionButton" onClick={nextLevel}>
+                다음 레벨
+              </button>
+            </div>
+          ) : (
+            <div style={{ marginBottom: "50px" }}>
+              <button className="actionButton" onClick={clearCanvas}>
+                다시 쓰기
+              </button>
+              <button className="actionButton" onClick={returnCurrentLine}>
+                한 획 지우기
+              </button>
+            </div>
+          )}
+        </div>
       </div>
     </div>
   );
