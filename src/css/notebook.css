@@ -29,41 +29,7 @@
 }
 
 .canvasWrapper {
-  border: 5px solid #a0cbe7;
-  border-radius: 10%;
   overflow: hidden;
   margin-bottom: 20px;
-}
-
-.canvas {
-  width: 100%;
-  height: auto;
-}
-
-.canvasButtonDiv {
-  display: flex;
-  justify-content: center;
-  margin: 10px 0px;
-}
-
-.colorButton {
-  margin: 0 5px;
-  border: none;
-  cursor: pointer;
-  border-radius: 20%;
-}
-
-.actionButton {
-  padding: 10px 20px;
-  margin: 0 5px;
-  border: none;
-  background-color: #a0cbe7;
-  color: white;
-  cursor: pointer;
-  font-size: 15px;
-  border-radius: 5px;
-}
-
-.actionButton:hover {
-  background-color: #87b2d6;
+  margin-top: 50px;
 }

@@ -1,8 +1,9 @@
 // introduce.js
 import React from "react";
 import "../css/introduce.css";
-import image1 from "../woman.png";
-import image2 from "../man.png";
+import image1 from "../img/woman.png";
+import image2 from "../img/man.png";
+import introImg from "../img/introImg.png";
 
 const teamMembers = [
   { image: image1, name: "박유진", role: "프론트엔드" },
@@ -21,6 +22,9 @@ const TeamMember = ({ image, name, role }) => (
 
 const Introduce = () => (
   <div className="introduce">
+    <div className="imgDiv">
+      <img src={introImg} alt={"소개글"} />
+    </div>
     <div className="introduceDiv">
       <h1>소개</h1>
       <div className="site-introduce">
