@@ -78,12 +78,21 @@ function Header() {
         </span>
         <span>|</span>
         <span
-          className="siteRight"
+          className="siteMiddle"
           onClick={() =>
             window.open("https://ko.dict.naver.com/#/main", "_blank")
           }
         >
           네이버 사전
+        </span>
+        <span>|</span>
+        <span
+          className="siteRight"
+          onClick={() =>
+            window.open("https://github.com/LJH4042/KORLAN", "_blank")
+          }
+        >
+          깃허브
         </span>
       </div>
       {isLoggedIn ? (

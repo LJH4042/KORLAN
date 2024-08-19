@@ -3,7 +3,7 @@ import React from "react";
 import "../css/introduce.css";
 import image1 from "../img/woman.png";
 import image2 from "../img/man.png";
-import introImg from "../img/introImg.png";
+import introImg from "../img/intro.png";
 
 const teamMembers = [
   { image: image1, name: "박유진", role: "프론트엔드" },

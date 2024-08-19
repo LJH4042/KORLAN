@@ -87,75 +87,84 @@ const LearningPage = () => {
 
   return (
     <div className={styles.pageContainer}>
-      <h2>한글 깨우치기</h2>
-      <div className={styles.buttonContainer}>
-        <button onClick={() => toggleLetterType("consonant")}>
-          자음 학습하기
-        </button>
-        <button onClick={() => toggleLetterType("vowel")}>모음 학습하기</button>
-        <button onClick={() => toggleLetterType("doubleConsonant")}>
-          쌍자음 학습하기
-        </button>
-        <button onClick={() => toggleLetterType("doubleVowel")}>
-          쌍모음 학습하기
-        </button>
-      </div>
-      <div className={styles.buttonContainer}>
-        <div className={styles.flexContainer}>
-          {letterType === "consonant" && (
-            <>
-              <h3>자음 학습하기</h3>
-              <ConsonantList
-                consonants={consonants}
-                onLetterSelect={handleLetterSelectionWithTTS}
-              />
-            </>
-          )}
-          {letterType === "vowel" && (
-            <>
-              <h3>모음 학습하기</h3>
-              <VowelList
-                vowels={vowels}
-                onLetterSelect={handleLetterSelectionWithTTS}
-              />
-            </>
-          )}
-          {letterType === "doubleConsonant" && (
-            <>
-              <h3>쌍자음 학습하기</h3>
-              <ConsonantList
-                consonants={doubleCons}
-                onLetterSelect={handleLetterSelectionWithTTS}
-              />
-            </>
-          )}
-          {letterType === "doubleVowel" && (
-            <>
-              <h3>쌍모음 학습하기</h3>
-              <VowelList
-                vowels={doubleVow}
-                onLetterSelect={handleLetterSelectionWithTTS}
-              />
-            </>
-          )}
-          {selectedLetter && (
-            <div className={styles.selectedLetterContainer}>
-              <button
-                onClick={() => lastSelectedLetter && speak(lastSelectedLetter)}
-              >
-                다시 듣기
-              </button>
-              <h3>선택한 글자: </h3>
-              <p className={styles.selectedLetter}> {selectedLetter}</p>
-              <div className={styles.exampleWord}>
-                <h3>
-                  예시 단어:{" "}
-                  {renderHighlightedExample(exampleWord, lastSelectedLetter)}
-                </h3>
+      <div className={styles.learnContainer}>
+        <h1>학습하기</h1>
+        <p style={{ fontSize: "1.2em", color: "#666", marginTop: "10px" }}>
+          -자음과 모음의 발음을 들으며 한글을 익혀요!-
+        </p>
+        <div className={styles.buttonContainer}>
+          <button onClick={() => toggleLetterType("consonant")}>
+            자음 학습하기
+          </button>
+          <button onClick={() => toggleLetterType("vowel")}>
+            모음 학습하기
+          </button>
+          <button onClick={() => toggleLetterType("doubleConsonant")}>
+            쌍자음 학습하기
+          </button>
+          <button onClick={() => toggleLetterType("doubleVowel")}>
+            쌍모음 학습하기
+          </button>
+        </div>
+        <div className={styles.buttonContainer}>
+          <div className={styles.flexContainer}>
+            {letterType === "consonant" && (
+              <>
+                <h3>자음 학습하기</h3>
+                <ConsonantList
+                  consonants={consonants}
+                  onLetterSelect={handleLetterSelectionWithTTS}
+                />
+              </>
+            )}
+            {letterType === "vowel" && (
+              <>
+                <h3>모음 학습하기</h3>
+                <VowelList
+                  vowels={vowels}
+                  onLetterSelect={handleLetterSelectionWithTTS}
+                />
+              </>
+            )}
+            {letterType === "doubleConsonant" && (
+              <>
+                <h3>쌍자음 학습하기</h3>
+                <ConsonantList
+                  consonants={doubleCons}
+                  onLetterSelect={handleLetterSelectionWithTTS}
+                />
+              </>
+            )}
+            {letterType === "doubleVowel" && (
+              <>
+                <h3>쌍모음 학습하기</h3>
+                <VowelList
+                  vowels={doubleVow}
+                  onLetterSelect={handleLetterSelectionWithTTS}
+                />
+              </>
+            )}
+            {selectedLetter && (
+              <div className={styles.selectedLetterContainer}>
+                <button
+                  onClick={() =>
+                    lastSelectedLetter && speak(lastSelectedLetter)
+                  }
+                >
+                  다시 듣기
+                </button>
+                <h3>선택한 글자: </h3>
+                <p className={styles.selectedLetter}> {selectedLetter}</p>
+                <div className={styles.exampleWord}>
+                  <h3>
+                    예시 단어:{" "}
+                    {renderHighlightedExample(exampleWord, lastSelectedLetter)}
+                  </h3>
+                </div>
               </div>
-            </div>
-          )}
-          <Canvas checkAnswer={checkAnswer} />
+            )}
+            <Canvas checkAnswer={checkAnswer} />
+          </div>
         </div>
       </div>
     </div>

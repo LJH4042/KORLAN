@@ -96,7 +96,7 @@ function Notebook() {
 
     if (isCorrect) {
       if (trimmedUserAnswer === previousAnswer) {
-        alert("정답입니다!");
+        alert(`정답입니다! ${currentNum} / 3`);
         setCurrentNum((prevNum) => prevNum + 1);
         if (currentNum === 3) {
           setCurrentNum(1);
@@ -104,11 +104,11 @@ function Notebook() {
           alert("잘했어요!");
         }
       } else if (previousAnswer === "") {
-        alert("정답입니다!");
+        alert(`정답입니다! ${currentNum} / 3`);
         setCurrentNum((prevNum) => prevNum + 1);
       } else {
         setCurrentNum(2);
-        alert("정답입니다.");
+        alert(`정답입니다! 1 / 3`);
       }
     } else {
       alert("오답입니다.");

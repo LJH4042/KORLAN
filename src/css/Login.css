@@ -1,5 +1,5 @@
 :root {
-  --bg: #F0F4F3;
+  --bg: #f0f4f3;
   --theme: #a0cbe7;
   --theme-two: #ffff;
   --text: #697a79;
@@ -65,7 +65,8 @@
   text-align: center;
 }
 
-.Panel a, .Panel button {
+.Panel a,
+.Panel button {
   color: inherit;
   font-family: inherit;
 }
@@ -97,7 +98,7 @@
 }
 
 .Panel > a:after {
-  content: '';
+  content: "";
   position: absolute;
   width: 100%;
   bottom: 0;

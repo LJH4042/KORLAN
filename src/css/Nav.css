@@ -25,6 +25,7 @@ html {
 .loginLeft:hover,
 .loginRight:hover,
 .siteLeft:hover,
+.siteMiddle:hover,
 .siteRight:hover {
   color: #0088ff;
 }
@@ -39,6 +40,12 @@ html {
   margin-left: 50px;
   font-size: 15px;
   font-weight: 600;
+  margin-right: 7px;
+}
+.siteMiddle {
+  font-size: 15px;
+  font-weight: 600;
+  margin-left: 7px;
   margin-right: 7px;
 }
 .siteRight {
