@@ -73,3 +73,8 @@
   border-radius: 50%;
   margin-bottom: 10px;
 }
+
+.imgDiv img {
+  width: 900px;
+  height: 400px;
+}

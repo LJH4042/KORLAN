@@ -24,7 +24,9 @@ html {
 }
 .loginLeft:hover,
 .loginRight:hover,
-.teamName:hover {
+.siteLeft:hover,
+.siteMiddle:hover,
+.siteRight:hover {
   color: #0088ff;
 }
 .loginLeft {
@@ -34,10 +36,22 @@ html {
   margin-left: 7px;
   margin-right: 50px;
 }
-.teamName {
+.siteLeft {
   margin-left: 50px;
   font-size: 15px;
   font-weight: 600;
+  margin-right: 7px;
+}
+.siteMiddle {
+  font-size: 15px;
+  font-weight: 600;
+  margin-left: 7px;
+  margin-right: 7px;
+}
+.siteRight {
+  font-size: 15px;
+  font-weight: 600;
+  margin-left: 7px;
 }
 .userId {
   margin-right: 50px;

@@ -64,11 +64,37 @@ function Header() {
       setIsLoggedIn(true);
       fetchUserData();
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (
     <div className="header">
-      <span className="teamName">중부대학교 정보보호학과</span>
+      <div>
+        <span
+          className="siteLeft"
+          onClick={() => window.open("https://www.joongbu.ac.kr/is/", "_blank")}
+        >
+          중부대학교 정보보호학과
+        </span>
+        <span>|</span>
+        <span
+          className="siteMiddle"
+          onClick={() =>
+            window.open("https://ko.dict.naver.com/#/main", "_blank")
+          }
+        >
+          네이버 사전
+        </span>
+        <span>|</span>
+        <span
+          className="siteRight"
+          onClick={() =>
+            window.open("https://github.com/LJH4042/KORLAN", "_blank")
+          }
+        >
+          깃허브
+        </span>
+      </div>
       {isLoggedIn ? (
         <div>
           <span className="userId">{userData.username}님 환영합니다.</span>

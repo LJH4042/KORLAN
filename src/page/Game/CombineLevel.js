@@ -2,6 +2,9 @@ import React, { useState } from "react";
 import "../../css/game.css";
 import CombineGame from "./CombineGame";
 import axios from "axios";
+import lowLevelImg from "../../img/egg.png";
+import middleLevelImg from "../../img/chick.png";
+import highLevelImg from "../../img/chicken.png";
 
 function CombineLevel() {
   const [levelList, setLevelList] = useState(true);
@@ -30,22 +33,31 @@ function CombineLevel() {
       <div className="gameContainer">
         {levelList ? (
           <div className="levelContainer">
-            <h1>낱말 게임</h1>
+            <h1>낱말 조합</h1>
+            <p className="gameDescription_2">
+              -자모음을 조합해 무슨 단어인지 맞춰보세요!-
+            </p>
             <div className="levelBtn">
-              <button style={{ backgroundColor: "red" }} onClick={lowGame}>
-                초급
+              <button onClick={lowGame}>
+                <div>
+                  <img src={lowLevelImg} alt={"초급"} />
+                </div>
+                <p>초급</p>
               </button>
-              <button style={{ backgroundColor: "gold" }} onClick={middleGame}>
-                중급
+              <button onClick={middleGame}>
+                <div>
+                  <img src={middleLevelImg} alt={"중급"} />
+                </div>
+                <p>중급</p>
               </button>
-              <button
-                style={{ backgroundColor: "limegreen" }}
-                onClick={highGame}
-              >
-                고급
+              <button onClick={highGame}>
+                <div>
+                  <img src={highLevelImg} alt={"고급"} />
+                </div>
+                <p>고급</p>
               </button>
             </div>
-            <div className="ruleDiv">
+            <div className="ruleDiv" style={{ backgroundColor: "#f9f9f9" }}>
               <p>-한 게임 당 총 10라운드로 진행됩니다.</p>
               <p>
                 -상단에 나오는 낱말들을 조합해 마우스 혹은 키보드로 적어 확인
