@@ -24,21 +24,22 @@ function AuthInput({ setIsAuth, setIsFind, setIsCheck }) {
   };
 
   return (
-    <div>
+    <div className="authInputContainer">
       <form onSubmit={submitAuthCode}>
         <div>
           <label>
-            인증코드(6자리)
+            인증코드(6자리) : <></>
             {<Timer setIsAuth={setIsAuth} setIsFind={setIsFind} />}
           </label>
           <input
             type="text"
             value={authCode}
             onChange={(e) => setAuthCode(e.target.value)}
+            placeholder="인증코드"
           />
           <h4>{authCodeError}</h4>
         </div>
-        <button type="submit" className="submitBtn">
+        <button type="submit" className="authSubmitBtn">
           인증
         </button>
       </form>
