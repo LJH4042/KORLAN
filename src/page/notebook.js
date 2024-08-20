@@ -48,7 +48,6 @@ function Notebook() {
     setExampleWord(selected ? selected.example : "");
   };
 
-  // 예시 단어를 클릭하면 TTS로 발음되도록 수정
   const renderHighlightedExample = (word, letter) => {
     const words = word.split(", ");
     return words.map((word, index) => (
