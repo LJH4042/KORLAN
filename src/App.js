@@ -12,8 +12,10 @@ import LearningPage from "./page/Learn/LearningPage";
 import Footer from "./component/footer";
 import "bootstrap/dist/css/bootstrap.min.css";
 import Introduce from "./page/introduce";
+import Notebook from "./page/notebook";
 import ImageLevel from "./page/Game/ImageLevel";
 import CombineLevel from "./page/Game/CombineLevel";
+import Header from "./component/Header";
 import axios from "axios";
 
 function App() {
@@ -44,6 +46,7 @@ function App() {
   return (
     <div>
       <BrowserRouter>
+        <Header />
         <Nav />
         <Routes>
           <Route index element={<Home />} />
@@ -57,6 +60,7 @@ function App() {
           <Route path="/combineGame" element={<CombineLevel />} />
           <Route path="/learn" element={<LearningPage />} />
           <Route path="/introduce" element={<Introduce />} />
+          <Route path="/notebook" element={<Notebook />} />
         </Routes>
       </BrowserRouter>
       <Footer />

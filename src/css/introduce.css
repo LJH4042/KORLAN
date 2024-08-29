@@ -4,6 +4,13 @@
   margin: 20px;
 }
 
+.introduceDiv {
+  border-bottom: 1px solid gray;
+  width: 60%;
+  margin-left: 300px;
+  padding-bottom: 50px;
+}
+
 .team-members {
   display: flex;
   justify-content: center;
@@ -17,6 +24,11 @@
   margin: 10px;
   width: 200px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.introduceDiv h1 {
+  margin-bottom: 30px;
+  margin-top: 50px;
 }
 
 .team-member h2 {
@@ -52,4 +64,17 @@
 
 .icon {
   font-size: 24px; /* 아이콘 크기 조정 */
+}
+
+.team-member-photo {
+  width: 50px;
+  height: 50px;
+  object-fit: cover;
+  border-radius: 50%;
+  margin-bottom: 10px;
+}
+
+.imgDiv img {
+  width: 900px;
+  height: 400px;
 }
