@@ -5,12 +5,8 @@ import "../../css/MyPage.css";
 
 function MyPage() {
   const navigate = useNavigate();
-  const [userData, setUserData] = useState({});
+  const [userData, setUserData] = useState([]);
   const [selectedContent, setSelectedContent] = useState(null);
-  const [learnCon, setLearnCon] = useState([]);
-  const [learnVow, setLearnVow] = useState([]);
-  const [learnDouCon, setLearnDouCon] = useState([]);
-  const [learnDouVow, setLearnDouVow] = useState([]);
 
   // 사용자 데이터를 가져오는 함수
   const fetchUserData = async () => {
@@ -24,10 +20,6 @@ function MyPage() {
     try {
       const res = await axios.get("http://localhost:5000/login", headerData);
       setUserData(res.data);
-      setLearnCon(res.data.learnPoint.consonant);
-      setLearnVow(res.data.learnPoint.vowel);
-      setLearnDouCon(res.data.learnPoint.doubleConsonant);
-      setLearnDouVow(res.data.learnPoint.doubleVowel);
     } catch (err) {
       if (err.response && err.response.status === 401) {
         try {
@@ -75,14 +67,14 @@ function MyPage() {
       case "학습 진행률":
         return (
           <LearningProgress
-            learnCon={learnCon.length}
-            learnVow={learnVow.length}
-            learnDouCon={learnDouCon.length}
-            learnDouVow={learnDouVow.length}
+            learnCon={userData.learnPoint.consonant.length}
+            learnVow={userData.learnPoint.vowel.length}
+            learnDouCon={userData.learnPoint.doubleConsonant.length}
+            learnDouVow={userData.learnPoint.doubleVowel.length}
           />
         );
       case "오답 앨범":
-        return <WrongAnswerAlbum />;
+        return <WrongAnswerAlbum userData={userData} />;
       default:
         return null;
     }
@@ -239,35 +231,35 @@ function StampBoard({ userData }) {
 function LearningProgress({ learnCon, learnVow, learnDouCon, learnDouVow }) {
   return (
     <div>
-      <p>자음 학습하기 ({learnCon} / 70)</p>
+      <p>자음 학습하기 ({learnCon} / 140)</p>
       <div className="bar-graph">
-        <div className="bar" style={{ width: `${(learnCon / 70) * 100}%` }}>
+        <div className="bar" style={{ width: `${(learnCon / 140) * 100}%` }}>
           <span className="bar-text">{`${Math.floor(
-            (learnCon / 70) * 100
+            (learnCon / 140) * 100
           )}%`}</span>
         </div>
       </div>
-      <p>모음 학습하기 ({learnVow} / 50)</p>
+      <p>모음 학습하기 ({learnVow} / 100)</p>
       <div className="bar-graph">
-        <div className="bar" style={{ width: `${(learnVow / 50) * 100}%` }}>
+        <div className="bar" style={{ width: `${(learnVow / 100) * 100}%` }}>
           <span className="bar-text">{`${Math.floor(
-            (learnVow / 50) * 100
+            (learnVow / 100) * 100
           )}%`}</span>
         </div>
       </div>
-      <p>쌍자음 학습하기 ({learnDouCon} / 25)</p>
+      <p>쌍자음 학습하기 ({learnDouCon} / 50)</p>
       <div className="bar-graph">
-        <div className="bar" style={{ width: `${(learnDouCon / 25) * 100}%` }}>
+        <div className="bar" style={{ width: `${(learnDouCon / 50) * 100}%` }}>
           <span className="bar-text">{`${Math.floor(
-            (learnDouCon / 25) * 100
+            (learnDouCon / 50) * 100
           )}%`}</span>
         </div>
       </div>
-      <p>쌍모음 학습하기 ({learnDouVow} / 55)</p>
+      <p>쌍모음 학습하기 ({learnDouVow} / 98)</p>
       <div className="bar-graph">
-        <div className="bar" style={{ width: `${(learnDouVow / 55) * 100}%` }}>
+        <div className="bar" style={{ width: `${(learnDouVow / 98) * 100}%` }}>
           <span className="bar-text">{`${Math.floor(
-            (learnDouVow / 55) * 100
+            (learnDouVow / 98) * 100
           )}%`}</span>
         </div>
       </div>
@@ -275,8 +267,57 @@ function LearningProgress({ learnCon, learnVow, learnDouCon, learnDouVow }) {
   );
 }
 
-function WrongAnswerAlbum() {
-  return <div>오답 앨범 페이지</div>;
+function WrongAnswerAlbum({ userData }) {
+  const [wrongAnswers, setWrongAnswers] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+
+  useEffect(() => {
+    const fetchWrongAnswers = async () => {
+      try {
+        const token = localStorage.getItem("token");
+        const response = await axios.get(
+          "http://localhost:5000/api/wrong-answers",
+          {
+            headers: { Authorization: `Bearer ${token}` },
+          }
+        );
+        setWrongAnswers(response.data);
+        setLoading(false);
+      } catch (err) {
+        console.error("Error fetching wrong answers:", err);
+        setError("오답을 불러오는 데 실패했습니다." + err.message);
+        setLoading(false);
+      }
+    };
+
+    fetchWrongAnswers();
+  }, []);
+
+  if (loading) return <div className="loading">로딩 중...</div>;
+  if (error) return <div className="error">{error}</div>;
+
+  return (
+    <div className="wrong-answer-album">
+      <h2>{userData.username}님의 오답 앨범</h2>
+      {wrongAnswers.length === 0 ? (
+        <p>아직 오답이 없습니다.</p>
+      ) : (
+        <ul className="wrong-answer-list">
+          {wrongAnswers.map((answer, index) => (
+            <li key={index} className="wrong-answer-item">
+              <h3>문제: {answer.question}</h3>
+              <p className="given-answer">내가 쓴 답: {answer.givenAnswer}</p>
+              <p className="correct-answer">정답: {answer.correctAnswer}</p>
+              <p className="timestamp">
+                풀이날짜: {new Date(answer.timestamp).toLocaleString()}
+              </p>
+            </li>
+          ))}
+        </ul>
+      )}
+    </div>
+  );
 }
 
 export default MyPage;

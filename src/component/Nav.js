@@ -63,20 +63,18 @@ function Nav() {
       <Link to={"/"}>
         <img className="logo" src={Logo} alt="Logo" />
       </Link>
-
       <div className="menuIcon" onClick={toggleMobileMenu}>
         &#9776;
       </div>
-
       <div className={`menuContainer ${isMobileMenuOpen ? "open" : ""}`}>
         <NavLink
           className={({ isActive }) =>
             isActive ? "navbarMenu active" : "navbarMenu"
           }
-          to={"/"}
+          to={"/introduce"}
           onClick={closeMenusOnMobile}
         >
-          홈
+          소개
         </NavLink>
         <NavLink
           className={({ isActive }) =>
@@ -119,45 +117,11 @@ function Nav() {
           className={({ isActive }) =>
             isActive ? "navbarMenu active" : "navbarMenu"
           }
-          to={"/myPage"}
+          to={"/notebook"}
           onClick={closeMenusOnMobile}
         >
-          마이페이지
+          연습장
         </NavLink>
-        <NavLink
-          className={({ isActive }) =>
-            isActive ? "navbarMenu active" : "navbarMenu"
-          }
-          to={"/introduce"}
-          onClick={closeMenusOnMobile}
-        >
-          개발자
-        </NavLink>
-      </div>
-      <div className={`authContainer ${isMobileMenuOpen ? "open" : ""}`}>
-        {isLoggedIn ? (
-          <div
-            className="navbarAuth"
-            onClick={() => {
-              handleLogout();
-              closeMenusOnMobile();
-            }}
-          >
-            로그아웃
-          </div>
-        ) : (
-          <>
-            <NavLink
-              to={"/login"}
-              className={({ isActive }) =>
-                isActive ? "navbarAuth active" : "navbarAuth"
-              }
-              onClick={closeMenusOnMobile}
-            >
-              로그인
-            </NavLink>
-          </>
-        )}
       </div>
     </div>
   );

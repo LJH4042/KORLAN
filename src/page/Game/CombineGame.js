@@ -168,9 +168,9 @@ function CombineGame({ gameLevel }) {
       <div className="combineDiv">
         {gameOver ? (
           <div className="gameoverDiv">
-            <h1>게임 종료</h1>
+            <h1>당신의 점수는? </h1>
             <div className="gameoverTextDiv">
-              <h2>점수 : {score} / 100</h2>
+              <h2>{score} / 100</h2>
               <h3 style={{ marginTop: "30px" }}>{gameoverText}</h3>
             </div>
             <div>

@@ -1,0 +1,36 @@
+.notebookContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 70vh;
+  background-color: #a0cbe7;
+  padding: 50px;
+}
+
+.notebookDiv {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 1100px;
+  background-color: white;
+  border-radius: 10px;
+}
+
+.notebookTitle {
+  text-align: center;
+  margin: 50px 20px 20px 20px;
+}
+
+.notebookDescription {
+  font-size: 1.2em;
+  margin-bottom: 20px;
+  color: #666;
+}
+
+.canvasWrapper {
+  overflow: hidden;
+  margin-bottom: 20px;
+  margin-top: 50px;
+}
