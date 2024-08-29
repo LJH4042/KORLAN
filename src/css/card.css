@@ -13,17 +13,17 @@
 }
 
 .card.learn-card {
-  background-color: rgba(255, 51, 51, 0.8); /* 투명도 추가 */
+  background-color: rgba(255, 51, 51, 0.8);
   color: #f0f0f0; /* 텍스트 색상 변경 */
 }
 
 .card.image-card {
-  background-color: rgba(255, 180, 0, 0.8); /* 투명도 추가 */
+  background-color: rgba(255, 180, 0, 0.8);
   color: #f0f0f0; /* 텍스트 색상 변경 */
 }
 
 .card.combine-card {
-  background-color: rgba(0, 180, 249, 0.8); /* 투명도 추가 */
+  background-color: rgba(0, 180, 249, 0.8);
   color: #f0f0f0; /* 텍스트 색상 변경 */
 }
 

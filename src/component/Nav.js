@@ -82,15 +82,6 @@ function Nav() {
           className={({ isActive }) =>
             isActive ? "navbarMenu active" : "navbarMenu"
           }
-          to={"/introduce"}
-          onClick={closeMenusOnMobile}
-        >
-          소개
-        </NavLink>
-        <NavLink
-          className={({ isActive }) =>
-            isActive ? "navbarMenu active" : "navbarMenu"
-          }
           to={"/learn"}
           onClick={closeMenusOnMobile}
         >
@@ -132,6 +123,15 @@ function Nav() {
           onClick={closeMenusOnMobile}
         >
           마이페이지
+        </NavLink>
+        <NavLink
+          className={({ isActive }) =>
+            isActive ? "navbarMenu active" : "navbarMenu"
+          }
+          to={"/introduce"}
+          onClick={closeMenusOnMobile}
+        >
+          개발자
         </NavLink>
       </div>
       <div className={`authContainer ${isMobileMenuOpen ? "open" : ""}`}>

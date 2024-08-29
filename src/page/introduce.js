@@ -40,6 +40,9 @@ const Introduce = () => (
         아이콘을 누르면 저희가 작업한 홈페이지의 소스 코드를 올려 둔 깃허브 주소를 확인하실 수 있습니다.
       </div>
     </div>
+    <div className='site-introduce'>
+      개발할 때 쓴 언어 이미지 추가
+    </div>
   </div>
 );
 
