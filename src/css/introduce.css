@@ -78,3 +78,14 @@
   width: 900px;
   height: 400px;
 }
+
+.tech-icon {
+  width: 100px; /* 원하는 너비 */
+  height: auto; /* 비율에 맞게 높이 자동 조절 */
+  margin: 10px; /* 이미지 간 간격 */
+}
+
+.team-member-photo {
+  width: 100px; /* 팀원 사진 너비 */
+  height: auto; /* 비율에 맞게 높이 자동 조절 */
+}

@@ -85,65 +85,76 @@ function Register() {
   }, [navigate]);
 
   return (
-    <div className="userContainer">
-      <h3>회원가입</h3>
-      <form onSubmit={registerSubmit} className="formContainer">
+    <div className="RegisterContainer">
+      <h2 className="RegisterTitle">회원가입</h2>
+      <form onSubmit={registerSubmit}>
         <div>
-          <label>ID</label>
           <input
             type="text"
             value={username}
             onChange={(e) => setUsername(e.target.value)}
+            placeholder="아이디"
+            className="RegisterLongInput"
           />
           <h4>{usernameError}</h4>
         </div>
         <div>
-          <label>비밀번호</label>
           <input
             type="password"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
+            placeholder="비밀번호"
+            className="RegisterLongInput"
           />
           <h4>{null}</h4>
         </div>
         <div>
-          <label>비밀번호 확인</label>
           <input
             type="password"
             value={password2}
             onChange={(e) => setPassword2(e.target.value)}
+            placeholder="비밀번호 확인"
+            className="RegisterLongInput"
           />
           <h4>{passwordError}</h4>
         </div>
         <div>
-          <label>이메일</label>
-          <div className="checkUser">
+          <div className="RegisterCheckUser">
             <input
               type="text"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
-              placeholder="ex) admin@aaa.com"
+              placeholder="이메일"
+              className="RegisterShortInput"
             />
-            <button className="authBtn" onClick={mailSendCode}>인증코드 전송</button>
+            <button className="RegisterAuthBtn" onClick={mailSendCode}>
+              확인
+            </button>
           </div>
           <h4>{emailError}</h4>
         </div>
         <div>
-          <label>
-            인증코드(6자리)
-            <span>{!isTimer && <Timer setIsFind={setIsTimer} />}</span>
-          </label>
-          <div className="checkUser">
+          {!isTimer && (
+            <span className="RegisterTimer">
+              인증코드(6자리) : <></>
+              <Timer setIsFind={setIsTimer} />
+            </span>
+          )}
+          <div className="RegisterCheckUser">
             <input
               type="text"
               value={authCode}
               onChange={(e) => setAuthCode(e.target.value)}
+              placeholder="인증번호"
+              className="RegisterShortInput"
             />
-            <button className="authBtn" onClick={submitAuthCode}>인증</button>
+            <button className="RegisterAuthBtn" onClick={submitAuthCode}>
+              인증
+            </button>
           </div>
           <h4>{authCodeError}</h4>
         </div>
-        <button className="submitBtn" type="submit">
+        <button className="RegisterSubmitBtn" type="submit">
           회원가입
         </button>
       </form>

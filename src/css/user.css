@@ -1,138 +1,309 @@
-.userContainer {
+/*로그인(Login.js)*/
+.LoginContainer {
   background-color: white;
-  padding: 20px;
-  border-radius: 8px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  max-width: 400px;
-  width: 100%;
-  margin: 20px auto 0;
+  padding: 150px 40px 150px 40px;
+  border-radius: 20px;
+  width: 600px;
+  margin: 20px 0px 20px 490px;
+  border: 2px solid #a0cbe7;
 }
-
-.userContainer h1,
-.userContainer h2,
-.userContainer h3 {
-  text-align: center;
-  color: #333;
+.LoginTitle {
+  font-size: 40px;
 }
-
-.userContainer label {
-  font-weight: bold;
-  font-size: 17px;
+.LoginContainer input {
   display: block;
+  width: 300px;
+  padding: 15px 15px 15px 15px;
+  margin: 30px 0px 10px 110px;
+  border: 0px solid white;
+  background-color: #f0f4f3;
   color: #333;
+  font-size: 18px;
 }
-
-.userContainer input {
-  display: block;
-  width: 100%;
-  padding: 10px;
-  margin: 25px 0;
-  border: 1px solid #ccc;
-  border-radius: 4px;
-  background-color: #d1ebfc;
-  color: #333;
+.LoginSubmitBtn {
+  width: 300px;
   font-size: 16px;
+  border: none;
+  border-radius: 50px;
+  background-color: #a0cbe7;
+  color: white;
+  cursor: pointer;
+  padding: 15px 15px 15px 15px;
+  margin: 25px 0px 0px 110px;
 }
-
-input[type='text']:focus,
-input[type='password']:focus,
-input[type='email']:focus,
-.userContainer input:focus {
-  border-color: #80a5c8;
-  outline: none;
+.LoginSpanDiv {
+  margin: 30px 0px 0px 170px;
 }
-
-.userContainer h4 {
+.LoginSpan {
+  text-align: center;
+  cursor: pointer;
+  border-bottom: 1px dashed black;
+  font-size: 17px;
+  width: 100px;
+}
+.LoginContainer p {
+  text-align: center;
+  margin: 30px 0px 0px 210px;
+  cursor: pointer;
+  border-bottom: 1px dashed black;
+  font-size: 17px;
+  width: 100px;
+}
+.LoginContainer h4 {
   color: red;
-  height: 15px;
   font-size: 14px;
-  margin: 5px 0 0 0;
+  font-weight: bold;
+  margin: 0px 0px 0px 50px;
 }
-
-.checkUser {
+/*회원가입(Register.js)*/
+.RegisterContainer {
+  background-color: white;
+  padding: 40px;
+  border-radius: 20px;
+  width: 600px;
+  margin: 20px 0px 20px 490px;
+  border: 2px solid #a0cbe7;
+}
+.RegisterTitle {
+  font-size: 40px;
+}
+.RegisterLongInput {
+  display: block;
+  width: 415px;
+  padding: 15px 15px 15px 15px;
+  margin: 25px 0px 0px 45px;
+  border: 0px solid white;
+  background-color: #f0f4f3;
+  color: #333;
+  font-size: 18px;
+}
+.RegisterShortInput {
+  display: block;
+  width: 300px;
+  padding: 15px 15px 15px 15px;
+  margin: 25px 0px 0px 0px;
+  border: 0px solid white;
+  background-color: #f0f4f3;
+  color: #333;
+  font-size: 18px;
+}
+.RegisterCheckUser {
   display: flex;
   justify-content: center;
   align-items: center;
   margin-right: 5px;
 }
-
-.checkUser input {
-  margin-right: 10px; /* 원하는 간격으로 조정 */
-}
-
-.authBtn {
-  width: 50%;
-  padding: 10px;
+.RegisterAuthBtn {
+  width: 100px;
+  padding: 16px 10px 16px 10px;
   border: none;
-  border-radius: 4px;
-  background-color: #99b0c5;
+  border-radius: 50px;
+  background-color: #a0cbe7;
   color: white;
+  margin-top: 30px;
 }
-
-.authBtn:hover {
-  background-color: #225f94;
-}
-
-.submitBtn {
-  width: 100%;
-  padding: 10px;
+.RegisterSubmitBtn {
+  width: 415px;
   font-size: 16px;
-  font-weight: 600;
   border: none;
-  border-radius: 4px;
-  background-color: #5a9bd4;
+  border-radius: 50px;
+  background-color: #a0cbe7;
   color: white;
   cursor: pointer;
+  padding: 15px 15px 15px 15px;
+  margin: 25px 0px 0px 45px;
 }
-
-.submitBtn:hover {
-  background-color: #225f94;
-}
-
-.userContainer p {
-  color: #5a9bd4;
+.RegisterContainer p {
   text-align: center;
-  margin-top: 15px;
-  font-weight: bold;
+  margin: 30px 0px 0px 230px;
   cursor: pointer;
+  border-bottom: 1px dashed black;
+  width: 50px;
+  font-size: 17px;
+}
+.RegisterTimer {
+  font-weight: bold;
+  margin-left: 50px;
+}
+.RegisterContainer h4 {
+  color: red;
+  height: 15px;
+  font-size: 14px;
+  font-weight: bold;
+  margin: 10px 0px 0px 50px;
 }
 
-.userContainer p:hover {
-  color: blue;
-  text-decoration: underline;
+/*ID 찾기, ID 확인(IdFind.js, IdCheck.js)*/
+.idFindContainer {
+  background-color: white;
+  padding: 150px 40px 150px 40px;
+  border-radius: 20px;
+  width: 600px;
+  margin: 20px 0px 20px 490px;
+  border: 2px solid #a0cbe7;
+}
+.idFindTitle {
+  text-align: center;
+  color: #333;
+}
+.idCheckInput {
+  display: block;
+  width: 300px;
+  padding: 15px 15px 15px 15px;
+  margin: 25px 0px 0px 110px;
+  border: 0px solid white;
+  background-color: #f0f4f3;
+  color: #333;
+  font-size: 18px;
+}
+.idFindContainer h4 {
+  color: red;
+  height: 15px;
+  font-size: 14px;
+  font-weight: bold;
+  margin: 10px 0px 0px 100px;
+}
+.idFindBtn {
+  width: 300px;
+  font-size: 16px;
+  border: none;
+  border-radius: 50px;
+  background-color: #a0cbe7;
+  color: white;
+  cursor: pointer;
+  padding: 15px 15px 15px 15px;
+  margin: 25px 0px 0px 110px;
+}
+.idFindContainer p {
+  text-align: center;
+  margin: 30px 0px 0px 230px;
+  cursor: pointer;
+  border-bottom: 1px dashed black;
+  width: 50px;
+  font-size: 17px;
+}
+.idCheckBtn {
+  width: 200px;
+  font-size: 16px;
+  border: none;
+  border-radius: 50px;
+  background-color: #a0cbe7;
+  color: white;
+  cursor: pointer;
+  padding: 15px 15px 15px 15px;
+  margin: 25px 0px 0px 160px;
 }
 
-.findDiv {
-  display: flex;
-  justify-content: space-between;
-  width: 100%;
+/*비밀번호 찾기(PwdFind.js)*/
+.pwdFindContainer {
+  background-color: white;
+  padding: 150px 40px 150px 40px;
+  border-radius: 20px;
+  width: 600px;
+  margin: 20px 0px 20px 490px;
+  border: 2px solid #a0cbe7;
+}
+.pwdFindTitle {
+  text-align: center;
+  color: #333;
+}
+.pwdCheckInput {
+  display: block;
+  width: 300px;
+  padding: 15px 15px 15px 15px;
+  margin: 30px 0px 0px 110px;
+  border: 0px solid white;
+  background-color: #f0f4f3;
+  color: #333;
+  font-size: 18px;
+}
+.pwdFindBtn {
+  width: 300px;
+  font-size: 16px;
+  border: none;
+  border-radius: 50px;
+  background-color: #a0cbe7;
+  color: white;
+  cursor: pointer;
+  padding: 15px 15px 15px 15px;
+  margin: 25px 0px 0px 110px;
+}
+.pwdFindContainer p {
+  text-align: center;
+  margin: 30px 0px 0px 230px;
+  cursor: pointer;
+  border-bottom: 1px dashed black;
+  width: 50px;
+  font-size: 17px;
+}
+.pwdFindContainer h4 {
+  color: red;
+  height: 15px;
+  font-size: 14px;
+  font-weight: bold;
+  margin: 10px 0px 0px 100px;
+}
+
+/*비밀번호 변경*/
+.pwdChangeTitle {
+  text-align: center;
+  color: #333;
+}
+.pwdChangeInput {
+  display: block;
+  width: 300px;
+  padding: 15px 15px 15px 15px;
+  margin: 30px 0px 0px 100px;
+  border: 0px solid white;
+  background-color: #f0f4f3;
+  color: #333;
+  font-size: 18px;
+}
+.pwdChangeBtn {
+  width: 300px;
+  font-size: 16px;
+  border: none;
+  border-radius: 50px;
+  background-color: #a0cbe7;
+  color: white;
+  cursor: pointer;
+  padding: 15px 15px 15px 15px;
+  margin: 25px 0px 0px 100px;
+}
+
+/*인증코드 입력(authInput.js)*/
+.authInputContainer input {
+  display: block;
+  width: 300px;
+  padding: 15px 15px 15px 15px;
+  margin: 25px 0px 0px 100px;
+  border: 0px solid white;
+  background-color: #f0f4f3;
+  color: #333;
+  font-size: 18px;
+}
+.authInputContainer label {
+  font-weight: bold;
+  margin-left: 100px;
   margin-top: 20px;
 }
-
-.findBtn,
-.findBtn2 {
-  flex-grow: 1;
-  padding: 10px 0;
+.authSubmitBtn {
+  width: 300px;
+  font-size: 16px;
   border: none;
-  border-radius: 4px;
-  cursor: pointer;
-  background-color: #5a9bd4;
+  border-radius: 50px;
+  background-color: #a0cbe7;
   color: white;
-  text-align: center;
-  font-weight: bold;
-  width: auto; /* 70%에서 auto로 변경하여 플렉스 박스에 맞게 조정 */
+  cursor: pointer;
+  padding: 15px 15px 15px 15px;
+  margin: 25px 0px 0px 100px;
 }
 
-.findBtn2 {
-  margin-left: 30px;
-}
-
-.findBtn:hover,
-.findBtn2:hover {
-  background-color: #225f94;
-}
-
-.timer {
-  margin-left: 320px;
-  color: red;
+/*공용*/
+input[type="text"]:focus,
+input[type="password"]:focus,
+input[type="email"]:focus,
+.RegisterContainer input:focus {
+  border-color: #80a5c8;
+  outline: none;
 }

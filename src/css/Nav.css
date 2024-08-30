@@ -16,6 +16,13 @@ html {
 .header span {
   color: darkgray;
 }
+.header img {
+  width: 40px;
+  height: 40px;
+  margin-left: 30px;
+  margin-right: 5px;
+}
+
 .loginLeft,
 .loginRight {
   font-size: 13px;
@@ -37,7 +44,6 @@ html {
   margin-right: 50px;
 }
 .siteLeft {
-  margin-left: 50px;
   font-size: 15px;
   font-weight: 600;
   margin-right: 7px;
