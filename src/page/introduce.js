@@ -4,6 +4,11 @@ import "../css/introduce.css";
 import image1 from "../img/woman.png";
 import image2 from "../img/man.png";
 import introImg from "../img/intro.png";
+import css from "../img/css.png";
+import js from "../img/js.png";
+import nodejs from "../img/nodejs.png";
+import react from "../img/react.png";
+import vscode from "../img/vscode.png";
 
 const teamMembers = [
   { image: image1, name: "박유진", role: "프론트엔드" },
@@ -17,6 +22,16 @@ const TeamMember = ({ image, name, role }) => (
     <img src={image} alt={name} className="team-member-photo" />
     <h2>{name}</h2>
     <p>{role}</p>
+  </div>
+);
+
+const TechnologyIcons = () => (
+  <div className="technology-icons">
+    <img src={css} alt="CSS" className="tech-icon" />
+    <img src={js} alt="JavaScript" className="tech-icon" />
+    <img src={nodejs} alt="Node.js" className="tech-icon" />
+    <img src={react} alt="React" className="tech-icon" />
+    <img src={vscode} alt="VSCode" className="tech-icon" />
   </div>
 );
 
@@ -52,7 +67,13 @@ const Introduce = () => (
         ))}
       </div>
     </div>
-    <div div className="introduceDiv">
+    <div className="introduceDiv">
+      <h1>사용한 기술, 라이브러리</h1>
+      <div className='site-introduce'>
+        <TechnologyIcons />
+      </div>
+    </div>
+    <div className="introduceDiv">
       <h1>소스 코드</h1>
       <div className="site-introduce">
         <div
@@ -67,7 +88,7 @@ const Introduce = () => (
         주소를 확인하실 수 있습니다.
       </div>
     </div>
-  </div>
+  </div >
 );
 
 export default Introduce;
