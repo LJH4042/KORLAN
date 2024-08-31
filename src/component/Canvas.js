@@ -66,6 +66,10 @@ function Canvas({
   };
 
   const outputCanvasImage = async () => {
+    if (paths.length === 0 && path.length === 0) {
+      alert("단어를 써주세요."); // 경고 메시지
+      return;
+    }
     const canvas = canvasRef.current;
     setOutputImageSrc(canvas.toDataURL());
     const dataURL = canvas.toDataURL("image/png");
@@ -206,7 +210,6 @@ function Canvas({
           </div>
         )}
       </div>
-      {/*outputImageSrc && <img src={outputImageSrc} alt="분석된 이미지" />*/}
     </div>
   );
 }
