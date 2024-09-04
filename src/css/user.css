@@ -53,8 +53,9 @@
   color: red;
   font-size: 14px;
   font-weight: bold;
-  margin: 0px 0px 0px 50px;
+  margin: 0px 0px 0px 110px;
 }
+
 /*회원가입(Register.js)*/
 .RegisterContainer {
   background-color: white;
@@ -79,7 +80,7 @@
 }
 .RegisterShortInput {
   display: block;
-  width: 300px;
+  width: 310px;
   padding: 15px 15px 15px 15px;
   margin: 25px 0px 0px 0px;
   border: 0px solid white;
@@ -161,7 +162,7 @@
   height: 15px;
   font-size: 14px;
   font-weight: bold;
-  margin: 10px 0px 0px 100px;
+  margin: 10px 0px 0px 110px;
 }
 .idFindBtn {
   width: 300px;
@@ -241,7 +242,7 @@
   height: 15px;
   font-size: 14px;
   font-weight: bold;
-  margin: 10px 0px 0px 100px;
+  margin: 10px 0px 0px 110px;
 }
 
 /*비밀번호 변경*/
@@ -253,7 +254,7 @@
   display: block;
   width: 300px;
   padding: 15px 15px 15px 15px;
-  margin: 30px 0px 0px 100px;
+  margin: 40px 0px 0px 110px;
   border: 0px solid white;
   background-color: #f0f4f3;
   color: #333;
@@ -268,7 +269,10 @@
   color: white;
   cursor: pointer;
   padding: 15px 15px 15px 15px;
-  margin: 25px 0px 0px 100px;
+  margin: 25px 0px 0px 110px;
+}
+.pwdChangeContainer h4 {
+  margin-left: 110px;
 }
 
 /*인증코드 입력(authInput.js)*/
@@ -297,6 +301,9 @@
   cursor: pointer;
   padding: 15px 15px 15px 15px;
   margin: 25px 0px 0px 100px;
+}
+.authInputContainer h4 {
+  margin-left: 100px;
 }
 
 /*공용*/

@@ -84,6 +84,9 @@ h3 {
   margin: auto;
   margin-top: 20px;
 }
+.learnCanvas {
+  margin-top: 50px;
+}
 
 /* 추가된 flexContainer 스타일 */
 .flexContainer {

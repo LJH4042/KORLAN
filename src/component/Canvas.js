@@ -153,6 +153,9 @@ function Canvas({
   return (
     <div className="canvasContainer">
       <div>
+        <p style={{ textAlign: "center", color: "gray" }}>
+          -최대한 또박또박 바르게 써주세요.-
+        </p>
         <canvas
           ref={canvasRef}
           width={750}

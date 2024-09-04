@@ -35,7 +35,9 @@ function Typing({
       ) : (
         <div>
           <input value={typing} onChange={changeTyping} />
-          <button onClick={sumbitAnswer}>확인</button>
+          <button className="typingButton" onClick={sumbitAnswer}>
+            확인
+          </button>
         </div>
       )}
     </div>
