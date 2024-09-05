@@ -21,8 +21,8 @@ const TeamMember = ({ image, name, role }) => (
 function TeamIntro() {
   return (
     <div className="introduce">
-      <div className="introduceDiv">
-        <h1>팀원 소개</h1>
+      <div className="introduceDiv-Final">
+        <h1 style={{ marginBottom: "50px" }}>팀원 소개</h1>
         <div className="team-members">
           {teamMembers.map((member, index) => (
             <TeamMember key={index} {...member} />

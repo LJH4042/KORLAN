@@ -10,6 +10,12 @@
   margin-left: 300px;
   padding-bottom: 50px;
 }
+.introduceDiv-Final {
+  width: 60%;
+  margin-left: 300px;
+  padding-bottom: 50px;
+  margin-top: 50px;
+}
 
 .team-members {
   display: flex;

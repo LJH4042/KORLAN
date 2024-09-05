@@ -95,22 +95,22 @@ function Notebook() {
 
     if (isCorrect) {
       if (trimmedUserAnswer === previousAnswer) {
-        alert(`정답입니다! ${currentNum} / 3`);
+        alert(`잘했어요! ${currentNum} / 3`);
         setCurrentNum((prevNum) => prevNum + 1);
         if (currentNum === 3) {
           setCurrentNum(1);
           updateWord(trimmedUserAnswer);
-          alert("잘했어요!");
+          alert("훌륭해요!!!!!!");
         }
       } else if (previousAnswer === "") {
-        alert(`정답입니다! ${currentNum} / 3`);
+        alert(`잘했어요! ${currentNum} / 3`);
         setCurrentNum((prevNum) => prevNum + 1);
       } else {
         setCurrentNum(2);
-        alert(`정답입니다! 1 / 3`);
+        alert(`잘했어요! 1 / 3`);
       }
     } else {
-      alert("오답입니다.");
+      alert("최대한 또박또박 바르게 써주세요.");
       setCurrentNum(1);
       try {
         const token = localStorage.getItem("token");
@@ -148,6 +148,29 @@ function Notebook() {
         headerData
       );
       console.log("데이터가 추가되었습니다.");
+
+      // 새로 추가된 단어를 상태에 즉시 반영
+      setSavedWords((prevWords) => {
+        const updatedWords = { ...prevWords };
+
+        if (letterType === "consonant") {
+          updatedWords.consonant = [...prevWords.consonant, trimmedUserAnswer];
+        } else if (letterType === "vowel") {
+          updatedWords.vowel = [...prevWords.vowel, trimmedUserAnswer];
+        } else if (letterType === "doubleConsonant") {
+          updatedWords.doubleConsonant = [
+            ...prevWords.doubleConsonant,
+            trimmedUserAnswer,
+          ];
+        } else if (letterType === "doubleVowel") {
+          updatedWords.doubleVowel = [
+            ...prevWords.doubleVowel,
+            trimmedUserAnswer,
+          ];
+        }
+
+        return updatedWords; // 상태 업데이트 후 컴포넌트가 다시 렌더링됩니다.
+      });
     } catch (err) {
       if (err.response.status === 401) {
         try {

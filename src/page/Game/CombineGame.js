@@ -174,8 +174,12 @@ function CombineGame({ gameLevel }) {
               <h3 style={{ marginTop: "30px" }}>{gameoverText}</h3>
             </div>
             <div>
-              <button onClick={resetGame}>난이도 선택</button>
-              <button onClick={() => navigate("/")}>홈으로</button>
+              <button className="actionButton" onClick={resetGame}>
+                난이도 선택
+              </button>
+              <button className="actionButton" onClick={() => navigate("/")}>
+                홈으로
+              </button>
             </div>
           </div>
         ) : (
@@ -210,8 +214,8 @@ function CombineGame({ gameLevel }) {
       </div>
       {!gameOver && (
         <div>
-          <h2 style={{ fontSize: "20px", marginBottom: "20px" }}>
-            글자 수: {length}, 힌트: {hint}
+          <h2 style={{ fontSize: "20px", marginBottom: "30px" }}>
+            글자 수: {length} / 힌트: {hint}
           </h2>
           {answerObj ? (
             <Typing

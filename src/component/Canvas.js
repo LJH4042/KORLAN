@@ -153,6 +153,9 @@ function Canvas({
   return (
     <div className="canvasContainer">
       <div>
+        <p style={{ textAlign: "center", color: "gray" }}>
+          -최대한 또박또박 바르게 써주세요.-
+        </p>
         <canvas
           ref={canvasRef}
           width={750}
@@ -191,10 +194,12 @@ function Canvas({
       <div className="canvasButtonDiv">
         {checkQuiz ? (
           <div>
-            <h3>
+            <h3 style={{ marginLeft: "120px" }}>
               정답: {quiz}, 제출한 답: {imgText}
             </h3>
-            <button onClick={nextLevel}>다음 레벨</button>
+            <button className="actionButton" onClick={nextLevel}>
+              다음 레벨
+            </button>
           </div>
         ) : (
           <div>

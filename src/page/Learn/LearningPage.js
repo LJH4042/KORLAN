@@ -163,7 +163,9 @@ const LearningPage = () => {
                 </div>
               </div>
             )}
-            <Canvas checkAnswer={checkAnswer} />
+            <div style={{ marginTop: "50px" }}>
+              <Canvas checkAnswer={checkAnswer} />
+            </div>
           </div>
         </div>
       </div>

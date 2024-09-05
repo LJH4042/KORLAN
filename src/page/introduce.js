@@ -40,8 +40,8 @@ const Introduce = () => (
         <TechnologyIcons />
       </div>
     </div>
-    <div className="introduceDiv">
-      <h1>소스 코드</h1>
+    <div className="introduceDiv-Final">
+      <h1 style={{ marginBottom: "40px" }}>소스 코드</h1>
       <div className="site-introduce">
         <div
           className="icon-container"
