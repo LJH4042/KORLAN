@@ -224,6 +224,7 @@ button:disabled,
   border: 3px solid rgb(146, 146, 146);
   border-radius: 20px;
   padding: 10px 80px 10px 80px;
+  width: 500px;
 }
 
 .typingContainer {
@@ -244,7 +245,8 @@ button:disabled,
 }
 
 .typingContainer button,
-.canvasButtonDiv button {
+.canvasButtonDiv button,
+.gameoverDiv button {
   background-color: #a0cbe7;
   color: white;
   border: none;

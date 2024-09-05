@@ -31,7 +31,7 @@ const Footer = () => {
               <a href="/notebook">연습장</a>
             </li>
             <li>
-              <a href="/teamIntro">개발자</a>
+              <a href="/teamIntro">개발팀</a>
             </li>
           </ul>
         </div>

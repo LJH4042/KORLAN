@@ -104,7 +104,7 @@ function Nav() {
           to={"/teamIntro"}
           onClick={closeMenusOnMobile}
         >
-          개발자
+          개발팀
         </NavLink>
       </div>
     </div>

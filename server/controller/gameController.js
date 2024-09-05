@@ -135,14 +135,14 @@ const submitAnswer = asynchHandler(async (req, res) => {
     userId,
     question,
     givenAnswer,
-    correctAnswer
+    correctAnswer,
   });
 
   try {
     await wrongAnswer.save();
-    res.status(201).json({ message: '오답이 저장되었습니다.' });
+    res.status(201).json({ message: "오답이 저장되었습니다." });
   } catch (error) {
-    res.status(500).json({ error: '오답 저장에 실패했습니다.' });
+    res.status(500).json({ error: "오답 저장에 실패했습니다." });
   }
 });
 
@@ -155,5 +155,5 @@ module.exports = {
   addCombineScore,
   learnData,
   submitAnswer,
-  getWrongAnswers
+  getWrongAnswers,
 };
