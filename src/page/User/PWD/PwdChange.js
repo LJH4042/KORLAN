@@ -43,6 +43,7 @@ function PwdChange({ name }) {
             onChange={(e) => setPassword(e.target.value)}
             placeholder="새 비밀번호"
             className="pwdChangeInput"
+            style={{ marginBottom: "30px" }}
           />
         </div>
         <div>
