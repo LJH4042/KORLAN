@@ -34,6 +34,7 @@ function PwdChange({ name }) {
   return (
     <div className="pwdChangeContainer">
       <h1 className="pwdChangeTitle">비밀번호 변경</h1>
+      <span className="pwdChangeSubTitle">-비밀번호를 변경하세요.-</span>
       <form onSubmit={pwdChangeSubmit}>
         <div>
           <input

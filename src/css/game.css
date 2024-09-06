@@ -10,7 +10,7 @@
   justify-content: center;
   min-height: 70vh;
   padding: 50px;
-  background-color: #a0cbe7;
+  background-color: #f0f4f9;
 }
 
 .imageDiv,
@@ -34,7 +34,7 @@
   height: auto;
   border: 3px solid rgb(146, 146, 146);
   border-radius: 8px;
-  margin: 0px 0px 10px 135px;
+  margin: 0px 0px 10px 145px;
   padding: 30px 150px 30px 150px;
 }
 
@@ -84,6 +84,7 @@ button:disabled,
   width: 1100px;
   background-color: white;
   border-radius: 10px;
+  margin-left: 50px;
 }
 
 .gameContainer div {
@@ -93,12 +94,12 @@ button:disabled,
 .gameDescription_1 {
   font-size: 1.2em;
   color: #666;
-  margin: 20px 0px 20px 210px;
+  margin: 20px 0px 20px 220px;
 }
 .gameDescription_2 {
   font-size: 1.2em;
   color: #666;
-  margin: 20px 0px 20px 230px;
+  margin: 20px 0px 20px 220px;
 }
 
 .levelContainer {
@@ -194,7 +195,7 @@ button:disabled,
 
 .canvasContainer {
   width: 100%;
-  margin: auto;
+  margin-left: 10px;
 }
 
 .canvasContainer button {
@@ -291,6 +292,7 @@ button:disabled,
   box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
   border: 3px solid #a0cbe7;
   border-radius: 20px;
+  margin-left: 10px;
 }
 
 @media (max-width: 768px) {

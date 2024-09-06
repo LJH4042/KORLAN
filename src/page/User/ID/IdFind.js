@@ -36,34 +36,39 @@ function IdFind() {
   }, [navigate]);
 
   return (
-    <div className="idFindContainer">
-      {!isCheck && <h1 className="idFindTitle">ID 찾기</h1>}
-      {isAuth && (
-        <AuthInput
-          setIsAuth={setIsAuth}
-          setIsFind={setIsFind}
-          setIsCheck={setIsCheck}
-        />
-      )}
-      {isCheck && <IdCheck emailer={email} />}
-      {isFind && (
-        <div>
-          <form onSubmit={IdFindSubmit}>
-            <div>
-              <input
-                type="text"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-                placeholder="이메일"
-                className="idCheckInput"
-              />
-              <h4>{emailError}</h4>
-            </div>
-            <button className="idFindBtn">ID 찾기</button>
-          </form>
-          <p onClick={() => navigate("/login")}>로그인</p>
-        </div>
-      )}
+    <div className="idFindPage">
+      <div className="idFindContainer">
+        {!isCheck && <h1 className="idFindTitle">ID 찾기</h1>}
+        {!isCheck && (
+          <span className="idFindSubTitle">-아이디를 잊으셨나요?-</span>
+        )}
+        {isAuth && (
+          <AuthInput
+            setIsAuth={setIsAuth}
+            setIsFind={setIsFind}
+            setIsCheck={setIsCheck}
+          />
+        )}
+        {isCheck && <IdCheck emailer={email} />}
+        {isFind && (
+          <div>
+            <form onSubmit={IdFindSubmit}>
+              <div>
+                <input
+                  type="text"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                  placeholder="이메일"
+                  className="idCheckInput"
+                />
+                <h4>{emailError}</h4>
+              </div>
+              <button className="idFindBtn">ID 찾기</button>
+            </form>
+            <p onClick={() => navigate("/login")}>로그인</p>
+          </div>
+        )}
+      </div>
     </div>
   );
 }
