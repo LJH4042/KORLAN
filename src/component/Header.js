@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import "../css/Nav.css";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
+import embel from "../img/JBUemble.png";
 
 function Header() {
   const navigate = useNavigate();
@@ -70,6 +71,7 @@ function Header() {
   return (
     <div className="header">
       <div>
+        <img src={embel} alt={"중부대 로고"} />
         <span
           className="siteLeft"
           onClick={() => window.open("https://www.joongbu.ac.kr/is/", "_blank")}

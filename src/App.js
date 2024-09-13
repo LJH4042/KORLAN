@@ -17,6 +17,7 @@ import ImageLevel from "./page/Game/ImageLevel";
 import CombineLevel from "./page/Game/CombineLevel";
 import Header from "./component/Header";
 import axios from "axios";
+import TeamIntro from "./page/TeamIntro";
 
 function App() {
   const checkToken = async () => {
@@ -61,6 +62,7 @@ function App() {
           <Route path="/learn" element={<LearningPage />} />
           <Route path="/introduce" element={<Introduce />} />
           <Route path="/notebook" element={<Notebook />} />
+          <Route path="/teamIntro" element={<TeamIntro />} />
         </Routes>
       </BrowserRouter>
       <Footer />

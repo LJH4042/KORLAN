@@ -25,9 +25,9 @@ function IdCheck({ emailer }) {
   }, []);
 
   return (
-    <div className="userContainer">
+    <div className="idCheckContainer">
       <h2>ID : {username}</h2>
-      <button className="submitBtn" onClick={() => navigate("/login")}>
+      <button className="idCheckBtn" onClick={() => navigate("/login")}>
         로그인
       </button>
     </div>

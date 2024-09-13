@@ -1,14 +1,11 @@
-import { Link, NavLink, useNavigate } from "react-router-dom";
+import { Link, NavLink } from "react-router-dom";
 import React, { useState, useEffect } from "react";
 import "../css/Nav.css";
 import Logo from "../logo.svg";
-import axios from "axios";
 
 function Nav() {
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
-  const navigate = useNavigate();
 
   const toggleDropdown = () => {
     setIsDropdownOpen(!isDropdownOpen);
@@ -36,28 +33,6 @@ function Nav() {
     return () => window.removeEventListener("resize", handleResize);
   }, []);
 
-  useEffect(() => {
-    const token = localStorage.getItem("token");
-    if (token) {
-      setIsLoggedIn(true);
-    }
-  }, []);
-
-  const handleLogout = async () => {
-    try {
-      await axios.post(
-        "http://localhost:5000/logout",
-        {},
-        { withCredentials: true } //withCredentials 허용
-      );
-      localStorage.removeItem("token"); //accessToken 삭제
-      navigate("/login"); //로그인 페이지로 이동
-      window.location.reload();
-    } catch (err) {
-      console.error("Logout failed", err);
-    }
-  };
-
   return (
     <div className="navbar">
       <Link to={"/"}>
@@ -67,6 +42,15 @@ function Nav() {
         &#9776;
       </div>
       <div className={`menuContainer ${isMobileMenuOpen ? "open" : ""}`}>
+        <NavLink
+          className={({ isActive }) =>
+            isActive ? "navbarMenu active" : "navbarMenu"
+          }
+          to={"/introduce"}
+          onClick={closeMenusOnMobile}
+        >
+          소개
+        </NavLink>
         <NavLink
           className={({ isActive }) =>
             isActive ? "navbarMenu active" : "navbarMenu"
@@ -117,10 +101,10 @@ function Nav() {
           className={({ isActive }) =>
             isActive ? "navbarMenu active" : "navbarMenu"
           }
-          to={"/introduce"}
+          to={"/teamIntro"}
           onClick={closeMenusOnMobile}
         >
-          개발자
+          개발팀
         </NavLink>
       </div>
     </div>

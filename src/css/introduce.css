@@ -10,6 +10,12 @@
   margin-left: 300px;
   padding-bottom: 50px;
 }
+.introduceDiv-Final {
+  width: 60%;
+  margin-left: 300px;
+  padding-bottom: 50px;
+  margin-top: 50px;
+}
 
 .team-members {
   display: flex;
@@ -34,11 +40,6 @@
 .team-member h2 {
   margin: 0;
   font-size: 1.5em;
-}
-
-.team-member p {
-  margin: 5px 0 0;
-  color: #555;
 }
 
 .site-introduce {
@@ -88,4 +89,8 @@
 .team-member-photo {
   width: 100px; /* 팀원 사진 너비 */
   height: auto; /* 비율에 맞게 높이 자동 조절 */
+}
+
+.progrom-img {
+  width: 900px;
 }

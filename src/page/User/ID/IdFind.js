@@ -36,8 +36,8 @@ function IdFind() {
   }, [navigate]);
 
   return (
-    <div className="userContainer">
-      <h1>ID 찾기</h1>
+    <div className="idFindContainer">
+      {!isCheck && <h1 className="idFindTitle">ID 찾기</h1>}
       {isAuth && (
         <AuthInput
           setIsAuth={setIsAuth}
@@ -50,16 +50,16 @@ function IdFind() {
         <div>
           <form onSubmit={IdFindSubmit}>
             <div>
-              <label>이메일</label>
               <input
                 type="text"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
-                placeholder="ex) admin@aaa.com"
+                placeholder="이메일"
+                className="idCheckInput"
               />
               <h4>{emailError}</h4>
             </div>
-            <button className="submitBtn">ID 찾기</button>
+            <button className="idFindBtn">ID 찾기</button>
           </form>
           <p onClick={() => navigate("/login")}>로그인</p>
         </div>
