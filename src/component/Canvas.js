@@ -116,6 +116,10 @@ function Canvas({
 
   const clearCanvas = () => {
     const canvas = canvasRef.current;
+    if (!canvas) {
+      console.error("캔버스 요소를 찾을 수 없습니다.");
+      return;
+    }
     const ctx = canvas.getContext("2d");
     ctx.clearRect(0, 0, canvas.width, canvas.height);
     setOutputImageSrc(null);
@@ -148,73 +152,74 @@ function Canvas({
     setCheckQuiz(false);
     setAnswerObjButton(false);
     setImgText("");
+    setPaths([]);
   };
 
   return (
     <div className="canvasContainer">
-      <div>
-        <p style={{ textAlign: "center", color: "gray" }}>
-          -최대한 또박또박 바르게 써주세요.-
-        </p>
-        <canvas
-          ref={canvasRef}
-          width={750}
-          height={300}
-          style={{
-            border: "5px solid #a0cbe7",
-            borderRadius: "10%",
-          }}
-          onMouseDown={drawingCanvas}
-          onMouseUp={stopDrawing}
-          onMouseOut={canvasOut}
-        />
-      </div>
-      <div className="canvasButtonDiv">
-        <button
-          style={{ backgroundColor: "gray", padding: "15px" }}
-          onClick={() => setColor("gray")}
-        />
-        <button
-          style={{ backgroundColor: "blue", padding: "15px" }}
-          onClick={() => setColor("blue")}
-        />
-        <button
-          style={{ backgroundColor: "red", padding: "15px" }}
-          onClick={() => setColor("red")}
-        />
-        <button
-          style={{ backgroundColor: "green", padding: "15px" }}
-          onClick={() => setColor("green")}
-        />
-        <button
-          style={{ backgroundColor: "purple", padding: "15px" }}
-          onClick={() => setColor("purple")}
-        />
-      </div>
-      <div className="canvasButtonDiv">
-        {checkQuiz ? (
+      {checkQuiz ? (
+        <div className="canvasButtonDiv">
+          <h3>{quiz}</h3>
+          <button className="actionButton" onClick={nextLevel}>
+            다음 레벨
+          </button>
+        </div>
+      ) : (
+        <div>
           <div>
-            <h3 style={{ marginLeft: "120px" }}>
-              정답: {quiz}, 제출한 답: {imgText}
-            </h3>
-            <button className="actionButton" onClick={nextLevel}>
-              다음 레벨
-            </button>
+            <p style={{ textAlign: "center", color: "gray" }}>
+              -최대한 또박또박 바르게 써주세요.-
+            </p>
+            <canvas
+              ref={canvasRef}
+              width={750}
+              height={300}
+              style={{
+                border: "5px solid #a0cbe7",
+                borderRadius: "10%",
+              }}
+              onMouseDown={drawingCanvas}
+              onMouseUp={stopDrawing}
+              onMouseOut={canvasOut}
+            />
           </div>
-        ) : (
-          <div>
-            <button className="actionButton" onClick={outputCanvasImage}>
-              확인
-            </button>
-            <button className="actionButton" onClick={clearCanvas}>
-              다시 쓰기
-            </button>
-            <button className="actionButton" onClick={returnCurrentLine}>
-              한 획 지우기
-            </button>
+          <div className="canvasButtonDiv">
+            <button
+              style={{ backgroundColor: "gray", padding: "15px" }}
+              onClick={() => setColor("gray")}
+            />
+            <button
+              style={{ backgroundColor: "blue", padding: "15px" }}
+              onClick={() => setColor("blue")}
+            />
+            <button
+              style={{ backgroundColor: "red", padding: "15px" }}
+              onClick={() => setColor("red")}
+            />
+            <button
+              style={{ backgroundColor: "green", padding: "15px" }}
+              onClick={() => setColor("green")}
+            />
+            <button
+              style={{ backgroundColor: "purple", padding: "15px" }}
+              onClick={() => setColor("purple")}
+            />
           </div>
-        )}
-      </div>
+          <div className="canvasButtonDiv">
+            <div>
+              <button className="actionButton" onClick={outputCanvasImage}>
+                확인
+              </button>
+              <button className="actionButton" onClick={clearCanvas}>
+                다시 쓰기
+              </button>
+              <button className="actionButton" onClick={returnCurrentLine}>
+                한 획 지우기
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 }

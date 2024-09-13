@@ -12,7 +12,7 @@ const LearningPage = () => {
   const { selectedLetter, handleLetterSelection, resetSelectedLetter } =
     useLearning();
 
-  const [letterType, setLetterType] = useState("consonant"); //현재 선택된 글자의 유형을 저장
+  const [letterType, setLetterType] = useState(""); //현재 선택된 글자의 유형을 저장
   const [lastSelectedLetter, setLastSelectedLetter] = useState(null); //마지막으로 선택된 글자를 저장
   const [exampleWord, setExampleWord] = useState(""); //선택된 글자의 예시 단어들을 저장
   const speak = useGoogleTTS();
@@ -153,11 +153,9 @@ const LearningPage = () => {
                 >
                   다시 듣기
                 </button>
-                <h3>선택한 글자: </h3>
                 <p className={styles.selectedLetter}> {selectedLetter}</p>
                 <div className={styles.exampleWord}>
                   <h3>
-                    예시 단어:{" "}
                     {renderHighlightedExample(exampleWord, lastSelectedLetter)}
                   </h3>
                 </div>

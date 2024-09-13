@@ -13,8 +13,7 @@
   background-color: #f0f4f9;
 }
 
-.imageDiv,
-.combineDiv {
+.imageDiv .combineDiv {
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -32,16 +31,20 @@
 .imageDiv img {
   max-width: 70%;
   height: auto;
-  border: 3px solid rgb(146, 146, 146);
+  border: 5px solid #dbe0e6;
+  box-shadow: 0px 0px 10px rgb(207, 207, 207);
   border-radius: 8px;
   margin: 0px 0px 10px 145px;
   padding: 30px 150px 30px 150px;
 }
-
-.textQuizDiv img {
-  max-width: 60%;
+.CombineimageDiv img {
+  max-width: 70%;
   height: auto;
-  margin: 0px 0px 0px 115px;
+  border: 5px solid #dbe0e6;
+  box-shadow: 0px 0px 10px rgb(207, 207, 207);
+  border-radius: 8px;
+  margin: 0px 0px 10px 145px;
+  padding: 30px 150px 30px 150px;
 }
 
 button,
@@ -187,10 +190,10 @@ button:disabled,
 }
 
 .textQuizDiv {
-  border: 3px solid rgb(146, 146, 146);
   border-radius: 20px;
   padding: 10px;
   margin-bottom: 10px;
+  background-color: #f7f7f7 !important;
 }
 
 .canvasContainer {
@@ -222,10 +225,9 @@ button:disabled,
 
 .canvasButtonDiv h3,
 .typingContainer h3 {
-  border: 3px solid rgb(146, 146, 146);
-  border-radius: 20px;
-  padding: 10px 80px 10px 80px;
-  width: 500px;
+  text-align: center;
+  font-size: 45px;
+  padding: 10px 0px 10px 0px;
 }
 
 .typingContainer {
@@ -279,11 +281,16 @@ button:disabled,
   font-size: 50px;
 }
 .gameoverTextDiv {
-  border: 3px solid rgb(146, 146, 146);
+  /*border: 3px solid rgb(146, 146, 146);*/
   border-radius: 20px;
-  padding: 10px 100px 10px 100px;
+  padding: 30px 100px 30px 100px;
   margin: 50px 0px 50px 0px;
   text-align: center;
+  background-color: #f7f7f7 !important;
+}
+.gameoverTextDiv h2 {
+  color: red;
+  font-style: italic;
 }
 
 .ruleDiv {
@@ -293,6 +300,13 @@ button:disabled,
   border: 3px solid #a0cbe7;
   border-radius: 20px;
   margin-left: 10px;
+}
+.hintText {
+  color: gray;
+  font-size: 15px;
+  margin-bottom: 30px;
+  text-align: center;
+  margin-left: 20px;
 }
 
 @media (max-width: 768px) {

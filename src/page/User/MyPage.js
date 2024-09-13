@@ -6,7 +6,7 @@ import "../../css/MyPage.css";
 function MyPage() {
   const navigate = useNavigate();
   const [userData, setUserData] = useState([]);
-  const [selectedContent, setSelectedContent] = useState(null);
+  const [selectedContent, setSelectedContent] = useState("내 정보");
 
   // 사용자 데이터를 가져오는 함수
   const fetchUserData = async () => {
