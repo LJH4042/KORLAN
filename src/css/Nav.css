@@ -1,7 +1,68 @@
-@import url('https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css');
+@import url("https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css");
 
 html {
   overflow-y: scroll; /* 항상 세로 스크롤바를 보이게 함 */
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center; /* 수직 중앙 정렬 */
+  box-sizing: border-box;
+  margin: 10px 0px 1px 0px;
+  padding-bottom: 10px;
+  box-shadow: 1px 1px 0px rgb(210, 209, 209);
+}
+.header span {
+  color: darkgray;
+}
+.header img {
+  width: 40px;
+  height: 40px;
+  margin-left: 30px;
+  margin-right: 5px;
+}
+
+.loginLeft,
+.loginRight {
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 0.5px;
+}
+.loginLeft:hover,
+.loginRight:hover,
+.siteLeft:hover,
+.siteMiddle:hover,
+.siteRight:hover {
+  color: #0088ff;
+}
+.loginLeft {
+  margin-right: 7px;
+}
+.loginRight {
+  margin-left: 7px;
+  margin-right: 50px;
+}
+.siteLeft {
+  font-size: 15px;
+  font-weight: 600;
+  margin-right: 7px;
+}
+.siteMiddle {
+  font-size: 15px;
+  font-weight: 600;
+  margin-left: 7px;
+  margin-right: 7px;
+}
+.siteRight {
+  font-size: 15px;
+  font-weight: 600;
+  margin-left: 7px;
+}
+.userId {
+  margin-right: 50px;
+  font-size: 15px;
+  font-weight: 600;
 }
 
 .navbar {
@@ -12,25 +73,27 @@ html {
   background-color: #ffffff;
   padding: 10px 20px;
   box-sizing: border-box;
+  box-shadow: 1px 1px 0px rgb(168, 167, 167);
 }
 
 .logo {
   width: 130px;
   height: 50px;
-  margin-left: 150px;
+  margin-left: 170px;
 }
 
-.menuIcon {
-  display: none;
-  font-size: 30px;
-  cursor: pointer;
+.navbarMenu .icon,
+.navbarAuth .icon {
+  margin-right: 7px; 
 }
+
 
 .menuContainer {
   display: flex;
   flex: 1;
   justify-content: center; /* 중앙 정렬 */
   align-items: center;
+  margin-right: 200px;
 }
 
 .authContainer {
@@ -41,7 +104,7 @@ html {
 
 .navbarMenu {
   color: rgb(0, 0, 0);
-  margin: 0 8px; /* 좌우 여백 */
+  margin: 0 30px; /* 좌우 여백 */
   font-size: 20px;
   font-weight: 600;
   text-decoration: none;
