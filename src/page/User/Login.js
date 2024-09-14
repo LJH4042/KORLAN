@@ -13,7 +13,11 @@ function Login() {
 
   const loginSubmit = async (e) => {
     e.preventDefault();
-    const loginData = { username, password };
+    const loginData = {
+      username,
+      password,
+      lastLogin: new Date().toLocaleString(),
+    };
     if (username === "" || password === "") alert("빈칸을 입력해주세요.");
     else {
       try {
