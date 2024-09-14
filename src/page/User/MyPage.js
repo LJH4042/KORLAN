@@ -2,14 +2,17 @@ import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import "../../css/MyPage.css";
+import profileImage from "../../image/profile.png";
 
 function MyPage() {
   const navigate = useNavigate();
   const [userData, setUserData] = useState([]);
-  const [selectedContent, setSelectedContent] = useState(null);
+  const [selectedContent, setSelectedContent] = useState("내 정보");
+  const [loading, setLoading] = useState(true);
 
   // 사용자 데이터를 가져오는 함수
   const fetchUserData = async () => {
+    setLoading(true);
     const token = localStorage.getItem("token");
     const headerData = {
       headers: {
@@ -35,11 +38,15 @@ function MyPage() {
         } catch (err) {
           console.error(err);
           localStorage.removeItem("token");
+          navigate("/login");
         }
       } else {
         console.error(err);
         localStorage.removeItem("token");
+        navigate("/login");
       }
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -59,6 +66,9 @@ function MyPage() {
 
   // 선택된 컨텐츠에 따라 보여줄 컴포넌트를 리턴
   const getContentComponent = () => {
+    if (loading) return <div className="loading">💖잠시만 기다려 주세요💖</div>; // 로딩 상태 표시
+    if (!userData) return null;
+
     switch (selectedContent) {
       case "내 정보":
         return <UserInfo userData={userData} navigate={navigate} />;
@@ -136,9 +146,20 @@ function UserInfo({ userData, navigate }) {
   };
 
   return (
-    <div>
-      <p>이름: {userData.username}</p>
+    <div className="user-info">
+      <img
+        src={
+          userData.profileImage
+            ? `/images/${userData.profileImage}`
+            : profileImage
+        }
+        alt="Profile"
+        className="profile-picture"
+      />
+      <h2>{userData.username}</h2>
       <p>이메일: {userData.email}</p>
+      <p>계정 생성일: {new Date(userData.creationDate).toLocaleDateString()}</p>
+      <p>마지막 로그인: {new Date(userData.lastLogin).toLocaleDateString()}</p>
       <button onClick={handleDeleteAccount}>탈퇴하기</button>
     </div>
   );

@@ -26,7 +26,10 @@ function IdCheck({ emailer }) {
 
   return (
     <div className="idCheckContainer">
-      <h2>ID : {username}</h2>
+      <h1 className="idCheckTitle">당신의 ID는?</h1>
+      <h3 className="idCheckSubTitle">
+        <span>{username}</span> 입니다
+      </h3>
       <button className="idCheckBtn" onClick={() => navigate("/login")}>
         로그인
       </button>

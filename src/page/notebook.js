@@ -19,7 +19,7 @@ function Notebook() {
     doubleVowel: [],
   });
 
-  const [letterType, setLetterType] = useState("consonant"); //현재 선택된 글자의 유형을 저장
+  const [letterType, setLetterType] = useState(""); //현재 선택된 글자의 유형을 저장
   const [lastSelectedLetter, setLastSelectedLetter] = useState(null); //마지막으로 선택된 글자를 저장
   const [exampleWord, setExampleWord] = useState(""); //선택된 글자의 예시 단어들을 저장
   const [currentNum, setCurrentNum] = useState(1); //맞춘 횟수를 저장
@@ -110,10 +110,11 @@ function Notebook() {
         alert(`잘했어요! 1 / 3`);
       }
     } else {
-      alert("최대한 또박또박 바르게 써주세요.");
+      alert("예시 단어가 아니거나, 최대한 또박또박 바르게 써주세요.");
       setCurrentNum(1);
       try {
         const token = localStorage.getItem("token");
+        if (token === null) return;
         await axios.post(
           "http://localhost:5000/wrong-answers",
           {
@@ -135,10 +136,9 @@ function Notebook() {
 
   const updateWord = async (trimmedUserAnswer) => {
     const token = localStorage.getItem("token");
+    if (token === null) return;
     const headerData = {
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
+      headers: { Authorization: `Bearer ${token}` },
       withCredentials: true,
     };
     try {
@@ -147,12 +147,10 @@ function Notebook() {
         { learnWord: trimmedUserAnswer, letterType: letterType },
         headerData
       );
-      console.log("데이터가 추가되었습니다.");
 
       // 새로 추가된 단어를 상태에 즉시 반영
       setSavedWords((prevWords) => {
         const updatedWords = { ...prevWords };
-
         if (letterType === "consonant") {
           updatedWords.consonant = [...prevWords.consonant, trimmedUserAnswer];
         } else if (letterType === "vowel") {
@@ -168,7 +166,6 @@ function Notebook() {
             trimmedUserAnswer,
           ];
         }
-
         return updatedWords; // 상태 업데이트 후 컴포넌트가 다시 렌더링됩니다.
       });
     } catch (err) {
@@ -196,10 +193,17 @@ function Notebook() {
 
   const fetchUserData = async () => {
     const token = localStorage.getItem("token");
+    if (!token) {
+      setSavedWords({
+        consonant: [],
+        vowel: [],
+        doubleConsonant: [],
+        doubleVowel: [],
+      });
+      return;
+    }
     const headerData = {
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
+      headers: { Authorization: `Bearer ${token}` },
       withCredentials: true,
     };
     try {
@@ -229,23 +233,21 @@ function Notebook() {
         </p>
         <div className={styles.buttonContainer}>
           <button onClick={() => toggleLetterType("consonant")}>
-            자음 학습하기
+            자음 연습장
           </button>
-          <button onClick={() => toggleLetterType("vowel")}>
-            모음 학습하기
-          </button>
+          <button onClick={() => toggleLetterType("vowel")}>모음 연습장</button>
           <button onClick={() => toggleLetterType("doubleConsonant")}>
-            쌍자음 학습하기
+            쌍자음 연습장
           </button>
           <button onClick={() => toggleLetterType("doubleVowel")}>
-            쌍모음 학습하기
+            쌍모음 연습장
           </button>
         </div>
         <div className={styles.buttonContainer}>
           <div className={styles.flexContainer}>
             {letterType === "consonant" && (
               <>
-                <h3>자음 학습하기</h3>
+                <h3>자음 연습장</h3>
                 <ConsonantList
                   consonants={consonants}
                   onLetterSelect={handleLetterSelectionWithTTS}
@@ -254,7 +256,7 @@ function Notebook() {
             )}
             {letterType === "vowel" && (
               <>
-                <h3>모음 학습하기</h3>
+                <h3>모음 연습장</h3>
                 <VowelList
                   vowels={vowels}
                   onLetterSelect={handleLetterSelectionWithTTS}
@@ -263,7 +265,7 @@ function Notebook() {
             )}
             {letterType === "doubleConsonant" && (
               <>
-                <h3>쌍자음 학습하기</h3>
+                <h3>쌍자음 연습장</h3>
                 <ConsonantList
                   consonants={doubleCons}
                   onLetterSelect={handleLetterSelectionWithTTS}
@@ -272,7 +274,7 @@ function Notebook() {
             )}
             {letterType === "doubleVowel" && (
               <>
-                <h3>쌍모음 학습하기</h3>
+                <h3>쌍모음 연습장</h3>
                 <VowelList
                   vowels={doubleVow}
                   onLetterSelect={handleLetterSelectionWithTTS}
@@ -281,11 +283,9 @@ function Notebook() {
             )}
             {selectedLetter && (
               <div className={styles.selectedLetterContainer}>
-                <h3>선택한 글자: </h3>
                 <p className={styles.selectedLetter}> {selectedLetter}</p>
                 <div className={styles.exampleWord}>
                   <h3>
-                    예시 단어:{" "}
                     {renderHighlightedExample(exampleWord, lastSelectedLetter)}
                   </h3>
                 </div>

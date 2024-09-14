@@ -82,10 +82,9 @@ html {
   margin-left: 170px;
 }
 
-.menuIcon {
-  display: none;
-  font-size: 30px;
-  cursor: pointer;
+.navbarMenu .icon,
+.navbarAuth .icon {
+  margin-right: 7px;
 }
 
 .menuContainer {
@@ -104,7 +103,7 @@ html {
 
 .navbarMenu {
   color: rgb(0, 0, 0);
-  margin: 0 40px; /* 좌우 여백 */
+  margin: 0 30px; /* 좌우 여백 */
   font-size: 20px;
   font-weight: 600;
   text-decoration: none;

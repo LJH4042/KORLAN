@@ -35,7 +35,7 @@ const Introduce = () => (
       </div>
     </div>
     <div className="introduceDiv">
-      <h1>개발 언어</h1>
+      <h1>사용 기술</h1>
       <div>
         <TechnologyIcons />
       </div>

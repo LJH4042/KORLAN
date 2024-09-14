@@ -2,6 +2,16 @@ import { Link, NavLink } from "react-router-dom";
 import React, { useState, useEffect } from "react";
 import "../css/Nav.css";
 import Logo from "../logo.svg";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import {
+  faInfoCircle,
+  faBook,
+  faGamepad,
+  faImage,
+  faPuzzlePiece,
+  faPen,
+  faUsers,
+} from "@fortawesome/free-solid-svg-icons";
 
 function Nav() {
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
@@ -38,9 +48,7 @@ function Nav() {
       <Link to={"/"}>
         <img className="logo" src={Logo} alt="Logo" />
       </Link>
-      <div className="menuIcon" onClick={toggleMobileMenu}>
-        &#9776;
-      </div>
+      <div className="menuIcon" onClick={toggleMobileMenu}></div>
       <div className={`menuContainer ${isMobileMenuOpen ? "open" : ""}`}>
         <NavLink
           className={({ isActive }) =>
@@ -49,6 +57,7 @@ function Nav() {
           to={"/introduce"}
           onClick={closeMenusOnMobile}
         >
+          <FontAwesomeIcon icon={faInfoCircle} className="icon" />
           소개
         </NavLink>
         <NavLink
@@ -58,12 +67,14 @@ function Nav() {
           to={"/learn"}
           onClick={closeMenusOnMobile}
         >
+          <FontAwesomeIcon icon={faBook} className="icon" />
           학습하기
         </NavLink>
         <div
           className={`navbarMenu dropdown ${isDropdownOpen ? "open" : ""}`}
           onClick={toggleDropdown}
         >
+          <FontAwesomeIcon icon={faGamepad} className="icon" />
           게임하기
           {isDropdownOpen && (
             <div className="dropdown-content">
@@ -74,6 +85,7 @@ function Nav() {
                   isActive ? "navbarMenu active" : "navbarMenu"
                 }
               >
+                <FontAwesomeIcon icon={faImage} className="icon" />
                 이미지 게임
               </NavLink>
               <NavLink
@@ -83,6 +95,7 @@ function Nav() {
                   isActive ? "navbarMenu active" : "navbarMenu"
                 }
               >
+                <FontAwesomeIcon icon={faPuzzlePiece} className="icon" />
                 낱말 조합
               </NavLink>
             </div>
@@ -95,6 +108,7 @@ function Nav() {
           to={"/notebook"}
           onClick={closeMenusOnMobile}
         >
+          <FontAwesomeIcon icon={faPen} className="icon" />
           연습장
         </NavLink>
         <NavLink
@@ -104,6 +118,7 @@ function Nav() {
           to={"/teamIntro"}
           onClick={closeMenusOnMobile}
         >
+          <FontAwesomeIcon icon={faUsers} className="icon" />
           개발팀
         </NavLink>
       </div>
