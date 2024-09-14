@@ -10,7 +10,6 @@ function MyPage() {
   const [selectedContent, setSelectedContent] = useState(null);
   const [loading, setLoading] = useState(true);
 
-
   // 사용자 데이터를 가져오는 함수
   const fetchUserData = async () => {
     setLoading(true);
@@ -69,7 +68,7 @@ function MyPage() {
   const getContentComponent = () => {
     if (loading) return <div className="loading">💖잠시만 기다려 주세요💖</div>; // 로딩 상태 표시
     if (!userData) return null;
-    
+
     switch (selectedContent) {
       case "내 정보":
         return <UserInfo userData={userData} navigate={navigate} />;
@@ -93,7 +92,7 @@ function MyPage() {
 
   return (
     <div className="container pullDown">
-      <div>
+       <div>
         <h1>마이페이지</h1>
         <a href="#info" onClick={() => handleLinkClick("내 정보")}>
           내 정보
@@ -148,18 +147,17 @@ function UserInfo({ userData, navigate }) {
 
   return (
     <div className="user-info">
-    <img src={userData.profileImage ? 
-    `/images/${userData.profileImage}` : profileImage} 
-    alt="Profile" className="profile-picture" />
-    <h2>{userData.username}</h2>
-    <p>이메일: {userData.email}</p>
-    <p>계정 생성일: {new Date(userData.creationDate).toLocaleDateString()}</p>
-    <p>마지막 로그인: {new Date(userData.lastLogin).toLocaleDateString()}</p>
-    <button onClick={handleDeleteAccount}>탈퇴하기</button>
-  </div>
-);
+      <img src={userData.profileImage ? 
+        `/images/${userData.profileImage}` : profileImage} 
+        alt="Profile" className="profile-picture" />
+      <h2>{userData.username}</h2>
+      <p>이메일: {userData.email}</p>
+      <p>계정 생성일: {new Date(userData.creationDate).toLocaleDateString()}</p>
+      <p>마지막 로그인: {new Date(userData.lastLogin).toLocaleDateString()}</p>
+      <button onClick={handleDeleteAccount}>탈퇴하기</button>
+    </div>
+  );
 }
-
 
 function StampBoard({ userData }) {
   const imageLowStamps = Math.min(userData.imageScore.low, 10);
@@ -311,7 +309,7 @@ function WrongAnswerAlbum({ userData }) {
     fetchWrongAnswers();
   }, []);
 
-  if (loading) return <div className="loading">로딩 중...</div>;
+  if (loading) return <div className="loading">💖잠시만 기다려 주세요💖</div>;
   if (error) return <div className="error">{error}</div>;
 
   return (
