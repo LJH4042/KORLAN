@@ -20,8 +20,10 @@
 }
 
 .notebookTitle {
-  text-align: center;
-  margin: 50px 20px 20px 20px;
+  margin-top: 50px;
+  font-size: 30px;
+  margin-bottom: 20px; /* 하단 마진만 남기고 좌우 정렬 제거 */
+  font-weight: bold;
 }
 
 .notebookDescription {

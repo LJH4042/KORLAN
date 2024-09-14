@@ -4,19 +4,79 @@ import image1 from "../img/woman.png";
 import image2 from "../img/man.png";
 
 const teamMembers = [
-  { image: image1, number: "92015142", name: "박유진", role: "프론트엔드", introduce: "메인, 교육, 소개, 개발자 페이지, 디자인" },
-  { image: image2, name: "신윤호", number: "91913646", role: "백엔드", introduce: "오답노트" },
-  { image: image2, name: "이정호", number: "91914042", role: "프론트엔드, 백엔드", introduce: "게임 페이지, 로그인, 회원가입" },
-  { image: image1, name: "최하은", number: "92113906", role: "프론트엔드", introduce: "마이페이지, 디자인" },
+  {
+    image: image1,
+    number: "92015142",
+    name: "박유진",
+    role: "프론트엔드",
+    introduce1: "메인",
+    introduce2: "교육",
+    introduce3: "소개",
+    introduce4: "개발자",
+    introduce5: "디자인",
+    introduce6: "",
+  },
+  {
+    image: image2,
+    name: "신윤호",
+    number: "91913646",
+    role: "백엔드",
+    introduce1: "서버",
+    introduce2: "오답노트",
+    introduce3: "",
+    introduce4: "",
+    introduce5: "",
+    introduce6: "",
+  },
+  {
+    image: image2,
+    name: "이정호",
+    number: "91914042",
+    role: "프론트엔드, 백엔드",
+    introduce1: "로그인",
+    introduce2: "회원가입",
+    introduce3: "게임",
+    introduce4: "연습장",
+    introduce5: "디자인",
+    introduce6: "서버",
+  },
+  {
+    image: image1,
+    name: "최하은",
+    number: "92113906",
+    role: "프론트엔드",
+    introduce1: "마이페이지",
+    introduce2: "디자인",
+    introduce3: "",
+    introduce4: "",
+    introduce5: "",
+    introduce6: "",
+  },
 ];
 
-const TeamMember = ({ image, name, number, role, introduce }) => (
+const TeamMember = ({
+  image,
+  name,
+  number,
+  role,
+  introduce1,
+  introduce2,
+  introduce3,
+  introduce4,
+  introduce5,
+  introduce6,
+}) => (
   <div className="team-member">
     <img src={image} alt={name} className="team-member-photo" />
     <h2>{name}</h2>
-    <p>{number}</p>
+    <p style={{ marginTop: "10px" }}>{number}</p>
     <h5>{role}</h5>
-    <p>{introduce}</p>
+    <p>{introduce1}</p>
+    <p>{introduce2}</p>
+    <p>{introduce3}</p>
+    <p>{introduce4}</p>
+    <p>{introduce5}</p>
+    <p>{introduce6}</p>
   </div>
 );
 

@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import "../../css/MyPage.css";
-import profileImage from "../../image/profile.png";
+import profileImage from "../../img/profile.png";
 
 function MyPage() {
   const navigate = useNavigate();
@@ -158,8 +158,8 @@ function UserInfo({ userData, navigate }) {
       />
       <h2>{userData.username}</h2>
       <p>이메일: {userData.email}</p>
-      <p>계정 생성일: {new Date(userData.creationDate).toLocaleDateString()}</p>
-      <p>마지막 로그인: {new Date(userData.lastLogin).toLocaleDateString()}</p>
+      <p>계정 생성일: {userData.creationDate}</p>
+      <p>마지막 로그인: {userData.lastLogin}</p>
       <button onClick={handleDeleteAccount}>탈퇴하기</button>
     </div>
   );
