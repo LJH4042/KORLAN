@@ -62,20 +62,18 @@ const LearningPage = () => {
   };
 
   const checkToken = async () => {
-    if (localStorage.getItem("token") === null) {
-      try {
-        const refreshRes = await axios.post(
-          "http://localhost:5000/refresh",
-          {},
-          { withCredentials: true }
-        );
-        const newToken = refreshRes.data.token;
-        localStorage.setItem("token", newToken);
-        axios.defaults.headers.common["Authorization"] = `Bearer ${newToken}`;
-      } catch (err) {
-        if (err.response.status === 403) {
-          return null;
-        }
+    if (localStorage.getItem("token") === null) return;
+    try {
+      const refreshRes = await axios.post(
+        "http://localhost:5000/refresh",
+        {},
+        { withCredentials: true }
+      );
+      const newToken = refreshRes.data.token;
+      localStorage.setItem("token", newToken);
+      axios.defaults.headers.common["Authorization"] = `Bearer ${newToken}`;
+    } catch (err) {
+      if (err.response && err.response.status === 403) {
         localStorage.removeItem("token");
       }
     }

@@ -110,10 +110,11 @@ function Notebook() {
         alert(`잘했어요! 1 / 3`);
       }
     } else {
-      alert("최대한 또박또박 바르게 써주세요.");
+      alert("예시 단어가 아니거나, 최대한 또박또박 바르게 써주세요.");
       setCurrentNum(1);
       try {
         const token = localStorage.getItem("token");
+        if (token === null) return;
         await axios.post(
           "http://localhost:5000/wrong-answers",
           {
@@ -135,10 +136,9 @@ function Notebook() {
 
   const updateWord = async (trimmedUserAnswer) => {
     const token = localStorage.getItem("token");
+    if (token === null) return;
     const headerData = {
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
+      headers: { Authorization: `Bearer ${token}` },
       withCredentials: true,
     };
     try {
@@ -147,12 +147,10 @@ function Notebook() {
         { learnWord: trimmedUserAnswer, letterType: letterType },
         headerData
       );
-      console.log("데이터가 추가되었습니다.");
 
       // 새로 추가된 단어를 상태에 즉시 반영
       setSavedWords((prevWords) => {
         const updatedWords = { ...prevWords };
-
         if (letterType === "consonant") {
           updatedWords.consonant = [...prevWords.consonant, trimmedUserAnswer];
         } else if (letterType === "vowel") {
@@ -168,7 +166,6 @@ function Notebook() {
             trimmedUserAnswer,
           ];
         }
-
         return updatedWords; // 상태 업데이트 후 컴포넌트가 다시 렌더링됩니다.
       });
     } catch (err) {
@@ -196,10 +193,17 @@ function Notebook() {
 
   const fetchUserData = async () => {
     const token = localStorage.getItem("token");
+    if (!token) {
+      setSavedWords({
+        consonant: [],
+        vowel: [],
+        doubleConsonant: [],
+        doubleVowel: [],
+      });
+      return;
+    }
     const headerData = {
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
+      headers: { Authorization: `Bearer ${token}` },
       withCredentials: true,
     };
     try {

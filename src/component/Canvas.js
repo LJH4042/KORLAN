@@ -23,6 +23,8 @@ function Canvas({
 
   useEffect(() => {
     const canvas = canvasRef.current;
+    if (!canvas) return;
+
     const ctx = canvas.getContext("2d");
     const drawing = (e) => {
       if (!isDrawing) return;
@@ -98,11 +100,11 @@ function Canvas({
     } catch (error) {
       console.error("Error processing canvas image:", error);
     }
-    console.log(outputImageSrc);
     clearCanvas();
   };
 
   const saveWrongAnswer = async (wrongAnswer) => {
+    if (localStorage.getItem("token") === null) return;
     try {
       await axios.post("http://localhost:5000/api/wrong-answers", wrongAnswer, {
         headers: {
@@ -116,10 +118,8 @@ function Canvas({
 
   const clearCanvas = () => {
     const canvas = canvasRef.current;
-    if (!canvas) {
-      console.error("캔버스 요소를 찾을 수 없습니다.");
-      return;
-    }
+    if (!canvas) return;
+
     const ctx = canvas.getContext("2d");
     ctx.clearRect(0, 0, canvas.width, canvas.height);
     setOutputImageSrc(null);
@@ -132,6 +132,7 @@ function Canvas({
 
   const redrawCanvas = () => {
     const canvas = canvasRef.current;
+    if (!canvas) return;
     const ctx = canvas.getContext("2d");
     ctx.clearRect(0, 0, canvas.width, canvas.height);
     paths.forEach((p) => {
