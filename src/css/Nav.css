@@ -6,13 +6,16 @@ html {
 
 .header {
   display: flex;
+  background-color: #ffcbcb;
   justify-content: space-between;
   align-items: center; /* 수직 중앙 정렬 */
   box-sizing: border-box;
-  margin: 10px 0px 1px 0px;
+  margin: 0px 0px 0px 0px;
+  padding-top: 10px;
   padding-bottom: 10px;
   box-shadow: 1px 1px 0px rgb(210, 209, 209);
 }
+
 .header span {
   color: darkgray;
 }

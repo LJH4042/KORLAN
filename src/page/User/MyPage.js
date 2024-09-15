@@ -315,7 +315,7 @@ function WrongAnswerAlbum({ userData }) {
     fetchWrongAnswers();
   }, []);
 
-  if (loading) return <div className="loading">로딩 중...</div>;
+  if (loading) return <div className="loading">💖잠시만 기다려 주세요💖</div>;
   if (error) return <div className="error">{error}</div>;
 
   return (

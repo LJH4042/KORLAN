@@ -69,7 +69,7 @@ function Canvas({
 
   const outputCanvasImage = async () => {
     if (paths.length === 0 && path.length === 0) {
-      alert("단어를 써주세요."); // 경고 메시지
+      alert("단어를 써주세요.");
       return;
     }
     const canvas = canvasRef.current;
@@ -79,6 +79,13 @@ function Canvas({
       const res = await axios.post("http://localhost:5000/canvas", {
         dataURL: dataURL,
       });
+      if (!res.data.text) {
+        alert("옳바른 단어가 아닙니다. 다시 써주세요.");
+        setTimeout(() => {
+          clearCanvas();
+        }, 100);
+        return;
+      }
       setImgText(res.data.text);
       const isCorrect = checkAnswer(res.data.text);
       if (!isCorrect) {
