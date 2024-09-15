@@ -1,6 +1,6 @@
 /*로그인(Login.js)*/
 .LoginPage {
-  background-color: #f7f7f7;
+  background-color: #f0f4f9;
   display: flex; /* 페이지 전체에 Flexbox 적용 */
   justify-content: center; /* 가로 방향 가운데 정렬 */
   align-items: center; /* 세로 방향 가운데 정렬 */
@@ -75,7 +75,7 @@
 
 /*회원가입(Register.js)*/
 .RegisterPage {
-  background-color: #f7f7f7;
+  background-color: #f0f4f9;
   display: flex; /* Flexbox 적용 */
   justify-content: center; /* 가로 방향 가운데 정렬 */
   align-items: center; /* 세로 방향 가운데 정렬 */
@@ -170,7 +170,7 @@
 
 /*ID 찾기, ID 확인(IdFind.js, IdCheck.js)*/
 .idFindPage {
-  background-color: #f7f7f7;
+  background-color: #f0f4f9;
   display: flex; /* Flexbox 적용 */
   justify-content: center; /* 가로 가운데 정렬 */
   align-items: center; /* 세로 가운데 정렬 */
@@ -272,7 +272,7 @@
 
 /*비밀번호 찾기(PwdFind.js)*/
 .pwdFindPage {
-  background-color: #f7f7f7;
+  background-color: #f0f4f9;
   display: flex; /* Flexbox 적용 */
   justify-content: center; /* 가로 가운데 정렬 */
   align-items: center; /* 세로 가운데 정렬 */

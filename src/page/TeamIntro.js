@@ -10,11 +10,11 @@ const teamMembers = [
     name: "박유진",
     role: "프론트엔드",
     introduce1: "메인",
-    introduce2: "교육",
-    introduce3: "소개",
-    introduce4: "개발자",
-    introduce5: "디자인",
-    introduce6: "",
+    introduce2: "소개",
+    introduce3: "학습하기",
+    introduce4: "연습장",
+    introduce5: "개발팀",
+    introduce6: "디자인",
   },
   {
     image: image2,
@@ -22,7 +22,7 @@ const teamMembers = [
     number: "91913646",
     role: "백엔드",
     introduce1: "서버",
-    introduce2: "오답노트",
+    introduce2: "마이페이지",
     introduce3: "",
     introduce4: "",
     introduce5: "",
@@ -35,7 +35,7 @@ const teamMembers = [
     role: "프론트엔드, 백엔드",
     introduce1: "로그인",
     introduce2: "회원가입",
-    introduce3: "게임",
+    introduce3: "게임하기",
     introduce4: "연습장",
     introduce5: "디자인",
     introduce6: "서버",
@@ -82,9 +82,17 @@ const TeamMember = ({
 
 function TeamIntro() {
   return (
-    <div className="introduce">
-      <div className="introduceDiv-Final">
-        <h1 style={{ marginBottom: "50px" }}>팀원 소개</h1>
+    <div className="teamIntroduce">
+      <div className="teamIntroduceDiv">
+        <h1
+          style={{
+            marginBottom: "50px",
+            letterSpacing: "5px",
+            fontSize: "30px",
+          }}
+        >
+          -팀원 소개-
+        </h1>
         <div className="team-members">
           {teamMembers.map((member, index) => (
             <TeamMember key={index} {...member} />

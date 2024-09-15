@@ -32,7 +32,9 @@ function Timer({ setIsAuth, setIsFind }) {
     }
   }, [minuts, second, timeDelay, setIsAuth, setIsFind]);
 
-  return <span>{`${minutsTimer} : ${secondTimer}`}</span>;
+  return (
+    <span style={{ color: "red" }}>{`${minutsTimer} : ${secondTimer}`}</span>
+  );
 }
 
 export default Timer;

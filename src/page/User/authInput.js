@@ -28,7 +28,7 @@ function AuthInput({ setIsAuth, setIsFind, setIsCheck }) {
       <form onSubmit={submitAuthCode}>
         <div>
           <label>
-            인증코드(6자리) : <></>
+            인증코드(6자리) - <></>
             {<Timer setIsAuth={setIsAuth} setIsFind={setIsFind} />}
           </label>
           <input
