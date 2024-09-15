@@ -10,7 +10,7 @@
   justify-content: center;
   min-height: 70vh;
   padding: 50px;
-  background-color: #f0f4f9;
+  background-color: #f7f7f7;
 }
 
 .imageDiv .combineDiv {
@@ -115,6 +115,9 @@ button:disabled,
   flex-direction: column;
   align-items: center;
   justify-content: center;
+  font-size: 30px;
+  margin-bottom: 20px; /* 하단 마진만 남기고 좌우 정렬 제거 */
+  font-weight: bold;
 }
 
 .levelBtn {
@@ -281,16 +284,17 @@ button:disabled,
   font-size: 50px;
 }
 .gameoverTextDiv {
-  /*border: 3px solid rgb(146, 146, 146);*/
   border-radius: 20px;
   padding: 30px 100px 30px 100px;
   margin: 50px 0px 50px 0px;
   text-align: center;
-  background-color: #f7f7f7 !important;
+  background-color: #f0f4f9 !important;
+  border: 10px double white;
 }
-.gameoverTextDiv h2 {
+.gameoverTextDiv h1 {
   color: red;
   font-style: italic;
+  text-decoration: underline;
 }
 
 .ruleDiv {
@@ -300,6 +304,7 @@ button:disabled,
   border: 3px solid #a0cbe7;
   border-radius: 20px;
   margin-left: 10px;
+  font-size: 17px;
 }
 .hintText {
   color: gray;

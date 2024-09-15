@@ -63,6 +63,7 @@ function Register() {
       password: password,
       checkPassword: password2,
       email: email,
+      creationDate: new Date().toLocaleString(),
     };
     if (inputs.some((input) => input === "")) alert("빈칸을 입력해주세요.");
     else if (isSubmit === false) alert("이메일 인증을 해주세요.");

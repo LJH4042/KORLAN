@@ -87,7 +87,7 @@ const LearningPage = () => {
     <div className={styles.pageContainer}>
       <div className={styles.learnContainer}>
         <h1>학습하기</h1>
-        <p style={{ fontSize: "1.2em", color: "#666", marginTop: "10px" }}>
+        <p style={{ fontSize: "1.2em", color: "#666", marginTop: "0px" }}>
           -자음과 모음의 발음을 들으며 한글을 익혀요!-
         </p>
         <div className={styles.buttonContainer}>
@@ -163,6 +163,18 @@ const LearningPage = () => {
               <Canvas checkAnswer={checkAnswer} />
             </div>
           </div>
+        </div>
+        <div className="ruleDiv" style={{ backgroundColor: "#f9f9f9" }}>
+          <p>-각 단어들을 클릭하면 해당 단어의 발음 소리가 재생됩니다.</p>
+          <p>
+            -마우스로 캔버스에 단어를 쓰고 '확인' 버튼을 누르시면 쓴 단어의 발음
+            소리가 재생됩니다.
+          </p>
+          <p>-위에 예시 단어 외에 다른 단어를 써도 발음 소리가 재생됩니다.</p>
+          <p>
+            -최대한 또박또박 바르게 단어를 써주세요. 엉망으로 쓰시면 발음이
+            제대로 재생되지 않습니다.
+          </p>
         </div>
       </div>
     </div>
