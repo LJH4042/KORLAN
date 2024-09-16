@@ -186,62 +186,74 @@ function StampBoard({ userData }) {
     .fill(false)
     .map((_, index) => index < combineHighStamps);
 
-  return (
-    <div className="stamp-board-container">
-      <div className="stamp-board">
-        <p>이미지 게임</p>
-        <p>(하)</p>
-        {i_StampsLow.map((stamped, index) => (
-          <div key={index} className={`stamp ${stamped ? "stamped" : ""}`}>
-            {stamped ? "🌞" : "⬜"}
+    return (
+      <div className="stamp-board-container">
+        <div className="stamp-board">
+          <h3>이미지 게임</h3>
+          <div className="stamp-row">
+            <p>하</p>
+            {i_StampsLow.map((stamped, index) => (
+              <div key={index} className={`stamp ${stamped ? "stamped" : ""}`}>
+                {stamped ? "🌞" : "⬜"}
+              </div>
+            ))}
           </div>
-        ))}
-        <p>(중)</p>
-        {i_StampsMiddle.map((stamped, index) => (
-          <div key={index} className={`stamp ${stamped ? "stamped" : ""}`}>
-            {stamped ? "🌞" : "⬜"}
+          <div className="stamp-row">
+            <p>중</p>
+            {i_StampsMiddle.map((stamped, index) => (
+              <div key={index} className={`stamp ${stamped ? "stamped" : ""}`}>
+                {stamped ? "🌞" : "⬜"}
+              </div>
+            ))}
           </div>
-        ))}
-        <p>(상)</p>
-        {i_StampsHigh.map((stamped, index) => (
-          <div key={index} className={`stamp ${stamped ? "stamped" : ""}`}>
-            {stamped ? "🌞" : "⬜"}
+          <div className="stamp-row">
+            <p>상</p>
+            {i_StampsHigh.map((stamped, index) => (
+              <div key={index} className={`stamp ${stamped ? "stamped" : ""}`}>
+                {stamped ? "🌞" : "⬜"}
+              </div>
+            ))}
           </div>
-        ))}
+        </div>
+        <div className="stamp-board">
+          <h3>조합 게임</h3>
+          <div className="stamp-row">
+            <p>하</p>
+            {c_StampsLow.map((stamped, index) => (
+              <div
+                key={index}
+                className={`stamp ${stamped ? "stamped-secondary" : ""}`}
+              >
+                {stamped ? "🌟" : "⬜"}
+              </div>
+            ))}
+          </div>
+          <div className="stamp-row">
+            <p>중</p>
+            {c_StampsMiddle.map((stamped, index) => (
+              <div
+                key={index}
+                className={`stamp ${stamped ? "stamped-secondary" : ""}`}
+              >
+                {stamped ? "🌟" : "⬜"}
+              </div>
+            ))}
+          </div>
+          <div className="stamp-row">
+            <p>상</p>
+            {c_StampsHigh.map((stamped, index) => (
+              <div
+                key={index}
+                className={`stamp ${stamped ? "stamped-secondary" : ""}`}
+              >
+                {stamped ? "🌟" : "⬜"}
+              </div>
+            ))}
+          </div>
+        </div>
       </div>
-      <div className="stamp-board">
-        <p>조합 게임</p>
-        <p>(하)</p>
-        {c_StampsLow.map((stamped, index) => (
-          <div
-            key={index}
-            className={`stamp ${stamped ? "stamped-secondary" : ""}`}
-          >
-            {stamped ? "🌟" : "⬜"}
-          </div>
-        ))}
-        <p>(중)</p>
-        {c_StampsMiddle.map((stamped, index) => (
-          <div
-            key={index}
-            className={`stamp ${stamped ? "stamped-secondary" : ""}`}
-          >
-            {stamped ? "🌟" : "⬜"}
-          </div>
-        ))}
-        <p>(상)</p>
-        {c_StampsHigh.map((stamped, index) => (
-          <div
-            key={index}
-            className={`stamp ${stamped ? "stamped-secondary" : ""}`}
-          >
-            {stamped ? "🌟" : "⬜"}
-          </div>
-        ))}
-      </div>
-    </div>
-  );
-}
+    );
+  }
 
 function LearningProgress({ learnCon, learnVow, learnDouCon, learnDouVow }) {
   return (
