@@ -45,18 +45,19 @@ function Header() {
   };
 
   const handleLogout = async () => {
-    try {
-      await axios.post(
-        "http://localhost:5000/logout",
-        {},
-        { withCredentials: true } //withCredentials 허용
-      );
-      localStorage.removeItem("token"); //accessToken 삭제
-      navigate("/login"); //로그인 페이지로 이동
-      window.location.reload();
-    } catch (err) {
-      console.error("Logout failed", err);
-    }
+    if (window.confirm("로그아웃 하시겠습니까?"))
+      try {
+        await axios.post(
+          "http://localhost:5000/logout",
+          {},
+          { withCredentials: true } //withCredentials 허용
+        );
+        localStorage.removeItem("token"); //accessToken 삭제
+        navigate("/login"); //로그인 페이지로 이동
+        window.location.reload();
+      } catch (err) {
+        console.error("Logout failed", err);
+      }
   };
 
   useEffect(() => {

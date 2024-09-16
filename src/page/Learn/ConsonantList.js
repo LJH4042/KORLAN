@@ -1,13 +1,16 @@
-import React from 'react';
-import ConsonantButton from './ConsonantButton';
+import React from "react";
+import ConsonantButton from "./ConsonantButton";
 
-const ConsonantList = ({ consonants, onLetterSelect }) => {
+const ConsonantList = ({ consonants, onLetterSelect, setIsCanvas }) => {
   return (
     <div className="Consonant">
       {consonants.map((item) => (
-        <ConsonantButton key={item.id}
+        <ConsonantButton
+          key={item.id}
           item={item}
-          onLetterSelect={onLetterSelect} />
+          onLetterSelect={onLetterSelect}
+          setIsCanvas={setIsCanvas}
+        />
       ))}
     </div>
   );

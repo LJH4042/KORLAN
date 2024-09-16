@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import "../css/notebook.css";
 import Canvas from "../component/Canvas";
 import useLearning from "./Learn/useLearning";
@@ -9,6 +9,8 @@ import axios from "axios";
 import { consonants, vowels, doubleCons, doubleVow } from "./Learn/LearnWord";
 
 function Notebook() {
+  const [noteWord, setNoteWord] = useState("");
+  const [isCanvas, setIsCanvas] = useState(false);
   const { selectedLetter, handleLetterSelection, resetSelectedLetter } =
     useLearning();
 
@@ -25,10 +27,13 @@ function Notebook() {
   const [currentNum, setCurrentNum] = useState(1); //맞춘 횟수를 저장
   const [previousAnswer, setPreviousAnswer] = useState(""); //이전에 입력한 답변을 저장
 
+  const canvasRef = useRef(null); // Ref for Canvas
+
   const toggleLetterType = (type) => {
     setLetterType(type);
     resetSelectedLetter(); // 글자 초기화 함수 호출
     setExampleWord("");
+    setIsCanvas(false);
   };
 
   //사용자가 선택한 글자를 TTS를 통해 발음
@@ -53,8 +58,17 @@ function Notebook() {
     return words.map((word, index) => (
       <React.Fragment key={index}>
         <span
+          onClick={() => {
+            setNoteWord(word);
+            setIsCanvas(true);
+            if (canvasRef.current) {
+              canvasRef.current.clearCanvas(); // Clear canvas on click
+            }
+          }}
           className={
-            savedWords[letterType].includes(word) ? styles.savedWord : ""
+            savedWords[letterType].includes(word)
+              ? styles.savedWord
+              : styles.baseWord
           }
         >
           {word}
@@ -91,7 +105,8 @@ function Notebook() {
         break;
     }
     const trimmedUserAnswer = userAnswer.trim();
-    const isCorrect = allExampleWords.includes(trimmedUserAnswer);
+    /*const isCorrect = allExampleWords.includes(trimmedUserAnswer);*/
+    const isCorrect = trimmedUserAnswer === noteWord;
 
     if (isCorrect) {
       if (trimmedUserAnswer === previousAnswer) {
@@ -251,6 +266,7 @@ function Notebook() {
                 <ConsonantList
                   consonants={consonants}
                   onLetterSelect={handleLetterSelectionWithTTS}
+                  setIsCanvas={setIsCanvas}
                 />
               </>
             )}
@@ -260,6 +276,7 @@ function Notebook() {
                 <VowelList
                   vowels={vowels}
                   onLetterSelect={handleLetterSelectionWithTTS}
+                  setIsCanvas={setIsCanvas}
                 />
               </>
             )}
@@ -269,6 +286,7 @@ function Notebook() {
                 <ConsonantList
                   consonants={doubleCons}
                   onLetterSelect={handleLetterSelectionWithTTS}
+                  setIsCanvas={setIsCanvas}
                 />
               </>
             )}
@@ -278,6 +296,7 @@ function Notebook() {
                 <VowelList
                   vowels={doubleVow}
                   onLetterSelect={handleLetterSelectionWithTTS}
+                  setIsCanvas={setIsCanvas}
                 />
               </>
             )}
@@ -291,24 +310,31 @@ function Notebook() {
                 </div>
               </div>
             )}
-            <div className="canvasWrapper">
-              <Canvas checkAnswer={checkAnswer} />
-            </div>
           </div>
         </div>
+        {isCanvas ? (
+          <div className="canvasWrapper" style={{ textAlign: "center" }}>
+            <h1>{noteWord}</h1>
+            <Canvas ref={canvasRef} checkAnswer={checkAnswer} />
+          </div>
+        ) : null}
         <div
           className="ruleDiv"
-          style={{ backgroundColor: "#f9f9f9", width: "800px" }}
+          style={{
+            backgroundColor: "#f9f9f9",
+            width: "800px",
+            marginTop: "20px",
+          }}
         >
           <p>
-            -각 자음/모음마다 제시된 예시 단어들을 마우스로 캔버스에다 써주세요.
+            -각 자음/모음마다 제시된 예시 단어를 클릭하면 캔버스가 뜹니다.
+            마우스로 캔버스에다 단어를 써주세요.
           </p>
-          <p>-단어는 한 개씩만 써주세요. 여러개 쓰면 오답처리가 됩니다.</p>
           <p>
-            -최대한 또박또박 바르게 단어를 써주세요. 엉망으로 쓰시면 발음이
-            오답처리가 됩니다.
+            -최대한 또박또박 바르게 단어를 써주세요. 엉망으로 쓰시면 오답처리가
+            됩니다.
           </p>
-          <p>-글씨를 올바르게 쓰면 '잘했어요!'라고 뜨며 정답 처리가 됩니다.</p>
+          <p>-단어를 올바르게 쓰면 '잘했어요!'라고 뜨며 정답 처리가 됩니다.</p>
           <p>
             -총 3번 '잘했어요!'를 받으시면 '훌륭해요!'라고 뜨며 그 단어의 학습이
             완료됩니다.
