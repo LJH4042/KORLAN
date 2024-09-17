@@ -15,7 +15,6 @@ function Canvas(
   const [path, setPath] = useState([]);
   const [paths, setPaths] = useState([]);
   const [imgText, setImgText] = useState("");
-  const [wrongAnswers, setWrongAnswers] = useState([]);
 
   useImperativeHandle(ref, () => ({
     clearCanvas,
@@ -105,9 +104,9 @@ function Canvas(
     try {
       await axios.post("http://localhost:5000/api/wrong-answers", wrongAnswer, {
         headers: {
-          Authorization: `Bearer ${localStorage.getItem('token')}`,
-          'Content-Type': 'application/json'
-        }
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
+          "Content-Type": "application/json",
+        },
       });
     } catch (error) {
       console.error("Error saving wrong answer:", error);
