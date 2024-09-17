@@ -8,6 +8,8 @@ const {
   addImageScore,
   addCombineScore,
   learnData,
+  submitAnswer,
+  getWrongAnswers
 } = require("../controller/gameController");
 const { upload } = require("../config/multer");
 const { authUser } = require("../middleware/authMiddleware");
@@ -19,5 +21,7 @@ router.route("/game/reset").post(resetImageID);
 router.route("/imageScore").post(authUser, addImageScore);
 router.route("/combineScore").post(authUser, addCombineScore);
 router.route("/learn").post(authUser, learnData);
+router.route("/submit-answer").post(authUser, submitAnswer);
+router.route("/wrong-answers").get(authUser, getWrongAnswers);
 
 module.exports = router;

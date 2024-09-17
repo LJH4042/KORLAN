@@ -1,33 +1,32 @@
-const asynchHandler = require("express-async-handler");
-const fs = require("fs");
+const asyncHandler = require("express-async-handler");
+const fs = require("fs").promises;
+const path = require("path");
 const detectText = require("../config/vision");
 const Game = require("../model/gameModel");
 const User = require("../model/userModel");
 const WrongAnswer = require("../model/WrongAnswer");
 
 //Post canvas, /canvas : 캔버스 텍스트 추출
-const postCanvas = asynchHandler(async (req, res) => {
+const postCanvas = asyncHandler(async (req, res) => {
   const { dataURL } = req.body;
   const base64Data = dataURL.replace(/^data:image\/\w+;base64,/, "");
   const buffer = Buffer.from(base64Data, "base64");
-  await new Promise((res, rej) => {
-    fs.writeFile("image.png", buffer, (err) => {
-      if (err) {
-        console.error(err);
-        rej("이미지 저장 중 에러 발생");
-      } else {
-        res();
-      }
-    });
-  });
-  const text = await detectText("image.png");
-  res.json({ text });
+  const imagePath = path.join(__dirname, '..', 'image.png');  // 서버 루트 디렉토리의 image.png
+
+  try {
+    await fs.writeFile(imagePath, buffer);
+    const text = await detectText(imagePath);
+    res.json({ text });
+  } catch (error) {
+    console.error("이미지 저장 중 에러 발생:", error);
+    res.status(500).json({ error: "이미지 저장 중 에러 발생" });
+  }
 });
 
 //Get random Image, /image : 이미지 가져오기
 let imageID = [];
 
-const getImage = asynchHandler(async (req, res) => {
+const getImage = asyncHandler(async (req, res) => {
   const { level } = req.body;
   if (imageID.length >= 10) {
     imageID = [];
@@ -44,13 +43,13 @@ const getImage = asynchHandler(async (req, res) => {
 });
 
 //Post reset Image ID, /image/reset : 게임 초기화
-const resetImageID = asynchHandler(async (req, res) => {
+const resetImageID = asyncHandler(async (req, res) => {
   imageID = [];
   res.status(200).send({ message: "게임 데이터가 초기화되었습니다." });
 });
 
 //Post Image, /image : 이미지 데이터 등록
-const postImage = asynchHandler(async (req, res) => {
+const postImage = asyncHandler(async (req, res) => {
   const { title, level, length, hint } = req.body;
   const existingTitle = await User.findOne({ title });
   if (existingTitle)
@@ -61,7 +60,7 @@ const postImage = asynchHandler(async (req, res) => {
 });
 
 //Post ImageGame Score Add, /imageScore : 이미지 게임 점수
-const addImageScore = asynchHandler(async (req, res) => {
+const addImageScore = asyncHandler(async (req, res) => {
   const { imageScore, level } = req.body;
   const user = await User.findById(req.user._id);
   if (level === "하") {
@@ -76,7 +75,7 @@ const addImageScore = asynchHandler(async (req, res) => {
 });
 
 //Post CombineGame Score Add, /CombineScore : 조합 게임 점수
-const addCombineScore = asynchHandler(async (req, res) => {
+const addCombineScore = asyncHandler(async (req, res) => {
   const { combineScore, level } = req.body;
   const user = await User.findById(req.user._id);
   if (level === "하") {
@@ -92,7 +91,7 @@ const addCombineScore = asynchHandler(async (req, res) => {
   await user.save();
 });
 
-const learnData = asynchHandler(async (req, res) => {
+const learnData = asyncHandler(async (req, res) => {
   const { learnWord, letterType } = req.body;
   const user = await User.findById(req.user._id);
   if (letterType === "consonant") {
@@ -116,35 +115,64 @@ const learnData = asynchHandler(async (req, res) => {
   res.status(200).json({ message: "데이터가 저장되었습니다." });
 });
 
-const getWrongAnswers = async (req, res) => {
-  const userId = req.params.userId;
+const getWrongAnswers = asyncHandler(async (req, res) => {
+  const userId = req.user._id;
+  const page = parseInt(req.query.page) || 1;
+  const limit = parseInt(req.query.limit) || 10;
 
   try {
-    const WrongAnswers = await WrongAnswer.find({ userId });
-    res.status(200).json(WrongAnswers);
+    const totalWrongAnswers = await WrongAnswer.countDocuments({ userId });
+    const totalPages = Math.ceil(totalWrongAnswers / limit);
+    const validPage = Math.max(1, Math.min(page, totalPages));
+    const skip = (validPage - 1) * limit;
+
+    const wrongAnswers = await WrongAnswer.find({ userId })
+      .sort({ timestamp: -1 })
+      .skip(skip)
+      .limit(limit);
+
+    res.status(200).json({
+      wrongAnswers,
+      currentPage: validPage,
+      totalPages,
+      totalItems: totalWrongAnswers
+    });
   } catch (error) {
-    res.status(500).json({ message: "오답불러오기에 실패했습니다.", error });
-  }
-};
-
-const submitAnswer = asynchHandler(async (req, res) => {
-  const { question, givenAnswer, correctAnswer } = req.body;
-  const userId = req.user.id;
-
-  const wrongAnswer = new WrongAnswer({
-    userId,
-    question,
-    givenAnswer,
-    correctAnswer,
-  });
-
-  try {
-    await wrongAnswer.save();
-    res.status(201).json({ message: "오답이 저장되었습니다." });
-  } catch (error) {
-    res.status(500).json({ error: "오답 저장에 실패했습니다." });
+    res.status(500).json({ error: '오답을 불러오는데 실패했습니다.' });
   }
 });
+
+const submitAnswer = asyncHandler(async (req, res) => {
+  const { question, givenAnswer, correctAnswer } = req.body;
+  const userId = req.user._id;
+  
+  if (givenAnswer !== correctAnswer) {
+    try {
+      const imagePath = path.join(__dirname, '..', 'image.png');
+      const imageData = await fs.readFile(imagePath, { encoding: 'base64' });
+      const base64Image = `data:image/png;base64,${imageData}`;
+
+      console.log("Image data length:", base64Image.length); // 디버깅용
+
+      const wrongAnswer = new WrongAnswer({
+        userId,
+        question,
+        givenAnswer,
+        correctAnswer,
+        image: base64Image
+      });
+
+      await wrongAnswer.save();
+      res.status(201).json({ message: '오답이 저장되었습니다.' });
+    } catch (error) {
+      console.error("Error saving wrong answer:", error);
+      res.status(500).json({ error: '오답 저장에 실패했습니다.' });
+    }
+  } else {
+    res.status(200).json({ message: '정답입니다.' });
+  }
+});
+
 
 module.exports = {
   postCanvas,
@@ -157,3 +185,4 @@ module.exports = {
   submitAnswer,
   getWrongAnswers,
 };
+

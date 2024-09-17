@@ -14,6 +14,7 @@ function Typing({
 
   const sumbitAnswer = () => {
     checkAnswer(typing);
+    setTyping("");
   };
 
   const nextLevel = () => {

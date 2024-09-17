@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import "../../css/MyPage.css";
+import Pagination from "../../component/Pagination"; 
 import profileImage from "../../img/profile.png";
 
 function MyPage() {
@@ -192,62 +193,74 @@ function StampBoard({ userData }) {
     .fill(false)
     .map((_, index) => index < combineHighStamps);
 
-  return (
-    <div className="stamp-board-container">
-      <div className="stamp-board">
-        <p>이미지 게임</p>
-        <p>(하)</p>
-        {i_StampsLow.map((stamped, index) => (
-          <div key={index} className={`stamp ${stamped ? "stamped" : ""}`}>
-            {stamped ? "🌞" : "⬜"}
+    return (
+      <div className="stamp-board-container">
+        <div className="stamp-board">
+          <h3>이미지 게임</h3>
+          <div className="stamp-row">
+            <p>하</p>
+            {i_StampsLow.map((stamped, index) => (
+              <div key={index} className={`stamp ${stamped ? "stamped" : ""}`}>
+                {stamped ? "🌞" : "⬜"}
+              </div>
+            ))}
           </div>
-        ))}
-        <p>(중)</p>
-        {i_StampsMiddle.map((stamped, index) => (
-          <div key={index} className={`stamp ${stamped ? "stamped" : ""}`}>
-            {stamped ? "🌞" : "⬜"}
+          <div className="stamp-row">
+            <p>중</p>
+            {i_StampsMiddle.map((stamped, index) => (
+              <div key={index} className={`stamp ${stamped ? "stamped" : ""}`}>
+                {stamped ? "🌞" : "⬜"}
+              </div>
+            ))}
           </div>
-        ))}
-        <p>(상)</p>
-        {i_StampsHigh.map((stamped, index) => (
-          <div key={index} className={`stamp ${stamped ? "stamped" : ""}`}>
-            {stamped ? "🌞" : "⬜"}
+          <div className="stamp-row">
+            <p>상</p>
+            {i_StampsHigh.map((stamped, index) => (
+              <div key={index} className={`stamp ${stamped ? "stamped" : ""}`}>
+                {stamped ? "🌞" : "⬜"}
+              </div>
+            ))}
           </div>
-        ))}
+        </div>
+        <div className="stamp-board">
+          <h3>조합 게임</h3>
+          <div className="stamp-row">
+            <p>하</p>
+            {c_StampsLow.map((stamped, index) => (
+              <div
+                key={index}
+                className={`stamp ${stamped ? "stamped-secondary" : ""}`}
+              >
+                {stamped ? "🌟" : "⬜"}
+              </div>
+            ))}
+          </div>
+          <div className="stamp-row">
+            <p>중</p>
+            {c_StampsMiddle.map((stamped, index) => (
+              <div
+                key={index}
+                className={`stamp ${stamped ? "stamped-secondary" : ""}`}
+              >
+                {stamped ? "🌟" : "⬜"}
+              </div>
+            ))}
+          </div>
+          <div className="stamp-row">
+            <p>상</p>
+            {c_StampsHigh.map((stamped, index) => (
+              <div
+                key={index}
+                className={`stamp ${stamped ? "stamped-secondary" : ""}`}
+              >
+                {stamped ? "🌟" : "⬜"}
+              </div>
+            ))}
+          </div>
+        </div>
       </div>
-      <div className="stamp-board">
-        <p>조합 게임</p>
-        <p>(하)</p>
-        {c_StampsLow.map((stamped, index) => (
-          <div
-            key={index}
-            className={`stamp ${stamped ? "stamped-secondary" : ""}`}
-          >
-            {stamped ? "🌟" : "⬜"}
-          </div>
-        ))}
-        <p>(중)</p>
-        {c_StampsMiddle.map((stamped, index) => (
-          <div
-            key={index}
-            className={`stamp ${stamped ? "stamped-secondary" : ""}`}
-          >
-            {stamped ? "🌟" : "⬜"}
-          </div>
-        ))}
-        <p>(상)</p>
-        {c_StampsHigh.map((stamped, index) => (
-          <div
-            key={index}
-            className={`stamp ${stamped ? "stamped-secondary" : ""}`}
-          >
-            {stamped ? "🌟" : "⬜"}
-          </div>
-        ))}
-      </div>
-    </div>
-  );
-}
+    );
+  }
 
 function LearningProgress({ learnCon, learnVow, learnDouCon, learnDouVow }) {
   return (
@@ -292,28 +305,30 @@ function WrongAnswerAlbum({ userData }) {
   const [wrongAnswers, setWrongAnswers] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const [totalWrongAnswers, setTotalWrongAnswers] = useState(0);
+  const [pageNum, setPageNum] = useState(1);
+  const onePageElement = 10; // 한 페이지당 보여줄 오답 수
 
   useEffect(() => {
     const fetchWrongAnswers = async () => {
       try {
-        const token = localStorage.getItem("token");
-        const response = await axios.get(
-          "http://localhost:5000/api/wrong-answers",
-          {
-            headers: { Authorization: `Bearer ${token}` },
-          }
-        );
-        setWrongAnswers(response.data);
+        const token = localStorage.getItem('token');
+        const response = await axios.get(`http://localhost:5000/api/wrong-answers?page=${pageNum}&limit=${onePageElement}`, {
+          headers: { Authorization: `Bearer ${token}` },
+          withCredentials: true
+        });
+        setWrongAnswers(response.data.wrongAnswers);
+        setTotalWrongAnswers(response.data.totalItems);
         setLoading(false);
       } catch (err) {
-        console.error("Error fetching wrong answers:", err);
-        setError("오답을 불러오는 데 실패했습니다." + err.message);
+        setError('오답을 불러오는 데 실패했습니다. ' + (err.response?.data?.message || err.message));
         setLoading(false);
       }
     };
 
     fetchWrongAnswers();
-  }, []);
+  }, [pageNum, onePageElement]);
+
 
   if (loading) return <div className="loading">💖잠시만 기다려 주세요💖</div>;
   if (error) return <div className="error">{error}</div>;
@@ -324,21 +339,29 @@ function WrongAnswerAlbum({ userData }) {
       {wrongAnswers.length === 0 ? (
         <p>아직 오답이 없습니다.</p>
       ) : (
-        <ul className="wrong-answer-list">
-          {wrongAnswers.map((answer, index) => (
-            <li key={index} className="wrong-answer-item">
-              <h3>문제: {answer.question}</h3>
-              <p className="given-answer">내가 쓴 답: {answer.givenAnswer}</p>
-              <p className="correct-answer">정답: {answer.correctAnswer}</p>
-              <p className="timestamp">
-                풀이날짜: {new Date(answer.timestamp).toLocaleString()}
-              </p>
-            </li>
-          ))}
-        </ul>
+        <>
+          <ul className="wrong-answer-list">
+            {wrongAnswers.map((answer, index) => (
+              <li key={index} className="wrong-answer-item">
+                <h3>문제: {answer.question}</h3>
+                <p className="given-answer">내가 쓴 답: {answer.givenAnswer}</p>
+                <img src={answer.image} alt="사용자 답변" />
+                <p className="correct-answer">정답: {answer.correctAnswer}</p>
+                <p className="timestamp">날짜: {new Date(answer.timestamp).toLocaleString()}</p>
+              </li>
+            ))}
+          </ul>
+          <Pagination
+            totalElement={totalWrongAnswers}
+            onePageElement={onePageElement}
+            pageNum={pageNum}
+            setPageNum={setPageNum}
+          />
+        </>
       )}
     </div>
   );
 }
 
 export default MyPage;
+

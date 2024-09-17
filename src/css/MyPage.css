@@ -26,7 +26,6 @@
 }
 
 .divider {
-  width: 80%;
   margin: 3px auto;
   border-top: 1.5px solid #ccc;
 }
@@ -69,8 +68,13 @@ div.pullDown a:hover:before {
 }
 
 .user-info {
-  padding-left: 20px;
-  font-size: 1.2em;
+  padding: 15px 30px;
+  border: 1px solid #ddd;
+  border-radius: 10px;
+  background-color: #f9f9f9;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  display: inline-block;
+  width: 80%;
 }
 
 .profile-picture {
@@ -83,34 +87,47 @@ div.pullDown a:hover:before {
 
 .stamp-board-container {
   display: flex;
-  justify-content: space-around;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 1em;
 }
 
 .stamp-board {
-  display: flex;
-  justify-content: center;
-  margin: 10px 0;
-  flex-wrap: wrap;
+  flex: 1;
+  min-width: 250px;
+  padding: 1em;
+  border: 1px solid #ddd;
+  border-radius: 10px;
+  background-color: #f9f9f9;
 }
 
-.stamp-board p {
-  width: 100%;
-  text-align: left;
+.stamp-board h3 {
+  margin-bottom: 1em;
   font-size: 1.5em;
-  margin: 0 0 10px;
-  color: #555;
+  color: #333;
+}
+
+.stamp-row {
+  display: flex;
+  align-items: center;
+  margin-bottom: 0.1em;
+}
+
+.stamp-row p {
+  margin-right: 0.1em;
+  font-size: 1.2em;
 }
 
 .stamp {
-  width: 50px;
-  height: 50px;
-  margin: 5px;
+  width: 40px;
+  height: 40px;
+  margin: 10px;
   display: flex;
   align-items: center;
   justify-content: center;
   font-size: 24px;
   border: 1px solid #ccc;
-  border-radius: 10px;
+  border-radius: 8px;
   background-color: #f9f9f9;
   transition: background-color 0.3s, transform 0.3s;
 }
@@ -121,7 +138,7 @@ div.pullDown a:hover:before {
 }
 
 .stamp.stamped-secondary {
-  background-color: #fff; /* Secondary stamp color */
+  background-color: #fff;
   transform: scale(1.1);
 }
 
@@ -162,4 +179,28 @@ div.pullDown a:hover:before {
 .loading {
   font-size: 1.5em;
   text-align: center;
+}
+
+.pagination {
+  display: flex;
+  justify-content: center;
+  margin-top: 20px;
+}
+
+.pagination button {
+  margin: 0 5px;
+  padding: 5px 10px;
+  border: 1px solid #ddd;
+  background-color: #f8f8f8;
+  cursor: pointer;
+}
+
+.pagination button.active {
+  background-color: #007bff;
+  color: white;
+}
+
+.pagination button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
 }
