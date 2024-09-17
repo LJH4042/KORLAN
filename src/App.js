@@ -12,12 +12,15 @@ import LearningPage from "./page/Learn/LearningPage";
 import Footer from "./component/footer";
 import "bootstrap/dist/css/bootstrap.min.css";
 import Introduce from "./page/introduce";
+import Notebook from "./page/notebook";
 import ImageLevel from "./page/Game/ImageLevel";
 import CombineLevel from "./page/Game/CombineLevel";
+import Header from "./component/Header";
 import axios from "axios";
+import TeamIntro from "./page/TeamIntro";
 
 function App() {
-  const checkToken = async () => {
+  /*const checkToken = async () => {
     if (localStorage.getItem("token") === null) {
       try {
         const refreshRes = await axios.post(
@@ -35,6 +38,23 @@ function App() {
         localStorage.removeItem("token");
       }
     }
+  };*/
+  const checkToken = async () => {
+    if (localStorage.getItem("token") === null) return;
+    try {
+      const refreshRes = await axios.post(
+        "http://localhost:5000/refresh",
+        {},
+        { withCredentials: true }
+      );
+      const newToken = refreshRes.data.token;
+      localStorage.setItem("token", newToken);
+      axios.defaults.headers.common["Authorization"] = `Bearer ${newToken}`;
+    } catch (err) {
+      if (err.response && err.response.status === 403) {
+        localStorage.removeItem("token");
+      }
+    }
   };
 
   useEffect(() => {
@@ -44,6 +64,7 @@ function App() {
   return (
     <div>
       <BrowserRouter>
+        <Header />
         <Nav />
         <Routes>
           <Route index element={<Home />} />
@@ -57,6 +78,8 @@ function App() {
           <Route path="/combineGame" element={<CombineLevel />} />
           <Route path="/learn" element={<LearningPage />} />
           <Route path="/introduce" element={<Introduce />} />
+          <Route path="/notebook" element={<Notebook />} />
+          <Route path="/teamIntro" element={<TeamIntro />} />
         </Routes>
       </BrowserRouter>
       <Footer />

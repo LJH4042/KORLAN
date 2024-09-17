@@ -32,26 +32,31 @@ function PwdChange({ name }) {
   };
 
   return (
-    <div className="userContainer">
+    <div className="pwdChangeContainer">
+      <h1 className="pwdChangeTitle">비밀번호 변경</h1>
+      <span className="pwdChangeSubTitle">-비밀번호를 변경하세요.-</span>
       <form onSubmit={pwdChangeSubmit}>
         <div>
-          <label>새 비밀번호</label>
           <input
             type="password"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
+            placeholder="새 비밀번호"
+            className="pwdChangeInput"
+            style={{ marginBottom: "30px" }}
           />
         </div>
         <div>
-          <label>새 비밀번호 확인</label>
           <input
             type="password"
             value={password2}
             onChange={(e) => setPassword2(e.target.value)}
+            placeholder="새 비밀번호 확인"
+            className="pwdChangeInput"
           />
           <h4>{passwordError}</h4>
         </div>
-        <button type="submit" className="submitBtn">
+        <button type="submit" className="pwdChangeBtn">
           비밀번호 변경
         </button>
       </form>

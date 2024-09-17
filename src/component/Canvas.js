@@ -1,14 +1,10 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useRef, useState, useImperativeHandle } from "react";
 import axios from "axios";
 
-function Canvas({
-  checkAnswer,
-  fetchData,
-  quiz,
-  checkQuiz,
-  setCheckQuiz,
-  setAnswerObjButton,
-}) {
+function Canvas(
+  { checkAnswer, fetchData, quiz, checkQuiz, setCheckQuiz, setAnswerObjButton },
+  ref
+) {
   const canvasRef = useRef(null);
 
   const [isDrawing, setIsDrawing] = useState(false);
@@ -21,9 +17,13 @@ function Canvas({
   const [imgText, setImgText] = useState("");
   const [wrongAnswers, setWrongAnswers] = useState([]);
 
+  useImperativeHandle(ref, () => ({
+    clearCanvas,
+  }));
 
   useEffect(() => {
     const canvas = canvasRef.current;
+    if (!canvas) return;
     const ctx = canvas.getContext("2d");
     const drawing = (e) => {
       if (!isDrawing) return;
@@ -67,10 +67,23 @@ function Canvas({
   };
 
   const outputCanvasImage = async () => {
+    if (paths.length === 0 && path.length === 0) {
+      alert("단어를 써주세요.");
+      return;
+    }
     const canvas = canvasRef.current;
     const dataURL = canvas.toDataURL("image/png");
     try {
-      const res = await axios.post("http://localhost:5000/canvas", { dataURL: dataURL });
+      const res = await axios.post("http://localhost:5000/canvas", {
+        dataURL: dataURL,
+      });
+      if (!res.data.text) {
+        alert("옳바른 단어가 아닙니다. 다시 써주세요.");
+        setTimeout(() => {
+          clearCanvas();
+        }, 100);
+        return;
+      }
       setImgText(res.data.text);
       const isCorrect = checkAnswer(res.data.text);
       if (!isCorrect) {
@@ -88,6 +101,7 @@ function Canvas({
   };
 
   const saveWrongAnswer = async (wrongAnswer) => {
+    if (localStorage.getItem("token") === null) return;
     try {
       await axios.post("http://localhost:5000/api/wrong-answers", wrongAnswer, {
         headers: {
@@ -102,6 +116,7 @@ function Canvas({
 
   const clearCanvas = () => {
     const canvas = canvasRef.current;
+    if (!canvas) return;
     const ctx = canvas.getContext("2d");
     ctx.clearRect(0, 0, canvas.width, canvas.height);
     setOutputImageSrc(null);
@@ -115,6 +130,7 @@ function Canvas({
 
   const redrawCanvas = () => {
     const canvas = canvasRef.current;
+    if (!canvas) return;
     const ctx = canvas.getContext("2d");
     ctx.clearRect(0, 0, canvas.width, canvas.height);
     paths.forEach((p) => {
@@ -134,65 +150,77 @@ function Canvas({
     clearCanvas();
     setCheckQuiz(false);
     setAnswerObjButton(false);
+    setImgText("");
+    setPaths([]);
   };
 
   return (
     <div className="canvasContainer">
-      <div>
-        <canvas
-          ref={canvasRef}
-          width={750}
-          height={300}
-          style={{
-            border: "5px solid #a0cbe7",
-            borderRadius: "10%",
-          }}
-          onMouseDown={drawingCanvas}
-          onMouseUp={stopDrawing}
-          onMouseOut={canvasOut}
-        />
-      </div>
-      <div className="canvasButtonDiv">
-        <button
-          style={{ backgroundColor: "gray", padding: "15px" }}
-          onClick={() => setColor("gray")}
-        />
-        <button
-          style={{ backgroundColor: "blue", padding: "15px" }}
-          onClick={() => setColor("blue")}
-        />
-        <button
-          style={{ backgroundColor: "red", padding: "15px" }}
-          onClick={() => setColor("red")}
-        />
-        <button
-          style={{ backgroundColor: "green", padding: "15px" }}
-          onClick={() => setColor("green")}
-        />
-        <button
-          style={{ backgroundColor: "purple", padding: "15px" }}
-          onClick={() => setColor("purple")}
-        />
-      </div>
-      <div className="canvasButtonDiv">
-        {checkQuiz ? (
+      {checkQuiz ? (
+        <div className="canvasButtonDiv">
+          <h3>{quiz}</h3>
+          <button className="actionButton" onClick={nextLevel}>
+            다음 레벨
+          </button>
+        </div>
+      ) : (
+        <div>
           <div>
-            <h3>
-              정답: {quiz}, 제출한 답: {imgText}
-            </h3>
-            <button onClick={nextLevel}>다음 레벨</button>
+            <p style={{ textAlign: "center", color: "gray" }}>
+              -최대한 또박또박 바르게 써주세요.-
+            </p>
+            <canvas
+              ref={canvasRef}
+              width={750}
+              height={300}
+              style={{
+                border: "5px solid #a0cbe7",
+                borderRadius: "10%",
+              }}
+              onMouseDown={drawingCanvas}
+              onMouseUp={stopDrawing}
+              onMouseOut={canvasOut}
+            />
           </div>
-        ) : (
-          <div>
-            <button onClick={outputCanvasImage}>확인</button>
-            <button onClick={clearCanvas}>다시 쓰기</button>
-            <button onClick={returnCurrentLine}>한 획 지우기</button>
+          <div className="canvasButtonDiv">
+            <button
+              style={{ backgroundColor: "gray", padding: "15px" }}
+              onClick={() => setColor("gray")}
+            />
+            <button
+              style={{ backgroundColor: "blue", padding: "15px" }}
+              onClick={() => setColor("blue")}
+            />
+            <button
+              style={{ backgroundColor: "red", padding: "15px" }}
+              onClick={() => setColor("red")}
+            />
+            <button
+              style={{ backgroundColor: "green", padding: "15px" }}
+              onClick={() => setColor("green")}
+            />
+            <button
+              style={{ backgroundColor: "purple", padding: "15px" }}
+              onClick={() => setColor("purple")}
+            />
           </div>
-        )}
-      </div>
-      {/*outputImageSrc && <img src={outputImageSrc} alt="분석된 이미지" />*/}
+          <div className="canvasButtonDiv">
+            <div>
+              <button className="actionButton" onClick={outputCanvasImage}>
+                확인
+              </button>
+              <button className="actionButton" onClick={clearCanvas}>
+                다시 쓰기
+              </button>
+              <button className="actionButton" onClick={returnCurrentLine}>
+                한 획 지우기
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 }
 
-export default Canvas;
+export default React.forwardRef(Canvas);

@@ -1,60 +1,41 @@
 .notebookContainer {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    padding: 20px;
-  }
-  
-  .notebookTitle {
-    text-align: center;
-    margin: 20px;
-  }
-  
-  .notebookDescription {
-    font-size: 1.2em;
-    margin-bottom: 20px;
-    color: #666;
-  }
-  
-  .canvasWrapper {
-    border: 5px solid #a0cbe7;
-    border-radius: 10%;
-    overflow: hidden;
-    margin-bottom: 20px;
-  }
-  
-  .canvas {
-    width: 100%;
-    height: auto;
-  }
-  
-  .canvasButtonDiv {
-    display: flex;
-    justify-content: center;
-    margin: 10px 0;
-  }
-  
-  .colorButton {
-    width: 40px;
-    height: 40px;
-    margin: 0 5px;
-    border: none;
-    cursor: pointer;
-    border-radius: 20%;
-  }
-  
-  .actionButton {
-    padding: 10px 20px;
-    margin: 0 5px;
-    border: none;
-    background-color: #a0cbe7;
-    color: white;
-    cursor: pointer;
-    font-size: 16px;
-    border-radius: 5px;
-  }
-  
-  .actionButton:hover {
-    background-color: #87b2d6;
-  }
-  
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  /*background-color: #f0f4f9;*/
+  background-color: #f7f7f7;
+  padding: 50px;
+}
+
+.notebookDiv {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 1100px;
+  background-color: white;
+  border-radius: 10px;
+  margin-left: 50px;
+  padding-bottom: 50px;
+}
+
+.notebookTitle {
+  margin-top: 50px;
+  font-size: 30px;
+  margin-bottom: 20px; /* 하단 마진만 남기고 좌우 정렬 제거 */
+  font-weight: bold;
+}
+
+.notebookDescription {
+  font-size: 1.2em;
+  margin-bottom: 20px;
+  color: #666;
+}
+
+.canvasWrapper {
+  overflow: hidden;
+  margin-bottom: 20px;
+  margin-top: 50px;
+  width: 110%;
+}

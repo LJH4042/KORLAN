@@ -145,7 +145,7 @@ const getWrongAnswers = asyncHandler(async (req, res) => {
 const submitAnswer = asyncHandler(async (req, res) => {
   const { question, givenAnswer, correctAnswer } = req.body;
   const userId = req.user._id;
-
+  
   if (givenAnswer !== correctAnswer) {
     try {
       const imagePath = path.join(__dirname, '..', 'image.png');
@@ -183,6 +183,6 @@ module.exports = {
   addCombineScore,
   learnData,
   submitAnswer,
-  getWrongAnswers
+  getWrongAnswers,
 };
 

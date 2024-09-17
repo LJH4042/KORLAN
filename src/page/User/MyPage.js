@@ -3,18 +3,17 @@ import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import "../../css/MyPage.css";
 import Pagination from "../../component/Pagination"; 
+import profileImage from "../../img/profile.png";
 
 function MyPage() {
   const navigate = useNavigate();
-  const [userData, setUserData] = useState({});
-  const [selectedContent, setSelectedContent] = useState(null);
-  const [learnCon, setLearnCon] = useState([]);
-  const [learnVow, setLearnVow] = useState([]);
-  const [learnDouCon, setLearnDouCon] = useState([]);
-  const [learnDouVow, setLearnDouVow] = useState([]);
+  const [userData, setUserData] = useState([]);
+  const [selectedContent, setSelectedContent] = useState("내 정보");
+  const [loading, setLoading] = useState(true);
 
   // 사용자 데이터를 가져오는 함수
   const fetchUserData = async () => {
+    setLoading(true);
     const token = localStorage.getItem("token");
     const headerData = {
       headers: {
@@ -25,10 +24,6 @@ function MyPage() {
     try {
       const res = await axios.get("http://localhost:5000/login", headerData);
       setUserData(res.data);
-      setLearnCon(res.data.learnPoint.consonant);
-      setLearnVow(res.data.learnPoint.vowel);
-      setLearnDouCon(res.data.learnPoint.doubleConsonant);
-      setLearnDouVow(res.data.learnPoint.doubleVowel);
     } catch (err) {
       if (err.response && err.response.status === 401) {
         try {
@@ -44,11 +39,15 @@ function MyPage() {
         } catch (err) {
           console.error(err);
           localStorage.removeItem("token");
+          navigate("/login");
         }
       } else {
         console.error(err);
         localStorage.removeItem("token");
+        navigate("/login");
       }
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -68,6 +67,9 @@ function MyPage() {
 
   // 선택된 컨텐츠에 따라 보여줄 컴포넌트를 리턴
   const getContentComponent = () => {
+    if (loading) return <div className="loading">💖잠시만 기다려 주세요💖</div>; // 로딩 상태 표시
+    if (!userData) return null;
+
     switch (selectedContent) {
       case "내 정보":
         return <UserInfo userData={userData} navigate={navigate} />;
@@ -76,10 +78,10 @@ function MyPage() {
       case "학습 진행률":
         return (
           <LearningProgress
-            learnCon={learnCon.length}
-            learnVow={learnVow.length}
-            learnDouCon={learnDouCon.length}
-            learnDouVow={learnDouVow.length}
+            learnCon={userData.learnPoint.consonant.length}
+            learnVow={userData.learnPoint.vowel.length}
+            learnDouCon={userData.learnPoint.doubleConsonant.length}
+            learnDouVow={userData.learnPoint.doubleVowel.length}
           />
         );
       case "오답 앨범":
@@ -145,9 +147,20 @@ function UserInfo({ userData, navigate }) {
   };
 
   return (
-    <div>
-      <p>이름: {userData.username}</p>
+    <div className="user-info">
+      <img
+        src={
+          userData.profileImage
+            ? `/images/${userData.profileImage}`
+            : profileImage
+        }
+        alt="Profile"
+        className="profile-picture"
+      />
+      <h2>{userData.username}</h2>
       <p>이메일: {userData.email}</p>
+      <p>계정 생성일: {userData.creationDate}</p>
+      <p>마지막 로그인: {userData.lastLogin}</p>
       <button onClick={handleDeleteAccount}>탈퇴하기</button>
     </div>
   );
@@ -180,79 +193,91 @@ function StampBoard({ userData }) {
     .fill(false)
     .map((_, index) => index < combineHighStamps);
 
-  return (
-    <div className="stamp-board-container">
-      <div className="stamp-board">
-        <p>이미지 게임</p>
-        <p>(하)</p>
-        {i_StampsLow.map((stamped, index) => (
-          <div key={index} className={`stamp ${stamped ? "stamped" : ""}`}>
-            {stamped ? "🌞" : "⬜"}
+    return (
+      <div className="stamp-board-container">
+        <div className="stamp-board">
+          <h3>이미지 게임</h3>
+          <div className="stamp-row">
+            <p>하</p>
+            {i_StampsLow.map((stamped, index) => (
+              <div key={index} className={`stamp ${stamped ? "stamped" : ""}`}>
+                {stamped ? "🌞" : "⬜"}
+              </div>
+            ))}
           </div>
-        ))}
-        <p>(중)</p>
-        {i_StampsMiddle.map((stamped, index) => (
-          <div key={index} className={`stamp ${stamped ? "stamped" : ""}`}>
-            {stamped ? "🌞" : "⬜"}
+          <div className="stamp-row">
+            <p>중</p>
+            {i_StampsMiddle.map((stamped, index) => (
+              <div key={index} className={`stamp ${stamped ? "stamped" : ""}`}>
+                {stamped ? "🌞" : "⬜"}
+              </div>
+            ))}
           </div>
-        ))}
-        <p>(상)</p>
-        {i_StampsHigh.map((stamped, index) => (
-          <div key={index} className={`stamp ${stamped ? "stamped" : ""}`}>
-            {stamped ? "🌞" : "⬜"}
+          <div className="stamp-row">
+            <p>상</p>
+            {i_StampsHigh.map((stamped, index) => (
+              <div key={index} className={`stamp ${stamped ? "stamped" : ""}`}>
+                {stamped ? "🌞" : "⬜"}
+              </div>
+            ))}
           </div>
-        ))}
+        </div>
+        <div className="stamp-board">
+          <h3>조합 게임</h3>
+          <div className="stamp-row">
+            <p>하</p>
+            {c_StampsLow.map((stamped, index) => (
+              <div
+                key={index}
+                className={`stamp ${stamped ? "stamped-secondary" : ""}`}
+              >
+                {stamped ? "🌟" : "⬜"}
+              </div>
+            ))}
+          </div>
+          <div className="stamp-row">
+            <p>중</p>
+            {c_StampsMiddle.map((stamped, index) => (
+              <div
+                key={index}
+                className={`stamp ${stamped ? "stamped-secondary" : ""}`}
+              >
+                {stamped ? "🌟" : "⬜"}
+              </div>
+            ))}
+          </div>
+          <div className="stamp-row">
+            <p>상</p>
+            {c_StampsHigh.map((stamped, index) => (
+              <div
+                key={index}
+                className={`stamp ${stamped ? "stamped-secondary" : ""}`}
+              >
+                {stamped ? "🌟" : "⬜"}
+              </div>
+            ))}
+          </div>
+        </div>
       </div>
-      <div className="stamp-board">
-        <p>조합 게임</p>
-        <p>(하)</p>
-        {c_StampsLow.map((stamped, index) => (
-          <div
-            key={index}
-            className={`stamp ${stamped ? "stamped-secondary" : ""}`}
-          >
-            {stamped ? "🌟" : "⬜"}
-          </div>
-        ))}
-        <p>(중)</p>
-        {c_StampsMiddle.map((stamped, index) => (
-          <div
-            key={index}
-            className={`stamp ${stamped ? "stamped-secondary" : ""}`}
-          >
-            {stamped ? "🌟" : "⬜"}
-          </div>
-        ))}
-        <p>(상)</p>
-        {c_StampsHigh.map((stamped, index) => (
-          <div
-            key={index}
-            className={`stamp ${stamped ? "stamped-secondary" : ""}`}
-          >
-            {stamped ? "🌟" : "⬜"}
-          </div>
-        ))}
-      </div>
-    </div>
-  );
-}
+    );
+  }
 
 function LearningProgress({ learnCon, learnVow, learnDouCon, learnDouVow }) {
   return (
     <div>
-      <p>자음 학습하기 ({learnCon} / 70)</p>
+      <p>자음 학습하기 ({learnCon} / 98)</p>
       <div className="bar-graph">
-        <div className="bar" style={{ width: `${(learnCon / 70) * 100}%` }}>
+        <div className="bar" style={{ width: `${(learnCon / 98) * 100}%` }}>
           <span className="bar-text">{`${Math.floor(
-            (learnCon / 70) * 100
+            (learnCon / 98) * 100
           )}%`}</span>
         </div>
       </div>
-      <p>모음 학습하기 ({learnVow} / 50)</p>
+      <p>모음 학습하기 ({learnVow} / 60)</p>
       <div className="bar-graph">
-        <div className="bar" style={{ width: `${(learnVow / 50) * 100}%` }}>
+        <div className="bar" style={{ width: `${(learnVow / 60) * 100}%` }}>
           <span className="bar-text">{`${Math.floor(
-            (learnVow / 50) * 100
+            (learnVow / 60) * 100
           )}%`}</span>
         </div>
       </div>
@@ -264,11 +289,11 @@ function LearningProgress({ learnCon, learnVow, learnDouCon, learnDouVow }) {
           )}%`}</span>
         </div>
       </div>
-      <p>쌍모음 학습하기 ({learnDouVow} / 55)</p>
+      <p>쌍모음 학습하기 ({learnDouVow} / 62)</p>
       <div className="bar-graph">
-        <div className="bar" style={{ width: `${(learnDouVow / 55) * 100}%` }}>
+        <div className="bar" style={{ width: `${(learnDouVow / 62) * 100}%` }}>
           <span className="bar-text">{`${Math.floor(
-            (learnDouVow / 55) * 100
+            (learnDouVow / 62) * 100
           )}%`}</span>
         </div>
       </div>
@@ -276,7 +301,7 @@ function LearningProgress({ learnCon, learnVow, learnDouCon, learnDouVow }) {
   );
 }
 
-function WrongAnswerAlbum({userData}) {
+function WrongAnswerAlbum({ userData }) {
   const [wrongAnswers, setWrongAnswers] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -304,7 +329,8 @@ function WrongAnswerAlbum({userData}) {
     fetchWrongAnswers();
   }, [pageNum, onePageElement]);
 
-  if (loading) return <div className="loading">로딩 중...</div>;
+
+  if (loading) return <div className="loading">💖잠시만 기다려 주세요💖</div>;
   if (error) return <div className="error">{error}</div>;
 
   return (

@@ -240,16 +240,12 @@ const LearningPage = () => {
   const { selectedLetter, handleLetterSelection, resetSelectedLetter } =
     useLearning();
 
-  //const [learnCon, setLearnCon] = useState([]);
-  //const [learnVow, setLearnVow] = useState([]);
-  //const [learnDoubleCon, setLearnDoubleCon] = useState([]);
-  //const [learnDoubleVow, setLearnDoubleVow] = useState([]);
-  const [letterType, setLetterType] = useState("consonant");
-  const [lastSelectedLetter, setLastSelectedLetter] = useState(null);
-  const [exampleWord, setExampleWord] = useState("");
-  const [currentNum, setCurrentNum] = useState(1);
-  const [previousAnswer, setPreviousAnswer] = useState(""); // 이전 답변
+  const [letterType, setLetterType] = useState(""); //현재 선택된 글자의 유형을 저장
+  const [lastSelectedLetter, setLastSelectedLetter] = useState(null); //마지막으로 선택된 글자를 저장
+  const [exampleWord, setExampleWord] = useState(""); //선택된 글자의 예시 단어들을 저장
   const speak = useGoogleTTS();
+
+  const setIsCanvas = () => null;
 
   const toggleLetterType = (type) => {
     setLetterType(type);
@@ -273,218 +269,146 @@ const LearningPage = () => {
     setExampleWord(selected ? selected.example : "");
   };
 
+  // 예시 단어를 클릭하면 TTS로 발음되도록 수정
   const renderHighlightedExample = (word, letter) => {
-    return word.split("").map((char, index) => (
-      <span key={index} className={char === letter ? styles.highlight : ""}>
-        {char}
-      </span>
+    const words = word.split(", ");
+    return words.map((word, index) => (
+      <React.Fragment key={index}>
+        <span
+          onClick={() => speak(word)} // 예시 단어 클릭 시 TTS 발음
+          className={styles.baseWord}
+        >
+          {word}
+        </span>
+        {index < words.length - 1 && ", "}
+      </React.Fragment>
     ));
   };
   const canvasRef = useRef(null);
   
   const checkAnswer = async (userAnswer) => {
-    let allExampleWords = [];
-    switch (letterType) {
-      case "consonant":
-        allExampleWords = consonants.flatMap((item) =>
-          item.letter === selectedLetter ? item.example.split(", ") : []
-        );
-        break;
-      case "vowel":
-        allExampleWords = vowels.flatMap((item) =>
-          item.letter === selectedLetter ? item.example.split(", ") : []
-        );
-        break;
-      case "doubleConsonant":
-        allExampleWords = doubleCons.flatMap((item) =>
-          item.letter === selectedLetter ? item.example.split(", ") : []
-        );
-        break;
-      case "doubleVowel":
-        allExampleWords = doubleVow.flatMap((item) =>
-          item.letter === selectedLetter ? item.example.split(", ") : []
-        );
-        break;
-      default:
-        break;
-    }
     const trimmedUserAnswer = userAnswer.trim();
-    const isCorrect = allExampleWords.includes(trimmedUserAnswer);
-    if (isCorrect) {
-      if (trimmedUserAnswer === previousAnswer) {
-        alert("정답입니다!");
-        setCurrentNum((prevNum) => prevNum + 1);
-        if (currentNum === 3) {
-          setCurrentNum(1);
-          updateWord(trimmedUserAnswer);
-          alert("잘했어요!");
-        }
-      } else if (previousAnswer === "") {
-        alert("정답입니다!");
-        setCurrentNum((prevNum) => prevNum + 1);
-      } else {
-        setCurrentNum(2);
-        alert("정답입니다.");
-      }
-    } else {
-      alert("오답입니다.");
-      setCurrentNum(1);
-      try {
-        const token = localStorage.getItem("token");
-        const canvasImage = canvasRef.current.toDataURL('image/png');
-        await axios.post(
-          "http://localhost:5000/api/wrong-answers",
-          {
-            question: selectedLetter,
-            givenAnswer: trimmedUserAnswer,
-            correctAnswer: allExampleWords.join(', '),
-            canvasImage: canvasImage
-          },
-          {
-            headers: { Authorization: `Bearer ${token}` },
-            withCredentials: true
-          }
-        );
-      } catch (error) {
-        console.error("오답 저장 실패:", error);
-      }
-    }
-    setPreviousAnswer(trimmedUserAnswer);
+    speak(trimmedUserAnswer); // 사용자가 입력한 단어를 TTS로 발음
   };
 
-  const updateWord = async (trimmedUserAnswer) => {
-    const token = localStorage.getItem("token");
-    const headerData = {
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-      withCredentials: true,
-    };
+  const checkToken = async () => {
+    if (localStorage.getItem("token") === null) return;
     try {
-      await axios.post(
-        "http://localhost:5000/learn",
-        { learnWord: trimmedUserAnswer, letterType: letterType },
-        headerData
+      const refreshRes = await axios.post(
+        "http://localhost:5000/refresh",
+        {},
+        { withCredentials: true }
       );
-      console.log("데이터가 추가되었습니다.");
+      const newToken = refreshRes.data.token;
+      localStorage.setItem("token", newToken);
+      axios.defaults.headers.common["Authorization"] = `Bearer ${newToken}`;
     } catch (err) {
-      if (err.response.status === 401) {
-        try {
-          const refreshRes = await axios.post(
-            "http://localhost:5000/refresh",
-            {},
-            { withCredentials: true }
-          );
-          const newToken = refreshRes.data.token;
-          localStorage.setItem("token", newToken);
-          axios.defaults.headers.common["Authorization"] = `Bearer ${newToken}`;
-          updateWord(trimmedUserAnswer); // 토큰을 갱신하고 다시 호출합니다.
-        } catch (err) {
-          console.error(err);
-          localStorage.removeItem("token");
-        }
-      } else {
-        console.error(err);
+      if (err.response && err.response.status === 403) {
         localStorage.removeItem("token");
       }
     }
   };
 
-  const fetchUserData = async () => {
-    const token = localStorage.getItem("token");
-    const headerData = {
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-      withCredentials: true,
-    };
-    try {
-      const res = await axios.get("http://localhost:5000/login", headerData);
-      //setLearnCon(res.data.learnPoint.consonant.join(" "));
-      //setLearnVow(res.data.learnPoint.vowel.join(" "));
-      //setLearnDoubleCon(res.data.learnPoint.doubleConsonant.join(" "));
-      //setLearnDoubleVow(res.data.learnPoint.doubleVowel.join(" "));
-    } catch (err) {
-      console.error(err);
-    }
-  };
-
   useEffect(() => {
-    fetchUserData();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+    checkToken();
   }, []);
 
   return (
     <div className={styles.pageContainer}>
-      <h2>한글 깨우치기</h2>
-      <div className={styles.buttonContainer}>
-        <button onClick={() => toggleLetterType("consonant")}>
-          자음 학습하기
-        </button>
-        <button onClick={() => toggleLetterType("vowel")}>모음 학습하기</button>
-        <button onClick={() => toggleLetterType("doubleConsonant")}>
-          쌍자음 학습하기
-        </button>
-        <button onClick={() => toggleLetterType("doubleVowel")}>
-          쌍모음 학습하기
-        </button>
-      </div>
-      <div className={styles.buttonContainer}>
-        <div className={styles.flexContainer}>
-          {letterType === "consonant" && (
-            <>
-              <h3>자음 학습하기</h3>
-              <ConsonantList
-                consonants={consonants}
-                onLetterSelect={handleLetterSelectionWithTTS}
-              />
-            </>
-          )}
-          {letterType === "vowel" && (
-            <>
-              <h3>모음 학습하기</h3>
-              <VowelList
-                vowels={vowels}
-                onLetterSelect={handleLetterSelectionWithTTS}
-              />
-            </>
-          )}
-          {letterType === "doubleConsonant" && (
-            <>
-              <h3>쌍자음 학습하기</h3>
-              <ConsonantList
-                consonants={doubleCons}
-                onLetterSelect={handleLetterSelectionWithTTS}
-              />
-            </>
-          )}
-          {letterType === "doubleVowel" && (
-            <>
-              <h3>쌍모음 학습하기</h3>
-              <VowelList
-                vowels={doubleVow}
-                onLetterSelect={handleLetterSelectionWithTTS}
-              />
-            </>
-          )}
-          {selectedLetter && (
-            <div className={styles.selectedLetterContainer}>
-              <button
-                onClick={() => lastSelectedLetter && speak(lastSelectedLetter)}
-              >
-                다시 듣기
-              </button>
-              <h3>선택한 글자: </h3>
-              <p className={styles.selectedLetter}> {selectedLetter}</p>
-              <div className={styles.exampleWord}>
-                <h3>
-                  예시 단어:{" "}
-                  {renderHighlightedExample(exampleWord, lastSelectedLetter)}
-                </h3>
+      <div className={styles.learnContainer}>
+        <h1>학습하기</h1>
+        <p style={{ fontSize: "1.2em", color: "#666", marginTop: "0px" }}>
+          -자음과 모음의 발음을 들으며 한글을 익혀요!-
+        </p>
+        <div className={styles.buttonContainer}>
+          <button onClick={() => toggleLetterType("consonant")}>
+            자음 학습하기
+          </button>
+          <button onClick={() => toggleLetterType("vowel")}>
+            모음 학습하기
+          </button>
+          <button onClick={() => toggleLetterType("doubleConsonant")}>
+            쌍자음 학습하기
+          </button>
+          <button onClick={() => toggleLetterType("doubleVowel")}>
+            쌍모음 학습하기
+          </button>
+        </div>
+        <div className={styles.buttonContainer}>
+          <div className={styles.flexContainer}>
+            {letterType === "consonant" && (
+              <>
+                <h3>자음 학습하기</h3>
+                <ConsonantList
+                  consonants={consonants}
+                  onLetterSelect={handleLetterSelectionWithTTS}
+                  setIsCanvas={setIsCanvas}
+                />
+              </>
+            )}
+            {letterType === "vowel" && (
+              <>
+                <h3>모음 학습하기</h3>
+                <VowelList
+                  vowels={vowels}
+                  onLetterSelect={handleLetterSelectionWithTTS}
+                  setIsCanvas={setIsCanvas}
+                />
+              </>
+            )}
+            {letterType === "doubleConsonant" && (
+              <>
+                <h3>쌍자음 학습하기</h3>
+                <ConsonantList
+                  consonants={doubleCons}
+                  onLetterSelect={handleLetterSelectionWithTTS}
+                  setIsCanvas={setIsCanvas}
+                />
+              </>
+            )}
+            {letterType === "doubleVowel" && (
+              <>
+                <h3>쌍모음 학습하기</h3>
+                <VowelList
+                  vowels={doubleVow}
+                  onLetterSelect={handleLetterSelectionWithTTS}
+                  setIsCanvas={setIsCanvas}
+                />
+              </>
+            )}
+            {selectedLetter && (
+              <div className={styles.selectedLetterContainer}>
+                <button
+                  onClick={() =>
+                    lastSelectedLetter && speak(lastSelectedLetter)
+                  }
+                >
+                  다시 듣기
+                </button>
+                <p className={styles.selectedLetter}> {selectedLetter}</p>
+                <div className={styles.exampleWord}>
+                  <h3>
+                    {renderHighlightedExample(exampleWord, lastSelectedLetter)}
+                  </h3>
+                </div>
               </div>
-            </div>
-          )}
+            )}
+          </div>
+        </div>
+        <div style={{ marginTop: "50px" }}>
           <Canvas ref={canvasRef} checkAnswer={checkAnswer} />
+        </div>
+        <div className="ruleDiv" style={{ backgroundColor: "#f9f9f9" }}>
+          <p>-각 단어들을 클릭하면 해당 단어의 발음 소리가 재생됩니다.</p>
+          <p>
+            -마우스로 캔버스에 단어를 쓰고 '확인' 버튼을 누르시면 쓴 단어의 발음
+            소리가 재생됩니다.
+          </p>
+          <p>-위에 예시 단어 외에 다른 단어를 써도 발음 소리가 재생됩니다.</p>
+          <p>
+            -최대한 또박또박 바르게 단어를 써주세요. 엉망으로 쓰시면 발음이
+            제대로 재생되지 않습니다.
+          </p>
         </div>
       </div>
     </div>

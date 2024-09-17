@@ -63,6 +63,7 @@ function Register() {
       password: password,
       checkPassword: password2,
       email: email,
+      creationDate: new Date().toLocaleString(),
     };
     if (inputs.some((input) => input === "")) alert("빈칸을 입력해주세요.");
     else if (isSubmit === false) alert("이메일 인증을 해주세요.");
@@ -85,69 +86,83 @@ function Register() {
   }, [navigate]);
 
   return (
-    <div className="userContainer">
-      <h3>회원가입</h3>
-      <form onSubmit={registerSubmit} className="formContainer">
-        <div>
-          <label>ID</label>
-          <input
-            type="text"
-            value={username}
-            onChange={(e) => setUsername(e.target.value)}
-          />
-          <h4>{usernameError}</h4>
-        </div>
-        <div>
-          <label>비밀번호</label>
-          <input
-            type="password"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-          />
-          <h4>{null}</h4>
-        </div>
-        <div>
-          <label>비밀번호 확인</label>
-          <input
-            type="password"
-            value={password2}
-            onChange={(e) => setPassword2(e.target.value)}
-          />
-          <h4>{passwordError}</h4>
-        </div>
-        <div>
-          <label>이메일</label>
-          <div className="checkUser">
+    <div className="RegisterPage">
+      <div className="RegisterContainer">
+        <h2 className="RegisterTitle">회원가입</h2>
+        <span className="RegisterSubTitle">-나만의 계정을 만들어 보세요.-</span>
+        <form onSubmit={registerSubmit}>
+          <div>
             <input
               type="text"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              placeholder="ex) admin@aaa.com"
+              value={username}
+              onChange={(e) => setUsername(e.target.value)}
+              placeholder="아이디"
+              className="RegisterLongInput"
             />
-            <button className="authBtn" onClick={mailSendCode}>인증코드 전송</button>
+            <h4>{usernameError}</h4>
           </div>
-          <h4>{emailError}</h4>
-        </div>
-        <div>
-          <label>
-            인증코드(6자리)
-            <span>{!isTimer && <Timer setIsFind={setIsTimer} />}</span>
-          </label>
-          <div className="checkUser">
+          <div>
             <input
-              type="text"
-              value={authCode}
-              onChange={(e) => setAuthCode(e.target.value)}
+              type="password"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              placeholder="비밀번호"
+              className="RegisterLongInput"
             />
-            <button className="authBtn" onClick={submitAuthCode}>인증</button>
+            <h4>{null}</h4>
           </div>
-          <h4>{authCodeError}</h4>
-        </div>
-        <button className="submitBtn" type="submit">
-          회원가입
-        </button>
-      </form>
-      <p onClick={() => navigate("/login")}>로그인</p>
+          <div>
+            <input
+              type="password"
+              value={password2}
+              onChange={(e) => setPassword2(e.target.value)}
+              placeholder="비밀번호 확인"
+              className="RegisterLongInput"
+            />
+            <h4>{passwordError}</h4>
+          </div>
+          <div>
+            <div className="RegisterCheckUser">
+              <input
+                type="text"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                placeholder="이메일"
+                className="RegisterShortInput"
+              />
+              <button className="RegisterAuthBtn" onClick={mailSendCode}>
+                확인
+              </button>
+            </div>
+            <h4>{emailError}</h4>
+          </div>
+          <div>
+            {!isTimer && (
+              <span className="RegisterTimer">
+                인증코드(6자리) : <></>
+                <Timer setIsFind={setIsTimer} />
+              </span>
+            )}
+            <div className="RegisterCheckUser">
+              <input
+                type="text"
+                value={authCode}
+                onChange={(e) => setAuthCode(e.target.value)}
+                placeholder="인증번호"
+                className="RegisterShortInput"
+              />
+              <button className="RegisterAuthBtn" onClick={submitAuthCode}>
+                인증
+              </button>
+            </div>
+            <h4>{authCodeError}</h4>
+          </div>
+          <button className="RegisterSubmitBtn" type="submit">
+            회원가입
+          </button>
+        </form>
+        <p onClick={() => navigate("/login")}>로그인</p>
+      </div>
     </div>
   );
 }

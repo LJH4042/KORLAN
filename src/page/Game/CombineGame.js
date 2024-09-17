@@ -168,14 +168,20 @@ function CombineGame({ gameLevel }) {
       <div className="combineDiv">
         {gameOver ? (
           <div className="gameoverDiv">
-            <h1>게임 종료</h1>
+            <h2 style={{ fontWeight: "600", fontSize: "40px" }}>
+              당신의 점수는?{" "}
+            </h2>
             <div className="gameoverTextDiv">
-              <h2>점수 : {score} / 100</h2>
+              <h1>{score} 점</h1>
               <h3 style={{ marginTop: "30px" }}>{gameoverText}</h3>
             </div>
             <div>
-              <button onClick={resetGame}>난이도 선택</button>
-              <button onClick={() => navigate("/")}>홈으로</button>
+              <button className="actionButton" onClick={resetGame}>
+                난이도 선택
+              </button>
+              <button className="actionButton" onClick={() => navigate("/")}>
+                홈으로
+              </button>
             </div>
           </div>
         ) : (
@@ -187,13 +193,13 @@ function CombineGame({ gameLevel }) {
                 {answerObjName}
               </button>
             </div>
-            <div className="textQuizDiv">
+            <div>
               {!checkQuiz ? (
-                <div>
+                <div className="textQuizDiv">
                   <span>{charArray.join(" , ")}</span>
                 </div>
               ) : (
-                <div>
+                <div className="CombineimageDiv">
                   {imageData ? ( //레이아웃 변경을 방지에서 CLS의 성능을 높임
                     <img
                       alt="이미지"
@@ -210,8 +216,8 @@ function CombineGame({ gameLevel }) {
       </div>
       {!gameOver && (
         <div>
-          <h2 style={{ fontSize: "20px", marginBottom: "20px" }}>
-            글자 수: {length}, 힌트: {hint}
+          <h2 className="hintText">
+            [{length}글자, {hint}]
           </h2>
           {answerObj ? (
             <Typing

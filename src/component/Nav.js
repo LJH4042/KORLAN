@@ -1,14 +1,21 @@
-import { Link, NavLink, useNavigate } from "react-router-dom";
+import { Link, NavLink } from "react-router-dom";
 import React, { useState, useEffect } from "react";
 import "../css/Nav.css";
 import Logo from "../logo.svg";
-import axios from "axios";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import {
+  faInfoCircle,
+  faBook,
+  faGamepad,
+  faImage,
+  faPuzzlePiece,
+  faPen,
+  faUsers,
+} from "@fortawesome/free-solid-svg-icons";
 
 function Nav() {
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
-  const navigate = useNavigate();
 
   const toggleDropdown = () => {
     setIsDropdownOpen(!isDropdownOpen);
@@ -36,48 +43,13 @@ function Nav() {
     return () => window.removeEventListener("resize", handleResize);
   }, []);
 
-  useEffect(() => {
-    const token = localStorage.getItem("token");
-    if (token) {
-      setIsLoggedIn(true);
-    }
-  }, []);
-
-  const handleLogout = async () => {
-    try {
-      await axios.post(
-        "http://localhost:5000/logout",
-        {},
-        { withCredentials: true } //withCredentials 허용
-      );
-      localStorage.removeItem("token"); //accessToken 삭제
-      navigate("/login"); //로그인 페이지로 이동
-      window.location.reload();
-    } catch (err) {
-      console.error("Logout failed", err);
-    }
-  };
-
   return (
     <div className="navbar">
       <Link to={"/"}>
         <img className="logo" src={Logo} alt="Logo" />
       </Link>
-
-      <div className="menuIcon" onClick={toggleMobileMenu}>
-        &#9776;
-      </div>
-
+      <div className="menuIcon" onClick={toggleMobileMenu}></div>
       <div className={`menuContainer ${isMobileMenuOpen ? "open" : ""}`}>
-        <NavLink
-          className={({ isActive }) =>
-            isActive ? "navbarMenu active" : "navbarMenu"
-          }
-          to={"/"}
-          onClick={closeMenusOnMobile}
-        >
-          홈
-        </NavLink>
         <NavLink
           className={({ isActive }) =>
             isActive ? "navbarMenu active" : "navbarMenu"
@@ -85,6 +57,7 @@ function Nav() {
           to={"/introduce"}
           onClick={closeMenusOnMobile}
         >
+          <FontAwesomeIcon icon={faInfoCircle} className="icon" />
           소개
         </NavLink>
         <NavLink
@@ -94,12 +67,14 @@ function Nav() {
           to={"/learn"}
           onClick={closeMenusOnMobile}
         >
+          <FontAwesomeIcon icon={faBook} className="icon" />
           학습하기
         </NavLink>
         <div
           className={`navbarMenu dropdown ${isDropdownOpen ? "open" : ""}`}
           onClick={toggleDropdown}
         >
+          <FontAwesomeIcon icon={faGamepad} className="icon" />
           게임하기
           {isDropdownOpen && (
             <div className="dropdown-content">
@@ -110,6 +85,7 @@ function Nav() {
                   isActive ? "navbarMenu active" : "navbarMenu"
                 }
               >
+                <FontAwesomeIcon icon={faImage} className="icon" />
                 이미지 게임
               </NavLink>
               <NavLink
@@ -119,6 +95,7 @@ function Nav() {
                   isActive ? "navbarMenu active" : "navbarMenu"
                 }
               >
+                <FontAwesomeIcon icon={faPuzzlePiece} className="icon" />
                 낱말 조합
               </NavLink>
             </div>
@@ -128,36 +105,22 @@ function Nav() {
           className={({ isActive }) =>
             isActive ? "navbarMenu active" : "navbarMenu"
           }
-          to={"/myPage"}
+          to={"/notebook"}
           onClick={closeMenusOnMobile}
         >
-          마이페이지
+          <FontAwesomeIcon icon={faPen} className="icon" />
+          연습장
         </NavLink>
-      </div>
-      <div className={`authContainer ${isMobileMenuOpen ? "open" : ""}`}>
-        {isLoggedIn ? (
-          <div
-            className="navbarAuth"
-            onClick={() => {
-              handleLogout();
-              closeMenusOnMobile();
-            }}
-          >
-            로그아웃
-          </div>
-        ) : (
-          <>
-            <NavLink
-              to={"/login"}
-              className={({ isActive }) =>
-                isActive ? "navbarAuth active" : "navbarAuth"
-              }
-              onClick={closeMenusOnMobile}
-            >
-              로그인
-            </NavLink>
-          </>
-        )}
+        <NavLink
+          className={({ isActive }) =>
+            isActive ? "navbarMenu active" : "navbarMenu"
+          }
+          to={"/teamIntro"}
+          onClick={closeMenusOnMobile}
+        >
+          <FontAwesomeIcon icon={faUsers} className="icon" />
+          개발팀
+        </NavLink>
       </div>
     </div>
   );

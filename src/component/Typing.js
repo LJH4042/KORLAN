@@ -14,6 +14,7 @@ function Typing({
 
   const sumbitAnswer = () => {
     checkAnswer(typing);
+    setTyping("");
   };
 
   const nextLevel = () => {
@@ -27,15 +28,17 @@ function Typing({
     <div className="typingContainer">
       {checkQuiz ? (
         <div>
-          <h3>
-            정답: {quiz}, 제출한 답: {typing}
-          </h3>
-          <button onClick={nextLevel}>다음 레벨</button>
+          <h3>{quiz}</h3>
+          <button className="actionButton" onClick={nextLevel}>
+            다음 레벨
+          </button>
         </div>
       ) : (
         <div>
           <input value={typing} onChange={changeTyping} />
-          <button onClick={sumbitAnswer}>확인</button>
+          <button className="typingButton" onClick={sumbitAnswer}>
+            확인
+          </button>
         </div>
       )}
     </div>
