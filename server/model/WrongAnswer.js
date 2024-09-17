@@ -5,6 +5,7 @@ const WrongAnswerSchema = new mongoose.Schema({
   question: { type: String, required: true },
   givenAnswer: { type: String, required: true },
   correctAnswer: { type: String, required: true },
+  image: { type: String, required: true },
   timestamp: { type: Date, default: Date.now },
 });
 
