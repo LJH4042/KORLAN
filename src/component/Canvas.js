@@ -1,14 +1,10 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useRef, useState, useImperativeHandle } from "react";
 import axios from "axios";
 
-function Canvas({
-  checkAnswer,
-  fetchData,
-  quiz,
-  checkQuiz,
-  setCheckQuiz,
-  setAnswerObjButton,
-}) {
+function Canvas(
+  { checkAnswer, fetchData, quiz, checkQuiz, setCheckQuiz, setAnswerObjButton },
+  ref
+) {
   const canvasRef = useRef(null);
 
   const [isDrawing, setIsDrawing] = useState(false);
@@ -21,10 +17,13 @@ function Canvas({
   const [imgText, setImgText] = useState("");
   const [wrongAnswers, setWrongAnswers] = useState([]);
 
+  useImperativeHandle(ref, () => ({
+    clearCanvas,
+  }));
+
   useEffect(() => {
     const canvas = canvasRef.current;
     if (!canvas) return;
-
     const ctx = canvas.getContext("2d");
     const drawing = (e) => {
       if (!isDrawing) return;
@@ -126,7 +125,6 @@ function Canvas({
   const clearCanvas = () => {
     const canvas = canvasRef.current;
     if (!canvas) return;
-
     const ctx = canvas.getContext("2d");
     ctx.clearRect(0, 0, canvas.width, canvas.height);
     setOutputImageSrc(null);
@@ -232,4 +230,4 @@ function Canvas({
   );
 }
 
-export default Canvas;
+export default React.forwardRef(Canvas);

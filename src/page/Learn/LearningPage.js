@@ -17,6 +17,8 @@ const LearningPage = () => {
   const [exampleWord, setExampleWord] = useState(""); //선택된 글자의 예시 단어들을 저장
   const speak = useGoogleTTS();
 
+  const setIsCanvas = () => null;
+
   const toggleLetterType = (type) => {
     setLetterType(type);
     resetSelectedLetter(); // 글자 초기화 함수 호출
@@ -48,6 +50,7 @@ const LearningPage = () => {
       <React.Fragment key={index}>
         <span
           onClick={() => speak(word)} // 예시 단어 클릭 시 TTS 발음
+          className={styles.baseWord}
         >
           {word}
         </span>
@@ -112,6 +115,7 @@ const LearningPage = () => {
                 <ConsonantList
                   consonants={consonants}
                   onLetterSelect={handleLetterSelectionWithTTS}
+                  setIsCanvas={setIsCanvas}
                 />
               </>
             )}
@@ -121,6 +125,7 @@ const LearningPage = () => {
                 <VowelList
                   vowels={vowels}
                   onLetterSelect={handleLetterSelectionWithTTS}
+                  setIsCanvas={setIsCanvas}
                 />
               </>
             )}
@@ -130,6 +135,7 @@ const LearningPage = () => {
                 <ConsonantList
                   consonants={doubleCons}
                   onLetterSelect={handleLetterSelectionWithTTS}
+                  setIsCanvas={setIsCanvas}
                 />
               </>
             )}
@@ -139,6 +145,7 @@ const LearningPage = () => {
                 <VowelList
                   vowels={doubleVow}
                   onLetterSelect={handleLetterSelectionWithTTS}
+                  setIsCanvas={setIsCanvas}
                 />
               </>
             )}
@@ -159,10 +166,10 @@ const LearningPage = () => {
                 </div>
               </div>
             )}
-            <div style={{ marginTop: "50px" }}>
-              <Canvas checkAnswer={checkAnswer} />
-            </div>
           </div>
+        </div>
+        <div style={{ marginTop: "50px" }}>
+          <Canvas checkAnswer={checkAnswer} />
         </div>
         <div className="ruleDiv" style={{ backgroundColor: "#f9f9f9" }}>
           <p>-각 단어들을 클릭하면 해당 단어의 발음 소리가 재생됩니다.</p>
