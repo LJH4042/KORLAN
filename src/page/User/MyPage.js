@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import "../../css/MyPage.css";
+import Pagination from "../../component/Pagination"; 
 
 function MyPage() {
   const navigate = useNavigate();
@@ -279,48 +280,62 @@ function WrongAnswerAlbum({userData}) {
   const [wrongAnswers, setWrongAnswers] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const [totalWrongAnswers, setTotalWrongAnswers] = useState(0);
+  const [pageNum, setPageNum] = useState(1);
+  const onePageElement = 10; // 한 페이지당 보여줄 오답 수
 
   useEffect(() => {
     const fetchWrongAnswers = async () => {
       try {
         const token = localStorage.getItem('token');
-        const response = await axios.get('http://localhost:5000/api/wrong-answers', {
-          headers: { Authorization: `Bearer ${token}` }
+        const response = await axios.get(`http://localhost:5000/api/wrong-answers?page=${pageNum}&limit=${onePageElement}`, {
+          headers: { Authorization: `Bearer ${token}` },
+          withCredentials: true
         });
-        setWrongAnswers(response.data);
+        setWrongAnswers(response.data.wrongAnswers);
+        setTotalWrongAnswers(response.data.totalItems);
         setLoading(false);
       } catch (err) {
-        console.error('Error fetching wrong answers:', err);
-        setError('오답을 불러오는 데 실패했습니다.'+ err.message);
+        setError('오답을 불러오는 데 실패했습니다. ' + (err.response?.data?.message || err.message));
         setLoading(false);
       }
     };
 
     fetchWrongAnswers();
-  }, []);
+  }, [pageNum, onePageElement]);
 
-if (loading) return <div className="loading">로딩 중...</div>;
-if (error) return <div className="error">{error}</div>;
+  if (loading) return <div className="loading">로딩 중...</div>;
+  if (error) return <div className="error">{error}</div>;
 
-return (
-  <div className="wrong-answer-album">
-    <h2>{userData.username}님의 오답 앨범</h2>
-    {wrongAnswers.length === 0 ? (
-      <p>아직 오답이 없습니다.</p>
-    ) : (
-      <ul className="wrong-answer-list">
-        {wrongAnswers.map((answer, index) => (
-          <li key={index} className="wrong-answer-item">
-            <h3>문제: {answer.question}</h3>
-            <p className="given-answer">내가 쓴 답: {answer.givenAnswer}</p>
-            <p className="correct-answer">정답: {answer.correctAnswer}</p>
-            <p className="timestamp">풀이날짜: {new Date(answer.timestamp).toLocaleString()}</p>
-          </li>
-        ))}
-      </ul>
-    )}
-  </div>
-);
+  return (
+    <div className="wrong-answer-album">
+      <h2>{userData.username}님의 오답 앨범</h2>
+      {wrongAnswers.length === 0 ? (
+        <p>아직 오답이 없습니다.</p>
+      ) : (
+        <>
+          <ul className="wrong-answer-list">
+            {wrongAnswers.map((answer, index) => (
+              <li key={index} className="wrong-answer-item">
+                <h3>문제: {answer.question}</h3>
+                <p className="given-answer">내가 쓴 답: {answer.givenAnswer}</p>
+                <img src={answer.image} alt="사용자 답변" />
+                <p className="correct-answer">정답: {answer.correctAnswer}</p>
+                <p className="timestamp">날짜: {new Date(answer.timestamp).toLocaleString()}</p>
+              </li>
+            ))}
+          </ul>
+          <Pagination
+            totalElement={totalWrongAnswers}
+            onePageElement={onePageElement}
+            pageNum={pageNum}
+            setPageNum={setPageNum}
+          />
+        </>
+      )}
+    </div>
+  );
 }
 
 export default MyPage;
+
