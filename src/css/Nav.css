@@ -24,6 +24,7 @@ html {
   height: 40px;
   margin-left: 30px;
   margin-right: 5px;
+  border-radius: 50%;
 }
 
 .loginLeft,
