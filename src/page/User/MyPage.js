@@ -346,7 +346,7 @@ function WrongAnswerAlbum({ userData }) {
     <div className="wrong-answer-album">
       <h2>{userData.username}님의 오답 앨범</h2>
       {wrongAnswers.length === 0 ? (
-        <p>아직 오답이 없습니다.</p>
+        <p style={{ textAlign: "center" }}>아직 오답이 없습니다.</p>
       ) : (
         <>
           <ul className="wrong-answer-list">
