@@ -88,7 +88,7 @@ function Register() {
   return (
     <div className="RegisterPage">
       <div className="RegisterContainer">
-        <h2 className="RegisterTitle">회원가입</h2>
+        <h2 className="RegisterTitle">-회원가입-</h2>
         <span className="RegisterSubTitle">-나만의 계정을 만들어 보세요.-</span>
         <form onSubmit={registerSubmit}>
           <div>

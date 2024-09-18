@@ -88,7 +88,7 @@ const LearningPage = () => {
   return (
     <div className={styles.pageContainer}>
       <div className={styles.learnContainer}>
-        <h1>학습하기</h1>
+        <h1>-학습하기-</h1>
         <p style={{ fontSize: "1.2em", color: "#666", marginTop: "0px" }}>
           -자음과 모음의 발음을 들으며 한글을 익혀요!-
         </p>

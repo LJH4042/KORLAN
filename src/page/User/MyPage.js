@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import "../../css/MyPage.css";
-import Pagination from "../../component/Pagination"; 
+import Pagination from "../../component/Pagination";
 import profileImage from "../../img/profile.png";
 
 function MyPage() {
@@ -92,29 +92,31 @@ function MyPage() {
   };
 
   return (
-    <div className="container pullDown">
-      <div>
-        <h1>마이페이지</h1>
-        <a href="#info" onClick={() => handleLinkClick("내 정보")}>
-          내 정보
-        </a>
-        <a href="#stamp" onClick={() => handleLinkClick("도장판")}>
-          도장판
-        </a>
-        <a href="#learn" onClick={() => handleLinkClick("학습 진행률")}>
-          학습 진행률
-        </a>
-        <a href="#album" onClick={() => handleLinkClick("오답 앨범")}>
-          오답 앨범
-        </a>
-      </div>
-      <div className="divider"></div>
-      {selectedContent && (
-        <div className="content">
-          {/* 선택된 컨텐츠에 따라 다른 컴포넌트를 보여줌 */}
-          {getContentComponent()}
+    <div className="myPage">
+      <div className="container pullDown">
+        <div>
+          <h1>-마이페이지-</h1>
+          <a href="#info" onClick={() => handleLinkClick("내 정보")}>
+            내 정보
+          </a>
+          <a href="#stamp" onClick={() => handleLinkClick("도장판")}>
+            도장판
+          </a>
+          <a href="#learn" onClick={() => handleLinkClick("학습 진행률")}>
+            학습 진행률
+          </a>
+          <a href="#album" onClick={() => handleLinkClick("오답 앨범")}>
+            오답 앨범
+          </a>
         </div>
-      )}
+        <div className="divider"></div>
+        {selectedContent && (
+          <div className="content">
+            {/* 선택된 컨텐츠에 따라 다른 컴포넌트를 보여줌 */}
+            {getContentComponent()}
+          </div>
+        )}
+      </div>
     </div>
   );
 }
@@ -161,7 +163,9 @@ function UserInfo({ userData, navigate }) {
       <p>이메일: {userData.email}</p>
       <p>계정 생성일: {userData.creationDate}</p>
       <p>마지막 로그인: {userData.lastLogin}</p>
-      <button onClick={handleDeleteAccount}>탈퇴하기</button>
+      <button className="deleteAcc" onClick={handleDeleteAccount}>
+        탈퇴하기
+      </button>
     </div>
   );
 }
@@ -193,74 +197,74 @@ function StampBoard({ userData }) {
     .fill(false)
     .map((_, index) => index < combineHighStamps);
 
-    return (
-      <div className="stamp-board-container">
-        <div className="stamp-board">
-          <h3>이미지 게임</h3>
-          <div className="stamp-row">
-            <p>하</p>
-            {i_StampsLow.map((stamped, index) => (
-              <div key={index} className={`stamp ${stamped ? "stamped" : ""}`}>
-                {stamped ? "🌞" : "⬜"}
-              </div>
-            ))}
-          </div>
-          <div className="stamp-row">
-            <p>중</p>
-            {i_StampsMiddle.map((stamped, index) => (
-              <div key={index} className={`stamp ${stamped ? "stamped" : ""}`}>
-                {stamped ? "🌞" : "⬜"}
-              </div>
-            ))}
-          </div>
-          <div className="stamp-row">
-            <p>상</p>
-            {i_StampsHigh.map((stamped, index) => (
-              <div key={index} className={`stamp ${stamped ? "stamped" : ""}`}>
-                {stamped ? "🌞" : "⬜"}
-              </div>
-            ))}
-          </div>
+  return (
+    <div className="stamp-board-container">
+      <div className="stamp-board">
+        <h3>이미지 게임</h3>
+        <div className="stamp-row">
+          <p>(하)</p>
+          {i_StampsLow.map((stamped, index) => (
+            <div key={index} className={`stamp ${stamped ? "stamped" : ""}`}>
+              {stamped ? "🌞" : "⬜"}
+            </div>
+          ))}
         </div>
-        <div className="stamp-board">
-          <h3>조합 게임</h3>
-          <div className="stamp-row">
-            <p>하</p>
-            {c_StampsLow.map((stamped, index) => (
-              <div
-                key={index}
-                className={`stamp ${stamped ? "stamped-secondary" : ""}`}
-              >
-                {stamped ? "🌟" : "⬜"}
-              </div>
-            ))}
-          </div>
-          <div className="stamp-row">
-            <p>중</p>
-            {c_StampsMiddle.map((stamped, index) => (
-              <div
-                key={index}
-                className={`stamp ${stamped ? "stamped-secondary" : ""}`}
-              >
-                {stamped ? "🌟" : "⬜"}
-              </div>
-            ))}
-          </div>
-          <div className="stamp-row">
-            <p>상</p>
-            {c_StampsHigh.map((stamped, index) => (
-              <div
-                key={index}
-                className={`stamp ${stamped ? "stamped-secondary" : ""}`}
-              >
-                {stamped ? "🌟" : "⬜"}
-              </div>
-            ))}
-          </div>
+        <div className="stamp-row">
+          <p>(중)</p>
+          {i_StampsMiddle.map((stamped, index) => (
+            <div key={index} className={`stamp ${stamped ? "stamped" : ""}`}>
+              {stamped ? "🌞" : "⬜"}
+            </div>
+          ))}
+        </div>
+        <div className="stamp-row">
+          <p>(상)</p>
+          {i_StampsHigh.map((stamped, index) => (
+            <div key={index} className={`stamp ${stamped ? "stamped" : ""}`}>
+              {stamped ? "🌞" : "⬜"}
+            </div>
+          ))}
         </div>
       </div>
-    );
-  }
+      <div className="stamp-board">
+        <h3>낱말 조합</h3>
+        <div className="stamp-row">
+          <p>(하)</p>
+          {c_StampsLow.map((stamped, index) => (
+            <div
+              key={index}
+              className={`stamp ${stamped ? "stamped-secondary" : ""}`}
+            >
+              {stamped ? "🌟" : "⬜"}
+            </div>
+          ))}
+        </div>
+        <div className="stamp-row">
+          <p>(중)</p>
+          {c_StampsMiddle.map((stamped, index) => (
+            <div
+              key={index}
+              className={`stamp ${stamped ? "stamped-secondary" : ""}`}
+            >
+              {stamped ? "🌟" : "⬜"}
+            </div>
+          ))}
+        </div>
+        <div className="stamp-row">
+          <p>(상)</p>
+          {c_StampsHigh.map((stamped, index) => (
+            <div
+              key={index}
+              className={`stamp ${stamped ? "stamped-secondary" : ""}`}
+            >
+              {stamped ? "🌟" : "⬜"}
+            </div>
+          ))}
+        </div>
+      </div>
+    </div>
+  );
+}
 
 function LearningProgress({ learnCon, learnVow, learnDouCon, learnDouVow }) {
   return (
@@ -307,28 +311,33 @@ function WrongAnswerAlbum({ userData }) {
   const [error, setError] = useState(null);
   const [totalWrongAnswers, setTotalWrongAnswers] = useState(0);
   const [pageNum, setPageNum] = useState(1);
-  const onePageElement = 10; // 한 페이지당 보여줄 오답 수
+  const onePageElement = 5; // 한 페이지당 보여줄 오답 수
 
   useEffect(() => {
     const fetchWrongAnswers = async () => {
       try {
-        const token = localStorage.getItem('token');
-        const response = await axios.get(`http://localhost:5000/api/wrong-answers?page=${pageNum}&limit=${onePageElement}`, {
-          headers: { Authorization: `Bearer ${token}` },
-          withCredentials: true
-        });
+        const token = localStorage.getItem("token");
+        const response = await axios.get(
+          `http://localhost:5000/api/wrong-answers?page=${pageNum}&limit=${onePageElement}`,
+          {
+            headers: { Authorization: `Bearer ${token}` },
+            withCredentials: true,
+          }
+        );
         setWrongAnswers(response.data.wrongAnswers);
         setTotalWrongAnswers(response.data.totalItems);
         setLoading(false);
       } catch (err) {
-        setError('오답을 불러오는 데 실패했습니다. ' + (err.response?.data?.message || err.message));
+        setError(
+          "오답을 불러오는 데 실패했습니다. " +
+            (err.response?.data?.message || err.message)
+        );
         setLoading(false);
       }
     };
 
     fetchWrongAnswers();
   }, [pageNum, onePageElement]);
-
 
   if (loading) return <div className="loading">💖잠시만 기다려 주세요💖</div>;
   if (error) return <div className="error">{error}</div>;
@@ -344,10 +353,12 @@ function WrongAnswerAlbum({ userData }) {
             {wrongAnswers.map((answer, index) => (
               <li key={index} className="wrong-answer-item">
                 <h3>문제: {answer.question}</h3>
-                <p className="given-answer">내가 쓴 답: {answer.givenAnswer}</p>
                 <img src={answer.image} alt="사용자 답변" />
                 <p className="correct-answer">정답: {answer.correctAnswer}</p>
-                <p className="timestamp">날짜: {new Date(answer.timestamp).toLocaleString()}</p>
+                <p className="given-answer">내가 쓴 답: {answer.givenAnswer}</p>
+                <p className="timestamp">
+                  날짜: {new Date(answer.timestamp).toLocaleString()}
+                </p>
               </li>
             ))}
           </ul>
@@ -357,6 +368,7 @@ function WrongAnswerAlbum({ userData }) {
             pageNum={pageNum}
             setPageNum={setPageNum}
           />
+          <h5>({pageNum} 쪽)</h5>
         </>
       )}
     </div>
@@ -364,4 +376,3 @@ function WrongAnswerAlbum({ userData }) {
 }
 
 export default MyPage;
-

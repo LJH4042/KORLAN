@@ -46,7 +46,7 @@ function Login() {
   return (
     <div className="LoginPage">
       <div className="LoginContainer">
-        <h2 className="LoginTitle">로그인</h2>
+        <h2 className="LoginTitle">-로그인-</h2>
         <span className="LoginSubTitle">-로그인하여 서비스를 이용하세요.-</span>
         <form onSubmit={loginSubmit}>
           <div>

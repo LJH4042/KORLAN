@@ -38,7 +38,7 @@ function IdFind() {
   return (
     <div className="idFindPage">
       <div className="idFindContainer">
-        {!isCheck && <h1 className="idFindTitle">ID 찾기</h1>}
+        {!isCheck && <h1 className="idFindTitle">-ID 찾기-</h1>}
         {!isCheck && (
           <span className="idFindSubTitle">-아이디를 잊으셨나요?-</span>
         )}

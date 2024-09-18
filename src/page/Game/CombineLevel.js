@@ -33,7 +33,7 @@ function CombineLevel() {
       <div className="gameContainer">
         {levelList ? (
           <div className="levelContainer">
-            <h1>낱말 조합</h1>
+            <h1>-낱말 조합-</h1>
             <p className="gameDescription_2">
               -자모음을 조합해 무슨 단어인지 맞춰보세요!-
             </p>

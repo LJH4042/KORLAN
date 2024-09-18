@@ -9,17 +9,19 @@
 .LoginContainer {
   background-color: white;
   padding: 100px 40px; /* 좌우 패딩을 동일하게 설정 */
-  border-radius: 10px;
+  border-radius: 20px;
   width: 900px; /* 너비를 조정하여 중앙 정렬에 맞추기 */
   display: flex; /* Flexbox 사용 */
   flex-direction: column; /* 수직으로 정렬 */
   align-items: center; /* 내부 요소 가운데 정렬 */
   border: 1px solid #eee;
+  border: 10px double #f0f4f9;
 }
 .LoginTitle {
   font-size: 30px;
   margin-bottom: 20px; /* 하단 마진만 남기고 좌우 정렬 제거 */
   font-weight: bold;
+  letter-spacing: 5px;
 }
 .LoginSubTitle {
   font-size: 18px;
@@ -84,17 +86,19 @@
 .RegisterContainer {
   background-color: white;
   padding: 100px 40px; /* 좌우 padding을 동일하게 조정 */
-  border-radius: 10px;
+  border-radius: 20px;
   width: 900px; /* 너비 조정 */
   display: flex; /* Flexbox 적용 */
   flex-direction: column; /* 수직 정렬 */
   align-items: center; /* 내부 요소 가운데 정렬 */
   border: 1px solid #eee;
+  border: 10px double #f0f4f9;
 }
 .RegisterTitle {
   font-size: 30px;
   margin-bottom: 20px; /* 하단 마진 추가 */
   font-weight: bold;
+  letter-spacing: 5px;
 }
 .RegisterSubTitle {
   font-size: 18px;
@@ -179,18 +183,20 @@
 .idFindContainer {
   background-color: white;
   padding: 150px 40px; /* padding 조정 */
-  border-radius: 10px; /* 둥근 모서리 적용 */
+  border-radius: 20px; /* 둥근 모서리 적용 */
   width: 900px; /* 너비 조정 */
   display: flex; /* Flexbox 적용 */
   flex-direction: column; /* 내부 요소 수직 정렬 */
   align-items: center; /* 내부 요소 수평 중앙 정렬 */
   border: 1px solid #eee;
+  border: 10px double #f0f4f9;
 }
 .idFindTitle {
   text-align: center;
   margin-bottom: 20px;
   font-size: 30px;
   font-weight: bold;
+  letter-spacing: 5px;
 }
 .idFindSubTitle {
   font-size: 18px;
@@ -238,8 +244,8 @@
 .idCheckContainer {
   background-color: white;
   padding: 60px 40px;
-  border-radius: 10px;
-  width: 900px;
+  border-radius: 20px;
+  width: 800px;
   display: flex; /* Flexbox 적용 */
   flex-direction: column; /* 내부 요소 수직 정렬 */
   align-items: center; /* 내부 요소 수평 중앙 정렬 */
@@ -249,6 +255,7 @@
   margin-bottom: 40px;
   font-size: 30px;
   font-weight: bold;
+  letter-spacing: 5px;
 }
 .idCheckSubTitle {
   font-size: 30px;
@@ -257,6 +264,7 @@
 }
 .idCheckSubTitle span {
   color: orange;
+  font-weight: bold;
 }
 .idCheckBtn {
   width: 415px;
@@ -281,18 +289,20 @@
 .pwdFindContainer {
   background-color: white;
   padding: 100px 40px; /* 좌우 패딩을 동일하게 설정 */
-  border-radius: 10px; /* 둥근 모서리 */
+  border-radius: 20px; /* 둥근 모서리 */
   width: 900px; /* 너비 조정 */
   display: flex; /* Flexbox 적용 */
   flex-direction: column; /* 수직 정렬 */
   align-items: center; /* 내부 요소 수평 가운데 정렬 */
   border: 1px solid #eee;
+  border: 10px double #f0f4f9;
 }
 .pwdFindTitle {
   text-align: center;
   margin-bottom: 20px;
   font-size: 30px;
   font-weight: bold;
+  letter-spacing: 5px;
 }
 .pwdFindSubTitle {
   font-size: 18px;
@@ -349,6 +359,7 @@
   margin-bottom: 20px;
   font-size: 30px;
   font-weight: bold;
+  letter-spacing: 5px;
 }
 .pwdChangeSubTitle {
   font-size: 18px;
