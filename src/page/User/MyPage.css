@@ -6,13 +6,10 @@
 }
 
 .container h1 {
-  position: absolute;
-  top: 150px;
-  left: 50%;
-  transform: translate(-50%, 0);
-  margin: 0;
-  padding: 10px;
-  font-size: 2.5em;
+  margin-top: -95px;
+  font-size: 30px;
+  margin-bottom: 20px; /* 하단 마진만 남기고 좌우 정렬 제거 */
+  font-weight: bold;
 }
 
 .container p {
@@ -23,6 +20,14 @@
   word-wrap: break-word;
   font-size: 1.5em;
   color: #555;
+}
+
+.MyPageDescription {
+  font-size: 1.2em;
+  margin-top: 10px;
+  margin-bottom: 50px;
+  color: #666;
+  text-align: center;
 }
 
 .divider {
@@ -84,6 +89,35 @@ div.pullDown a:hover:before {
   object-fit: cover;
   border: 2px solid #ddd;
 }
+
+.gender-image {
+  width: 60px; /* 이미지 크기 조정 */
+  height: 60px; /* 이미지 크기 조정 */
+}
+
+.gender-selection {
+  display: flex;
+  align-items: center;
+  justify-content: center; /* 가운데 정렬 추가 */
+  gap: 20px; /* 간격 조정 */
+}
+
+.gender-box {
+  border: 2px solid #ccc;
+  border-radius: 5px;
+  padding: 5px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background-color 0.3s;
+}
+
+.gender-box.selected {
+  background-color: #ffcbcb; /* 선택 시 배경색 */
+  border-color: #ff69b4; /* 선택 시 테두리 색 */
+}
+
 
 .stamp-board-container {
   display: flex;
