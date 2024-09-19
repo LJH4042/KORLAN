@@ -15,7 +15,6 @@ function Canvas(
   const [path, setPath] = useState([]);
   const [paths, setPaths] = useState([]);
   const [imgText, setImgText] = useState("");
-  const [wrongAnswers, setWrongAnswers] = useState([]);
 
   useImperativeHandle(ref, () => ({
     clearCanvas,
@@ -72,7 +71,6 @@ function Canvas(
       return;
     }
     const canvas = canvasRef.current;
-    setOutputImageSrc(canvas.toDataURL());
     const dataURL = canvas.toDataURL("image/png");
     try {
       const res = await axios.post("http://localhost:5000/canvas", {
@@ -88,19 +86,11 @@ function Canvas(
       setImgText(res.data.text);
       const isCorrect = checkAnswer(res.data.text);
       if (!isCorrect) {
-        // 오답인 경우 wrongAnswers 배열에 추가
         const newWrongAnswer = {
           question: quiz,
           givenAnswer: res.data.text,
           correctAnswer: quiz,
-          timestamp: new Date(),
         };
-        setWrongAnswers((prevWrongAnswers) => [
-          ...prevWrongAnswers,
-          newWrongAnswer,
-        ]);
-
-        // 서버에 오답 정보 저장
         await saveWrongAnswer(newWrongAnswer);
       }
     } catch (error) {
@@ -115,6 +105,7 @@ function Canvas(
       await axios.post("http://localhost:5000/api/wrong-answers", wrongAnswer, {
         headers: {
           Authorization: `Bearer ${localStorage.getItem("token")}`,
+          "Content-Type": "application/json",
         },
       });
     } catch (error) {
@@ -129,6 +120,7 @@ function Canvas(
     ctx.clearRect(0, 0, canvas.width, canvas.height);
     setOutputImageSrc(null);
     setPaths([]);
+    setImgText("");
   };
 
   const returnCurrentLine = () => {

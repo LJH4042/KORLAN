@@ -2,6 +2,7 @@ const express = require("express");
 const cors = require("cors");
 const cookieParser = require("cookie-parser");
 const dbConnect = require("./config/dbConnect");
+const path = require("path");
 const axios = require("axios");
 require("dotenv").config();
 
@@ -14,6 +15,7 @@ app.use(express.json());
 app.use(cookieParser());
 app.use(express.urlencoded({ extended: true }));
 app.use("/file", express.static("file"));
+app.use('/image.png', express.static(path.join(__dirname, 'image.png')));
 
 app.post("/synthesize", async (req, res) => {
   const text = req.body.text;
@@ -32,7 +34,7 @@ app.post("/synthesize", async (req, res) => {
 app.use("/", require("./route/userRoute"));
 app.use("/", require("./route/postRoute"));
 app.use("/", require("./route/gameRoute"));
-app.use("/api", require("./route/wrongAnswerRoute"));
+app.use("/api", require("./route/WrongAnswerRoute"));
 
 app.listen(5000, () => {
   console.log("5000 포트에서 서버 실행 중");

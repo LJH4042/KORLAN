@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import useLearning from "./useLearning";
 import ConsonantList from "./ConsonantList";
 import VowelList from "./VowelList";
@@ -25,12 +25,10 @@ const LearningPage = () => {
     setExampleWord("");
   };
 
-  //사용자가 선택한 글자를 TTS를 통해 발음
   const handleLetterSelectionWithTTS = (letter) => {
-    handleLetterSelection(letter); //선택된 글자를 처리합니다.
-    setLastSelectedLetter(letter); //마지막으로 선택된 글자를 저장
-    speak(letter); //TTS로 발음
-    //선택된 글자 유형에 해당하는 배열에서 글자를 찾음
+    handleLetterSelection(letter);
+    setLastSelectedLetter(letter);
+    speak(letter);
     const selected =
       letterType === "consonant"
         ? consonants.find((item) => item.letter === letter)
@@ -39,7 +37,7 @@ const LearningPage = () => {
         : letterType === "doubleConsonant"
         ? doubleCons.find((item) => item.letter === letter)
         : doubleVow.find((item) => item.letter === letter);
-    //선택된 글자가 있으면 exampleWord 지정
+
     setExampleWord(selected ? selected.example : "");
   };
 
@@ -58,6 +56,7 @@ const LearningPage = () => {
       </React.Fragment>
     ));
   };
+  const canvasRef = useRef(null);
 
   const checkAnswer = async (userAnswer) => {
     const trimmedUserAnswer = userAnswer.trim();
@@ -89,7 +88,7 @@ const LearningPage = () => {
   return (
     <div className={styles.pageContainer}>
       <div className={styles.learnContainer}>
-        <h1>학습하기</h1>
+        <h1>-학습하기-</h1>
         <p style={{ fontSize: "1.2em", color: "#666", marginTop: "0px" }}>
           -자음과 모음의 발음을 들으며 한글을 익혀요!-
         </p>
@@ -169,7 +168,7 @@ const LearningPage = () => {
           </div>
         </div>
         <div style={{ marginTop: "50px" }}>
-          <Canvas checkAnswer={checkAnswer} />
+          <Canvas ref={canvasRef} checkAnswer={checkAnswer} />
         </div>
         <div className="ruleDiv" style={{ backgroundColor: "#f9f9f9" }}>
           <p>-각 단어들을 클릭하면 해당 단어의 발음 소리가 재생됩니다.</p>

@@ -41,7 +41,7 @@ function PwdFind() {
   return (
     <div className="pwdFindPage">
       <div className="pwdFindContainer">
-        {!isCheck && <h1 className="pwdFindTitle">비밀번호 찾기</h1>}
+        {!isCheck && <h1 className="pwdFindTitle">-비밀번호 찾기-</h1>}
         {!isCheck && (
           <span className="pwdFindSubTitle">-비밀번호를 잊으셨나요?-</span>
         )}

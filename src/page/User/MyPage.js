@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import "../../css/MyPage.css";
+import Pagination from "../../component/Pagination";
 import profileImage from "../../img/profile.png";
 import maleImage from "../../img/boy.png";
 import femaleImage from "../../img/girl.png";
@@ -87,29 +88,34 @@ function MyPage() {
   };
 
   return (
-    <div className="container pullDown">
-      <div>
-        <h1>마이페이지</h1>
-        <div className="MyPageDescription">
-          -나의 정보를 확인하고 관리해요! -
+    <div className="myPage">
+      <div className="container pullDown">
+        <div>
+          <h1>-마이페이지-</h1>
+          <div className="MyPageDescription">
+            -나의 정보를 확인하고 관리해요! -
+          </div>
+          <a href="#info" onClick={() => handleLinkClick("내 정보")}>
+            내 정보
+          </a>
+          <a href="#stamp" onClick={() => handleLinkClick("도장판")}>
+            도장판
+          </a>
+          <a href="#learn" onClick={() => handleLinkClick("학습 진행률")}>
+            학습 진행률
+          </a>
+          <a href="#album" onClick={() => handleLinkClick("오답 앨범")}>
+            오답 앨범
+          </a>
         </div>
-        <a href="#info" onClick={() => handleLinkClick("내 정보")}>
-          내 정보
-        </a>
-        <a href="#stamp" onClick={() => handleLinkClick("도장판")}>
-          도장판
-        </a>
-        <a href="#learn" onClick={() => handleLinkClick("학습 진행률")}>
-          학습 진행률
-        </a>
-        <a href="#album" onClick={() => handleLinkClick("오답 앨범")}>
-          오답 앨범
-        </a>
+        <div className="divider"></div>
+        {selectedContent && (
+          <div className="content">
+            {/* 선택된 컨텐츠에 따라 다른 컴포넌트를 보여줌 */}
+            {getContentComponent()}
+          </div>
+        )}
       </div>
-      <div className="divider"></div>
-      {selectedContent && (
-        <div className="content">{getContentComponent()}</div>
-      )}
     </div>
   );
 }
@@ -244,9 +250,9 @@ function StampBoard({ userData }) {
   return (
     <div className="stamp-board-container">
       <div className="stamp-board">
-        <h3>이미지 게임</h3>
+        <h3>-이미지 게임-</h3>
         <div className="stamp-row">
-          <p>하</p>
+          <p>(하)</p>
           {i_StampsLow.map((stamped, index) => (
             <div key={index} className={`stamp ${stamped ? "stamped" : ""}`}>
               {stamped ? "🌞" : "⬜"}
@@ -254,7 +260,7 @@ function StampBoard({ userData }) {
           ))}
         </div>
         <div className="stamp-row">
-          <p>중</p>
+          <p>(중)</p>
           {i_StampsMiddle.map((stamped, index) => (
             <div key={index} className={`stamp ${stamped ? "stamped" : ""}`}>
               {stamped ? "🌞" : "⬜"}
@@ -262,7 +268,7 @@ function StampBoard({ userData }) {
           ))}
         </div>
         <div className="stamp-row">
-          <p>상</p>
+          <p>(상)</p>
           {i_StampsHigh.map((stamped, index) => (
             <div key={index} className={`stamp ${stamped ? "stamped" : ""}`}>
               {stamped ? "🌞" : "⬜"}
@@ -271,9 +277,9 @@ function StampBoard({ userData }) {
         </div>
       </div>
       <div className="stamp-board">
-        <h3>조합 게임</h3>
+        <h3>낱말 조합</h3>
         <div className="stamp-row">
-          <p>하</p>
+          <p>(하)</p>
           {c_StampsLow.map((stamped, index) => (
             <div
               key={index}
@@ -284,7 +290,7 @@ function StampBoard({ userData }) {
           ))}
         </div>
         <div className="stamp-row">
-          <p>중</p>
+          <p>(중)</p>
           {c_StampsMiddle.map((stamped, index) => (
             <div
               key={index}
@@ -295,7 +301,7 @@ function StampBoard({ userData }) {
           ))}
         </div>
         <div className="stamp-row">
-          <p>상</p>
+          <p>(상)</p>
           {c_StampsHigh.map((stamped, index) => (
             <div
               key={index}
@@ -353,28 +359,35 @@ function WrongAnswerAlbum({ userData }) {
   const [wrongAnswers, setWrongAnswers] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const [totalWrongAnswers, setTotalWrongAnswers] = useState(0);
+  const [pageNum, setPageNum] = useState(1);
+  const onePageElement = 5; // 한 페이지당 보여줄 오답 수
 
   useEffect(() => {
     const fetchWrongAnswers = async () => {
       try {
         const token = localStorage.getItem("token");
         const response = await axios.get(
-          "http://localhost:5000/api/wrong-answers",
+          `http://localhost:5000/api/wrong-answers?page=${pageNum}&limit=${onePageElement}`,
           {
             headers: { Authorization: `Bearer ${token}` },
+            withCredentials: true,
           }
         );
-        setWrongAnswers(response.data);
+        setWrongAnswers(response.data.wrongAnswers);
+        setTotalWrongAnswers(response.data.totalItems);
+        setLoading(false);
       } catch (err) {
-        console.error("Error fetching wrong answers:", err);
-        setError("오답을 불러오는 데 실패했습니다." + err.message);
-      } finally {
+        setError(
+          "오답을 불러오는 데 실패했습니다. " +
+            (err.response?.data?.message || err.message)
+        );
         setLoading(false);
       }
     };
 
     fetchWrongAnswers();
-  }, []);
+  }, [pageNum, onePageElement]);
 
   if (loading) return <div className="loading">💖잠시만 기다려 주세요💖</div>;
   if (error) return <div className="error">{error}</div>;
@@ -383,20 +396,30 @@ function WrongAnswerAlbum({ userData }) {
     <div className="wrong-answer-album">
       <h2>{userData.username}님의 오답 앨범</h2>
       {wrongAnswers.length === 0 ? (
-        <p>아직 오답이 없습니다.</p>
+        <p style={{ textAlign: "center" }}>아직 오답이 없습니다.</p>
       ) : (
-        <ul className="wrong-answer-list">
-          {wrongAnswers.map((answer, index) => (
-            <li key={index} className="wrong-answer-item">
-              <h3>문제: {answer.question}</h3>
-              <p className="given-answer">내가 쓴 답: {answer.givenAnswer}</p>
-              <p className="correct-answer">정답: {answer.correctAnswer}</p>
-              <p className="timestamp">
-                풀이날짜: {new Date(answer.timestamp).toLocaleString()}
-              </p>
-            </li>
-          ))}
-        </ul>
+        <>
+          <ul className="wrong-answer-list">
+            {wrongAnswers.map((answer, index) => (
+              <li key={index} className="wrong-answer-item">
+                <h3>문제: {answer.question}</h3>
+                <img src={answer.image} alt="사용자 답변" />
+                <p className="correct-answer">정답: {answer.correctAnswer}</p>
+                <p className="given-answer">내가 쓴 답: {answer.givenAnswer}</p>
+                <p className="timestamp">
+                  날짜: {new Date(answer.timestamp).toLocaleString()}
+                </p>
+              </li>
+            ))}
+          </ul>
+          <Pagination
+            totalElement={totalWrongAnswers}
+            onePageElement={onePageElement}
+            pageNum={pageNum}
+            setPageNum={setPageNum}
+          />
+          <h5>({pageNum} 쪽)</h5>
+        </>
       )}
     </div>
   );

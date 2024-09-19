@@ -118,7 +118,6 @@ div.pullDown a:hover:before {
   border-color: #ff69b4; /* 선택 시 테두리 색 */
 }
 
-
 .stamp-board-container {
   display: flex;
   justify-content: space-between;

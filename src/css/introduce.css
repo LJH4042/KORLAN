@@ -9,7 +9,7 @@
 }
 
 .introduceDiv {
-  border-bottom: 10px double #fcf9f2;
+  border: 10px double #fcf9f2;
   width: 80%;
   margin-left: 160px;
   padding-bottom: 50px;
@@ -21,31 +21,30 @@
   width: 80%;
   margin-left: 160px;
   padding-bottom: 50px;
-  /*margin-top: 50px;*/
   padding-top: 50px;
   background-color: white;
-  border-bottom: 10px double #fcf9f2;
+  border: 10px double #fcf9f2;
   border-radius: 20px;
 }
 .teamIntroduce {
   text-align: center;
   background-color: #fcf9f2;
-  height: 100vh;
   display: flex; /* 페이지 전체에 Flexbox 적용 */
   justify-content: center; /* 가로 방향 가운데 정렬 */
   align-items: center; /* 세로 방향 가운데 정렬 */
+  padding-top: 20px;
+  padding-bottom: 20px;
 }
 .teamIntroduceDiv {
   background-color: white;
   width: 80%;
-  margin-left: 50px;
   border-radius: 20px;
   border: 10px double #fcf9f2;
   padding-bottom: 50px;
+  margin: 30px 0px 30px 30px;
 }
 .teamIntroduce h1 {
   margin-bottom: 30px;
-  /*margin-top: 50px;*/
   padding-top: 50px;
   font-weight: bold;
 }
@@ -67,7 +66,6 @@
 
 .introduceDiv h1 {
   margin-bottom: 50px;
-  /*margin-top: 50px;*/
   padding-top: 50px;
   font-weight: bold;
   letter-spacing: 5px;
@@ -97,12 +95,10 @@
   line-height: 1.6;
   margin: 20px auto;
   padding: 25px 15px 15px 15px;
-  /*background-color: #f9f9f9;*/
   background-color: white;
   border: 10px double #f3f3f3;
   border-radius: 20px;
   max-width: 900px;
-  /*box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);*/
   font-weight: 500;
   font-style: italic;
 }

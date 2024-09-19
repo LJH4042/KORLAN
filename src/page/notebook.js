@@ -128,18 +128,20 @@ function Notebook() {
       alert("예시 단어가 아니거나, 최대한 또박또박 바르게 써주세요.");
       setCurrentNum(1);
       try {
-        const token = localStorage.getItem("token");
-        if (token === null) return;
+        if (localStorage.getItem("token") === null) return;
+        const newWrongAnswer = {
+          question: noteWord,
+          givenAnswer: trimmedUserAnswer,
+          correctAnswer: noteWord,
+        };
         await axios.post(
-          "http://localhost:5000/wrong-answers",
+          "http://localhost:5000/api/wrong-answers",
+          newWrongAnswer,
           {
-            question: selectedLetter,
-            givenAnswer: trimmedUserAnswer,
-            correctAnswer: allExampleWords.join(", "),
-          },
-          {
-            headers: { Authorization: `Bearer ${token}` },
-            withCredentials: true,
+            headers: {
+              Authorization: `Bearer ${localStorage.getItem("token")}`,
+              "Content-Type": "application/json",
+            },
           }
         );
       } catch (error) {
@@ -242,7 +244,7 @@ function Notebook() {
   return (
     <div className="notebookContainer">
       <div className="notebookDiv">
-        <h1 className="notebookTitle">연습장</h1>
+        <h1 className="notebookTitle">-연습장-</h1>
         <p className="notebookDescription">
           -연습장에 글씨를 쓰며 한글 실력을 키워보세요!-
         </p>

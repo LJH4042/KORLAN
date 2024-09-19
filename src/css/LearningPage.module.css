@@ -16,15 +16,17 @@
   justify-content: center;
   width: 1100px;
   background-color: white;
-  border-radius: 10px;
+  border-radius: 20px;
   margin-left: 50px;
   padding-bottom: 50px;
+  border: 10px double #f7f7f7;
 }
 .learnContainer h1 {
   margin-top: 50px;
   font-size: 30px;
   margin-bottom: 20px; /* 하단 마진만 남기고 좌우 정렬 제거 */
   font-weight: bold;
+  letter-spacing: 5px;
 }
 
 h2 {
