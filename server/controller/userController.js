@@ -157,7 +157,8 @@ const mailCode = asynchHandler(async (req, res) => {
 
 //Post Register User, /register : 회원가입
 const registerUser = asynchHandler(async (req, res) => {
-  const { username, password, checkPassword, email, creationDate } = req.body;
+  const { username, password, checkPassword, email, creationDate, gender } =
+    req.body;
   const existingUser = await User.findOne({ username });
   if (existingUser)
     return res.status(401).json({ nameMessage: "이미 사용중인 아이디입니다." });
@@ -170,6 +171,7 @@ const registerUser = asynchHandler(async (req, res) => {
       password: hashedPassword,
       email,
       creationDate,
+      gender,
     });
     res.status(201).json({ message: "회원가입 성공" });
   }

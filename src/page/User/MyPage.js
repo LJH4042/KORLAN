@@ -57,6 +57,7 @@ function MyPage() {
     } else {
       fetchUserData();
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [navigate]);
 
   const handleLinkClick = (content) => {
@@ -121,7 +122,7 @@ function MyPage() {
 }
 
 function UserInfo({ userData, navigate }) {
-  const [gender, setGender] = useState(userData.gender || "");
+  const [genderImg, setGenderImg] = useState("");
 
   const handleDeleteAccount = async () => {
     if (window.confirm("정말 탈퇴하시겠습니까?")) {
@@ -141,37 +142,17 @@ function UserInfo({ userData, navigate }) {
           )
           .then((res) => alert(res.data.message));
         localStorage.removeItem("token");
-        navigate("/login");
+        window.location.reload("/login");
       } catch (err) {
         console.error(err);
       }
     }
   };
 
-  const handleGenderChange = async (selectedGender) => {
-    setGender(selectedGender);
-    const token = localStorage.getItem("token");
-    const headerData = {
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-      withCredentials: true,
-    };
-
-    try {
-      await axios.post(
-        "http://localhost:5000/update-gender",
-        {
-          username: userData.username,
-          gender: selectedGender,
-        },
-        headerData
-      );
-      alert("성별이 업데이트되었습니다.");
-    } catch (err) {
-      console.error("성별 업데이트 오류:", err);
-    }
-  };
+  useEffect(() => {
+    if (userData.gender === "boy") setGenderImg(maleImage);
+    else if (userData.gender === "girl") setGenderImg(femaleImage);
+  }, [userData.gender]);
 
   return (
     <div className="user-info">
@@ -189,31 +170,20 @@ function UserInfo({ userData, navigate }) {
           <h2>{userData.username}</h2>
           <div className="gender-selection">
             <span
-              style={{ marginLeft: "-335px", fontSize: "1.5em", color: "#555" }}
+              style={{ marginLeft: "-340px", fontSize: "1.5em", color: "#555" }}
             >
               성별 :
             </span>
-            <div
-              className={`gender-box ${gender === "male" ? "selected" : ""}`}
-              onClick={() => handleGenderChange("male")}
-            >
-              <img src={maleImage} alt="Male" className="gender-image" />
-            </div>
-            <div
-              className={`gender-box ${gender === "female" ? "selected" : ""}`}
-              onClick={() => handleGenderChange("female")}
-            >
-              <img src={femaleImage} alt="Female" className="gender-image" />
+            <div>
+              <img src={genderImg} alt="genderImg" className="gender-image" />
             </div>
           </div>
           <p>이메일 : {userData.email}</p>
-          <p>
-            계정 생성일 : {new Date(userData.creationDate).toLocaleDateString()}
-          </p>
-          <p>
-            마지막 로그인 : {new Date(userData.lastLogin).toLocaleDateString()}
-          </p>
-          <button onClick={handleDeleteAccount}>탈퇴하기</button>
+          <p>계정 생성일: {userData.creationDate}</p>
+          <p>마지막 로그인: {userData.lastLogin}</p>
+          <button className="deleteAcc" onClick={handleDeleteAccount}>
+            탈퇴하기
+          </button>
         </div>
       </div>
     </div>
