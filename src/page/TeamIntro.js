@@ -36,8 +36,8 @@ const teamMembers = [
     introduce1: "서버",
     introduce2: "로그인",
     introduce3: "회원가입",
-    introduce4: "소개",
-    introduce5: "게임하기",
+    introduce4: "게임하기",
+    introduce5: "연습장",
     introduce6: "디자인",
   },
   {
