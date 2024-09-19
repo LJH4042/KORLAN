@@ -86,8 +86,9 @@ button:disabled,
   justify-content: center;
   width: 1100px;
   background-color: white;
-  border-radius: 10px;
+  border-radius: 20px;
   margin-left: 50px;
+  border: 10px double #f7f7f7;
 }
 
 .gameContainer div {
@@ -106,7 +107,7 @@ button:disabled,
 }
 
 .levelContainer {
-  padding: 50px 100px 50px 100px;
+  padding: 40px 100px 50px 100px;
   margin-top: 10px;
 }
 
@@ -118,10 +119,11 @@ button:disabled,
   font-size: 30px;
   margin-bottom: 20px; /* 하단 마진만 남기고 좌우 정렬 제거 */
   font-weight: bold;
+  letter-spacing: 5px;
 }
 
 .levelBtn {
-  margin-left: 50px;
+  margin-left: 60px;
   margin-bottom: 20px;
 }
 .levelBtn button {

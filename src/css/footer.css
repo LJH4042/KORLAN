@@ -12,17 +12,19 @@ body {
 
 .footer {
   background-color: #303030;
-  padding: 20px 0;
+  padding: 10px 0;
   font-size: 15px;
   width: 100%;
   margin-top: auto;
+  color: #e1e1e1;
 }
 
 .footer-container {
-  margin: 0 auto;
   display: flex;
   justify-content: space-between;
   flex-wrap: wrap;
+  max-width: 1200px;
+  margin: 0 auto;
 }
 
 .footer-section {
@@ -33,18 +35,19 @@ body {
 
 .footer-section h4 {
   margin-bottom: 10px;
-  color: #ffffffc5;
+  color: gray;
+  text-decoration: underline;
+  font-size: 18px;
+  font-weight: bold;
 }
 
 .footer-section p {
-  color: #e1e1e1a7;
+  margin-bottom: 5px;
 }
 
 .footer-section ul {
   list-style: none;
   padding: 0;
-  display: flex;
-  gap: 15px;
 }
 
 .footer-section ul li {
@@ -52,19 +55,17 @@ body {
 }
 
 .footer-section ul li a {
-  color: #e1e1e1a7;
+  color: #e1e1e1;
   text-decoration: none;
 }
 
 .footer-section ul li a:hover {
   color: #ffffff;
-  text-decoration: none;
+  text-decoration: underline;
 }
 
 .footer-bottom {
   display: flex;
-  justify-content: center;
-  align-items: center;
   padding: 10px 0;
   border-top: 1px solid #444;
   height: 50px;
@@ -72,5 +73,11 @@ body {
 
 .footer-bottom p {
   color: #ffffffc5;
-  margin: 0;
+  margin-top: 5px;
+}
+.bottomP_1 {
+  margin-left: 180px;
+}
+.bottomP_2 {
+  margin-left: 600px;
 }

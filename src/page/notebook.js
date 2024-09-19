@@ -244,7 +244,7 @@ function Notebook() {
   return (
     <div className="notebookContainer">
       <div className="notebookDiv">
-        <h1 className="notebookTitle">연습장</h1>
+        <h1 className="notebookTitle">-연습장-</h1>
         <p className="notebookDescription">
           -연습장에 글씨를 쓰며 한글 실력을 키워보세요!-
         </p>

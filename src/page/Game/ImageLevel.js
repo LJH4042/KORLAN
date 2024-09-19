@@ -33,7 +33,7 @@ function ImageLevel() {
       <div className="gameContainer">
         {levelList ? (
           <div className="levelContainer">
-            <h1>이미지 게임</h1>
+            <h1>-이미지 게임-</h1>
             <p className="gameDescription_1">
               -그림을 보고 무엇인지 맞추며 단어를 익혀요!-
             </p>
