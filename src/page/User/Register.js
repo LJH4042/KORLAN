@@ -130,7 +130,7 @@ function Register() {
               value={gender}
               onChange={(e) => setGender(e.target.value)}
             >
-              <option value="none">---성별---</option>
+              <option value="none">-성별-</option>
               <option value="boy">남자</option>
               <option value="girl">여자</option>
             </select>
