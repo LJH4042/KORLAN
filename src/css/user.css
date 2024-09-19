@@ -72,7 +72,7 @@
   color: red;
   font-size: 14px;
   font-weight: bold;
-  height: 20px;
+  height: 30px;
 }
 
 /*회원가입(Register.js)*/
@@ -81,7 +81,7 @@
   display: flex; /* Flexbox 적용 */
   justify-content: center; /* 가로 방향 가운데 정렬 */
   align-items: center; /* 세로 방향 가운데 정렬 */
-  height: 158vh;
+  height: 171vh;
 }
 .RegisterContainer {
   background-color: white;
@@ -115,11 +115,20 @@
   color: #333;
   font-size: 18px;
 }
-.RegisterShortInput {
+.RegisterShortInput_1 {
   display: block;
   width: 310px;
   padding: 15px;
-  margin-top: 25px;
+  border: none;
+  background-color: #f0f4f3;
+  color: #333;
+  font-size: 18px;
+}
+.RegisterShortInput_2 {
+  display: block;
+  width: 310px;
+  padding: 15px;
+  margin-top: 10px;
   border: none;
   background-color: #f0f4f3;
   color: #333;
@@ -131,7 +140,7 @@
   align-items: center;
   margin-right: 5px;
 }
-.RegisterAuthBtn {
+.RegisterAuthBtn_1 {
   width: 100px;
   padding: 16px 10px;
   border: none;
@@ -139,7 +148,15 @@
   background-color: #a0cbe7;
   color: white;
   font-size: 20px;
-  margin-top: 30px;
+}
+.RegisterAuthBtn_2 {
+  width: 100px;
+  padding: 16px 10px;
+  border: none;
+  border-radius: 50px;
+  background-color: #a0cbe7;
+  color: white;
+  font-size: 20px;
 }
 .RegisterSubmitBtn {
   width: 415px;
@@ -170,6 +187,17 @@
   font-size: 14px;
   font-weight: bold;
   margin-top: 10px;
+}
+.RegisterGender {
+  display: block;
+  width: 415px;
+  padding: 15px;
+  margin-top: 25px;
+  margin-bottom: 50px;
+  border: none;
+  background-color: #f0f4f3;
+  color: #333;
+  font-size: 18px;
 }
 
 /*ID 찾기, ID 확인(IdFind.js, IdCheck.js)*/

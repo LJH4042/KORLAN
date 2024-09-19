@@ -18,6 +18,7 @@ function Register() {
   const [emailError, setEmailError] = useState("");
   const [authCode, setAuthCode] = useState("");
   const [authCodeError, setAuthCodeError] = useState("");
+  const [gender, setGender] = useState("none");
 
   //이메일 인증 확인 함수
   const mailSendCode = async (e) => {
@@ -64,8 +65,10 @@ function Register() {
       checkPassword: password2,
       email: email,
       creationDate: new Date().toLocaleString(),
+      gender: gender,
     };
     if (inputs.some((input) => input === "")) alert("빈칸을 입력해주세요.");
+    else if (gender === "none") alert("성별을 지정해주세요.");
     else if (isSubmit === false) alert("이메일 인증을 해주세요.");
     else {
       try {
@@ -122,15 +125,26 @@ function Register() {
             <h4>{passwordError}</h4>
           </div>
           <div>
+            <select
+              className="RegisterGender"
+              value={gender}
+              onChange={(e) => setGender(e.target.value)}
+            >
+              <option value="none">---성별---</option>
+              <option value="boy">남자</option>
+              <option value="girl">여자</option>
+            </select>
+          </div>
+          <div>
             <div className="RegisterCheckUser">
               <input
                 type="text"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 placeholder="이메일"
-                className="RegisterShortInput"
+                className="RegisterShortInput_1"
               />
-              <button className="RegisterAuthBtn" onClick={mailSendCode}>
+              <button className="RegisterAuthBtn_1" onClick={mailSendCode}>
                 확인
               </button>
             </div>
@@ -149,9 +163,9 @@ function Register() {
                 value={authCode}
                 onChange={(e) => setAuthCode(e.target.value)}
                 placeholder="인증번호"
-                className="RegisterShortInput"
+                className="RegisterShortInput_2"
               />
-              <button className="RegisterAuthBtn" onClick={submitAuthCode}>
+              <button className="RegisterAuthBtn_2" onClick={submitAuthCode}>
                 인증
               </button>
             </div>
