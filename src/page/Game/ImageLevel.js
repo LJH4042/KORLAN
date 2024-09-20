@@ -33,7 +33,7 @@ function ImageLevel() {
       <div className="gameContainer">
         {levelList ? (
           <div className="levelContainer">
-            <h1>이미지 게임</h1>
+            <h1>-이미지 게임-</h1>
             <p className="gameDescription_1">
               -그림을 보고 무엇인지 맞추며 단어를 익혀요!-
             </p>
@@ -71,7 +71,10 @@ function ImageLevel() {
                 -게임이 끝난 후 100점을 받으면 마이페이지에 스티커를 하나 받을
                 수 있습니다.
               </p>
-              <p>-마우스로 할 경우 최대한 또박또박 바르게 써주세요.</p>
+              <p>
+                -마우스로 할 경우 최대한 또박또박 바르게 써주세요. 엉망으로 썼을
+                시 오답 처리됩니다.
+              </p>
             </div>
           </div>
         ) : (

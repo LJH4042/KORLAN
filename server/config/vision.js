@@ -20,7 +20,8 @@ const detectText = async (file_path) => {
       return "";
     }
   } catch (error) {
-    console.error("Error detecting text:", error);
+    //console.error("Error detecting text:", error);
+    return;
   }
 };
 

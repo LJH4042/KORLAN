@@ -17,7 +17,7 @@ const getUserData = asynchHandler(async (req, res) => {
 
 //Post Login User, /login : 로그인
 const loginUser = asynchHandler(async (req, res) => {
-  const { username, password } = req.body;
+  const { username, password, lastLogin } = req.body;
   const user = await User.findOne({ username });
   if (!user)
     return res.status(401).json({ nameMessage: "일치하는 아이디가 없습니다." });
@@ -36,6 +36,8 @@ const loginUser = asynchHandler(async (req, res) => {
     expires: new Date(Date.now() + 7 * 24 * 60 * 60 * 1000),
   });
   res.status(200).json({ message: "로그인 성공", token });
+  user.lastLogin = lastLogin;
+  await user.save();
 });
 
 //Post refresh Access Token, /reflesh : 토큰 재발급
@@ -155,7 +157,8 @@ const mailCode = asynchHandler(async (req, res) => {
 
 //Post Register User, /register : 회원가입
 const registerUser = asynchHandler(async (req, res) => {
-  const { username, password, checkPassword, email } = req.body;
+  const { username, password, checkPassword, email, creationDate, gender } =
+    req.body;
   const existingUser = await User.findOne({ username });
   if (existingUser)
     return res.status(401).json({ nameMessage: "이미 사용중인 아이디입니다." });
@@ -163,7 +166,13 @@ const registerUser = asynchHandler(async (req, res) => {
     return res.status(401).json({ pwdMessage: "비밀번호가 다릅니다." });
   else if (password === checkPassword) {
     const hashedPassword = await bcrypt.hash(password, 10);
-    await User.create({ username, password: hashedPassword, email });
+    await User.create({
+      username,
+      password: hashedPassword,
+      email,
+      creationDate,
+      gender,
+    });
     res.status(201).json({ message: "회원가입 성공" });
   }
 });

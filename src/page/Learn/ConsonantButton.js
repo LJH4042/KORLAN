@@ -1,9 +1,14 @@
 // ConsonantButton.js
-import React from 'react';
+import React from "react";
 
-const ConsonantButton = ({ item, onLetterSelect }) => {
+const ConsonantButton = ({ item, onLetterSelect, setIsCanvas }) => {
   return (
-    <button onClick={() => onLetterSelect(item.letter)}>
+    <button
+      onClick={() => {
+        onLetterSelect(item.letter);
+        setIsCanvas(false);
+      }}
+    >
       {item.letter}
     </button>
   );

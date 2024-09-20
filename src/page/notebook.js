@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import "../css/notebook.css";
 import Canvas from "../component/Canvas";
 import useLearning from "./Learn/useLearning";
@@ -9,6 +9,8 @@ import axios from "axios";
 import { consonants, vowels, doubleCons, doubleVow } from "./Learn/LearnWord";
 
 function Notebook() {
+  const [noteWord, setNoteWord] = useState("");
+  const [isCanvas, setIsCanvas] = useState(false);
   const { selectedLetter, handleLetterSelection, resetSelectedLetter } =
     useLearning();
 
@@ -19,16 +21,19 @@ function Notebook() {
     doubleVowel: [],
   });
 
-  const [letterType, setLetterType] = useState("consonant"); //현재 선택된 글자의 유형을 저장
+  const [letterType, setLetterType] = useState(""); //현재 선택된 글자의 유형을 저장
   const [lastSelectedLetter, setLastSelectedLetter] = useState(null); //마지막으로 선택된 글자를 저장
   const [exampleWord, setExampleWord] = useState(""); //선택된 글자의 예시 단어들을 저장
   const [currentNum, setCurrentNum] = useState(1); //맞춘 횟수를 저장
   const [previousAnswer, setPreviousAnswer] = useState(""); //이전에 입력한 답변을 저장
 
+  const canvasRef = useRef(null); // Ref for Canvas
+
   const toggleLetterType = (type) => {
     setLetterType(type);
     resetSelectedLetter(); // 글자 초기화 함수 호출
     setExampleWord("");
+    setIsCanvas(false);
   };
 
   //사용자가 선택한 글자를 TTS를 통해 발음
@@ -53,8 +58,17 @@ function Notebook() {
     return words.map((word, index) => (
       <React.Fragment key={index}>
         <span
+          onClick={() => {
+            setNoteWord(word);
+            setIsCanvas(true);
+            if (canvasRef.current) {
+              canvasRef.current.clearCanvas(); // Clear canvas on click
+            }
+          }}
           className={
-            savedWords[letterType].includes(word) ? styles.savedWord : ""
+            savedWords[letterType].includes(word)
+              ? styles.savedWord
+              : styles.baseWord
           }
         >
           {word}
@@ -91,7 +105,8 @@ function Notebook() {
         break;
     }
     const trimmedUserAnswer = userAnswer.trim();
-    const isCorrect = allExampleWords.includes(trimmedUserAnswer);
+    /*const isCorrect = allExampleWords.includes(trimmedUserAnswer);*/
+    const isCorrect = trimmedUserAnswer === noteWord;
 
     if (isCorrect) {
       if (trimmedUserAnswer === previousAnswer) {
@@ -110,20 +125,23 @@ function Notebook() {
         alert(`잘했어요! 1 / 3`);
       }
     } else {
-      alert("최대한 또박또박 바르게 써주세요.");
+      alert("예시 단어가 아니거나, 최대한 또박또박 바르게 써주세요.");
       setCurrentNum(1);
       try {
-        const token = localStorage.getItem("token");
+        if (localStorage.getItem("token") === null) return;
+        const newWrongAnswer = {
+          question: noteWord,
+          givenAnswer: trimmedUserAnswer,
+          correctAnswer: noteWord,
+        };
         await axios.post(
-          "http://localhost:5000/wrong-answers",
+          "http://localhost:5000/api/wrong-answers",
+          newWrongAnswer,
           {
-            question: selectedLetter,
-            givenAnswer: trimmedUserAnswer,
-            correctAnswer: allExampleWords.join(", "),
-          },
-          {
-            headers: { Authorization: `Bearer ${token}` },
-            withCredentials: true,
+            headers: {
+              Authorization: `Bearer ${localStorage.getItem("token")}`,
+              "Content-Type": "application/json",
+            },
           }
         );
       } catch (error) {
@@ -135,10 +153,9 @@ function Notebook() {
 
   const updateWord = async (trimmedUserAnswer) => {
     const token = localStorage.getItem("token");
+    if (token === null) return;
     const headerData = {
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
+      headers: { Authorization: `Bearer ${token}` },
       withCredentials: true,
     };
     try {
@@ -147,12 +164,10 @@ function Notebook() {
         { learnWord: trimmedUserAnswer, letterType: letterType },
         headerData
       );
-      console.log("데이터가 추가되었습니다.");
 
       // 새로 추가된 단어를 상태에 즉시 반영
       setSavedWords((prevWords) => {
         const updatedWords = { ...prevWords };
-
         if (letterType === "consonant") {
           updatedWords.consonant = [...prevWords.consonant, trimmedUserAnswer];
         } else if (letterType === "vowel") {
@@ -168,7 +183,6 @@ function Notebook() {
             trimmedUserAnswer,
           ];
         }
-
         return updatedWords; // 상태 업데이트 후 컴포넌트가 다시 렌더링됩니다.
       });
     } catch (err) {
@@ -196,10 +210,17 @@ function Notebook() {
 
   const fetchUserData = async () => {
     const token = localStorage.getItem("token");
+    if (!token) {
+      setSavedWords({
+        consonant: [],
+        vowel: [],
+        doubleConsonant: [],
+        doubleVowel: [],
+      });
+      return;
+    }
     const headerData = {
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
+      headers: { Authorization: `Bearer ${token}` },
       withCredentials: true,
     };
     try {
@@ -223,78 +244,107 @@ function Notebook() {
   return (
     <div className="notebookContainer">
       <div className="notebookDiv">
-        <h1 className="notebookTitle">연습장</h1>
+        <h1 className="notebookTitle">-연습장-</h1>
         <p className="notebookDescription">
           -연습장에 글씨를 쓰며 한글 실력을 키워보세요!-
         </p>
         <div className={styles.buttonContainer}>
           <button onClick={() => toggleLetterType("consonant")}>
-            자음 학습하기
+            자음 연습장
           </button>
-          <button onClick={() => toggleLetterType("vowel")}>
-            모음 학습하기
-          </button>
+          <button onClick={() => toggleLetterType("vowel")}>모음 연습장</button>
           <button onClick={() => toggleLetterType("doubleConsonant")}>
-            쌍자음 학습하기
+            쌍자음 연습장
           </button>
           <button onClick={() => toggleLetterType("doubleVowel")}>
-            쌍모음 학습하기
+            쌍모음 연습장
           </button>
         </div>
         <div className={styles.buttonContainer}>
           <div className={styles.flexContainer}>
             {letterType === "consonant" && (
               <>
-                <h3>자음 학습하기</h3>
+                <h3>자음 연습장</h3>
                 <ConsonantList
                   consonants={consonants}
                   onLetterSelect={handleLetterSelectionWithTTS}
+                  setIsCanvas={setIsCanvas}
                 />
               </>
             )}
             {letterType === "vowel" && (
               <>
-                <h3>모음 학습하기</h3>
+                <h3>모음 연습장</h3>
                 <VowelList
                   vowels={vowels}
                   onLetterSelect={handleLetterSelectionWithTTS}
+                  setIsCanvas={setIsCanvas}
                 />
               </>
             )}
             {letterType === "doubleConsonant" && (
               <>
-                <h3>쌍자음 학습하기</h3>
+                <h3>쌍자음 연습장</h3>
                 <ConsonantList
                   consonants={doubleCons}
                   onLetterSelect={handleLetterSelectionWithTTS}
+                  setIsCanvas={setIsCanvas}
                 />
               </>
             )}
             {letterType === "doubleVowel" && (
               <>
-                <h3>쌍모음 학습하기</h3>
+                <h3>쌍모음 연습장</h3>
                 <VowelList
                   vowels={doubleVow}
                   onLetterSelect={handleLetterSelectionWithTTS}
+                  setIsCanvas={setIsCanvas}
                 />
               </>
             )}
             {selectedLetter && (
               <div className={styles.selectedLetterContainer}>
-                <h3>선택한 글자: </h3>
                 <p className={styles.selectedLetter}> {selectedLetter}</p>
                 <div className={styles.exampleWord}>
                   <h3>
-                    예시 단어:{" "}
                     {renderHighlightedExample(exampleWord, lastSelectedLetter)}
                   </h3>
                 </div>
               </div>
             )}
-            <div className="canvasWrapper">
-              <Canvas checkAnswer={checkAnswer} />
-            </div>
           </div>
+        </div>
+        {isCanvas ? (
+          <div className="canvasWrapper" style={{ textAlign: "center" }}>
+            <h1>{noteWord}</h1>
+            <Canvas ref={canvasRef} checkAnswer={checkAnswer} />
+          </div>
+        ) : null}
+        <div
+          className="ruleDiv"
+          style={{
+            backgroundColor: "#f9f9f9",
+            width: "800px",
+            marginTop: "20px",
+          }}
+        >
+          <p>
+            -각 자음/모음마다 제시된 예시 단어를 클릭하면 캔버스가 뜹니다.
+            마우스로 캔버스에다 단어를 써주세요.
+          </p>
+          <p>
+            -최대한 또박또박 바르게 단어를 써주세요. 엉망으로 쓰시면 오답처리가
+            됩니다.
+          </p>
+          <p>-단어를 올바르게 쓰면 '잘했어요!'라고 뜨며 정답 처리가 됩니다.</p>
+          <p>
+            -총 3번 '잘했어요!'를 받으시면 '훌륭해요!'라고 뜨며 그 단어의 학습이
+            완료됩니다.
+          </p>
+          <p>
+            -학습이 완료된 단어는 빨간색으로 표시됩니다. 단 로그인을 했을 시에만
+            적용됩니다.
+          </p>
         </div>
       </div>
     </div>

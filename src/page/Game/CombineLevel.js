@@ -33,7 +33,7 @@ function CombineLevel() {
       <div className="gameContainer">
         {levelList ? (
           <div className="levelContainer">
-            <h1>낱말 조합</h1>
+            <h1>-낱말 조합-</h1>
             <p className="gameDescription_2">
               -자모음을 조합해 무슨 단어인지 맞춰보세요!-
             </p>
@@ -71,7 +71,10 @@ function CombineLevel() {
                 -게임이 끝난 후 100점을 받으면 마이페이지에 스티커를 하나 받을
                 수 있습니다.
               </p>
-              <p>-마우스로 할 경우 최대한 또박또박 바르게 써주세요.</p>
+              <p>
+                -마우스로 할 경우 최대한 또박또박 바르게 써주세요. 엉망으로 썼을
+                시 오답 처리됩니다.
+              </p>
             </div>
           </div>
         ) : (

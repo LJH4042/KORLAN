@@ -39,46 +39,51 @@ function PwdFind() {
   }, [navigate]);
 
   return (
-    <div className="pwdFindContainer">
-      {!isCheck && <h1 className="pwdFindTitle">비밀번호 찾기</h1>}
-      {isAuth && (
-        <AuthInput
-          setIsFind={setIsFind}
-          setIsCheck={setIsCheck}
-          setIsAuth={setIsAuth}
-        />
-      )}
-      {isCheck && <PwdChange name={username} />}
-      {isFind && (
-        <div>
-          <form onSubmit={pwdFindSubmit}>
-            <div>
-              <input
-                type="text"
-                value={username}
-                onChange={(e) => setUsername(e.target.value)}
-                placeholder="아이디"
-                className="pwdCheckInput"
-              />
-              <h4>{usernameError}</h4>
-            </div>
-            <div>
-              <input
-                type="text"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-                placeholder="이메일"
-                className="pwdCheckInput"
-              />
-              <h4>{emailError}</h4>
-            </div>
-            <button type="submit" className="pwdFindBtn">
-              다음
-            </button>
-          </form>
-          <p onClick={() => navigate("/login")}>로그인</p>
-        </div>
-      )}
+    <div className="pwdFindPage">
+      <div className="pwdFindContainer">
+        {!isCheck && <h1 className="pwdFindTitle">-비밀번호 찾기-</h1>}
+        {!isCheck && (
+          <span className="pwdFindSubTitle">-비밀번호를 잊으셨나요?-</span>
+        )}
+        {isAuth && (
+          <AuthInput
+            setIsFind={setIsFind}
+            setIsCheck={setIsCheck}
+            setIsAuth={setIsAuth}
+          />
+        )}
+        {isCheck && <PwdChange name={username} />}
+        {isFind && (
+          <div>
+            <form onSubmit={pwdFindSubmit}>
+              <div>
+                <input
+                  type="text"
+                  value={username}
+                  onChange={(e) => setUsername(e.target.value)}
+                  placeholder="아이디"
+                  className="pwdCheckInput"
+                />
+                <h4>{usernameError}</h4>
+              </div>
+              <div>
+                <input
+                  type="text"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                  placeholder="이메일"
+                  className="pwdCheckInput"
+                />
+                <h4>{emailError}</h4>
+              </div>
+              <button type="submit" className="pwdFindBtn">
+                다음
+              </button>
+            </form>
+            <p onClick={() => navigate("/login")}>로그인</p>
+          </div>
+        )}
+      </div>
     </div>
   );
 }

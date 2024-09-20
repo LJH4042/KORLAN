@@ -20,7 +20,7 @@ import axios from "axios";
 import TeamIntro from "./page/TeamIntro";
 
 function App() {
-  const checkToken = async () => {
+  /*const checkToken = async () => {
     if (localStorage.getItem("token") === null) {
       try {
         const refreshRes = await axios.post(
@@ -35,6 +35,23 @@ function App() {
         if (err.response.status === 403) {
           return null;
         }
+        localStorage.removeItem("token");
+      }
+    }
+  };*/
+  const checkToken = async () => {
+    if (localStorage.getItem("token") === null) return;
+    try {
+      const refreshRes = await axios.post(
+        "http://localhost:5000/refresh",
+        {},
+        { withCredentials: true }
+      );
+      const newToken = refreshRes.data.token;
+      localStorage.setItem("token", newToken);
+      axios.defaults.headers.common["Authorization"] = `Bearer ${newToken}`;
+    } catch (err) {
+      if (err.response && err.response.status === 403) {
         localStorage.removeItem("token");
       }
     }

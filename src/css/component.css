@@ -1,15 +1,18 @@
 /*페이지네이션*/
 .postPagination {
   display: flex;
-  margin: 30px 30px 0px 0px;
+  margin: 30px 30px 0px 60px;
   justify-content: center;
+  text-align: center;
 }
 .postPagination button {
-  width: 30px;
-  height: 30px;
+  width: 40px;
+  height: 40px;
   border: 1px solid black;
   font-weight: bold;
   background-color: white;
+  color: black;
+  padding: 0;
 }
 .postPagination button:hover {
   background-color: black;

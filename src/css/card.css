@@ -3,7 +3,9 @@
   flex-wrap: wrap;
   justify-content: center;
   gap: 20px;
-  background-color: rgb(238, 233, 226);
+  /*background-color: rgb(238, 233, 226);*/
+  /*background-color: #f7f7f7;*/
+  background-color: #fcf9f2;
   padding: 30px 0px 30px 0px;
 }
 

@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import useLearning from "./useLearning";
 import ConsonantList from "./ConsonantList";
 import VowelList from "./VowelList";
@@ -12,10 +12,12 @@ const LearningPage = () => {
   const { selectedLetter, handleLetterSelection, resetSelectedLetter } =
     useLearning();
 
-  const [letterType, setLetterType] = useState("consonant"); //현재 선택된 글자의 유형을 저장
+  const [letterType, setLetterType] = useState(""); //현재 선택된 글자의 유형을 저장
   const [lastSelectedLetter, setLastSelectedLetter] = useState(null); //마지막으로 선택된 글자를 저장
   const [exampleWord, setExampleWord] = useState(""); //선택된 글자의 예시 단어들을 저장
   const speak = useGoogleTTS();
+
+  const setIsCanvas = () => null;
 
   const toggleLetterType = (type) => {
     setLetterType(type);
@@ -23,12 +25,10 @@ const LearningPage = () => {
     setExampleWord("");
   };
 
-  //사용자가 선택한 글자를 TTS를 통해 발음
   const handleLetterSelectionWithTTS = (letter) => {
-    handleLetterSelection(letter); //선택된 글자를 처리합니다.
-    setLastSelectedLetter(letter); //마지막으로 선택된 글자를 저장
-    speak(letter); //TTS로 발음
-    //선택된 글자 유형에 해당하는 배열에서 글자를 찾음
+    handleLetterSelection(letter);
+    setLastSelectedLetter(letter);
+    speak(letter);
     const selected =
       letterType === "consonant"
         ? consonants.find((item) => item.letter === letter)
@@ -37,7 +37,7 @@ const LearningPage = () => {
         : letterType === "doubleConsonant"
         ? doubleCons.find((item) => item.letter === letter)
         : doubleVow.find((item) => item.letter === letter);
-    //선택된 글자가 있으면 exampleWord 지정
+
     setExampleWord(selected ? selected.example : "");
   };
 
@@ -48,6 +48,7 @@ const LearningPage = () => {
       <React.Fragment key={index}>
         <span
           onClick={() => speak(word)} // 예시 단어 클릭 시 TTS 발음
+          className={styles.baseWord}
         >
           {word}
         </span>
@@ -55,6 +56,7 @@ const LearningPage = () => {
       </React.Fragment>
     ));
   };
+  const canvasRef = useRef(null);
 
   const checkAnswer = async (userAnswer) => {
     const trimmedUserAnswer = userAnswer.trim();
@@ -62,20 +64,18 @@ const LearningPage = () => {
   };
 
   const checkToken = async () => {
-    if (localStorage.getItem("token") === null) {
-      try {
-        const refreshRes = await axios.post(
-          "http://localhost:5000/refresh",
-          {},
-          { withCredentials: true }
-        );
-        const newToken = refreshRes.data.token;
-        localStorage.setItem("token", newToken);
-        axios.defaults.headers.common["Authorization"] = `Bearer ${newToken}`;
-      } catch (err) {
-        if (err.response.status === 403) {
-          return null;
-        }
+    if (localStorage.getItem("token") === null) return;
+    try {
+      const refreshRes = await axios.post(
+        "http://localhost:5000/refresh",
+        {},
+        { withCredentials: true }
+      );
+      const newToken = refreshRes.data.token;
+      localStorage.setItem("token", newToken);
+      axios.defaults.headers.common["Authorization"] = `Bearer ${newToken}`;
+    } catch (err) {
+      if (err.response && err.response.status === 403) {
         localStorage.removeItem("token");
       }
     }
@@ -88,8 +88,8 @@ const LearningPage = () => {
   return (
     <div className={styles.pageContainer}>
       <div className={styles.learnContainer}>
-        <h1>학습하기</h1>
-        <p style={{ fontSize: "1.2em", color: "#666", marginTop: "10px" }}>
+        <h1>-학습하기-</h1>
+        <p style={{ fontSize: "1.2em", color: "#666", marginTop: "0px" }}>
           -자음과 모음의 발음을 들으며 한글을 익혀요!-
         </p>
         <div className={styles.buttonContainer}>
@@ -114,6 +114,7 @@ const LearningPage = () => {
                 <ConsonantList
                   consonants={consonants}
                   onLetterSelect={handleLetterSelectionWithTTS}
+                  setIsCanvas={setIsCanvas}
                 />
               </>
             )}
@@ -123,6 +124,7 @@ const LearningPage = () => {
                 <VowelList
                   vowels={vowels}
                   onLetterSelect={handleLetterSelectionWithTTS}
+                  setIsCanvas={setIsCanvas}
                 />
               </>
             )}
@@ -132,6 +134,7 @@ const LearningPage = () => {
                 <ConsonantList
                   consonants={doubleCons}
                   onLetterSelect={handleLetterSelectionWithTTS}
+                  setIsCanvas={setIsCanvas}
                 />
               </>
             )}
@@ -141,6 +144,7 @@ const LearningPage = () => {
                 <VowelList
                   vowels={doubleVow}
                   onLetterSelect={handleLetterSelectionWithTTS}
+                  setIsCanvas={setIsCanvas}
                 />
               </>
             )}
@@ -153,20 +157,30 @@ const LearningPage = () => {
                 >
                   다시 듣기
                 </button>
-                <h3>선택한 글자: </h3>
                 <p className={styles.selectedLetter}> {selectedLetter}</p>
                 <div className={styles.exampleWord}>
                   <h3>
-                    예시 단어:{" "}
                     {renderHighlightedExample(exampleWord, lastSelectedLetter)}
                   </h3>
                 </div>
               </div>
             )}
-            <div style={{ marginTop: "50px" }}>
-              <Canvas checkAnswer={checkAnswer} />
-            </div>
           </div>
+        </div>
+        <div style={{ marginTop: "50px" }}>
+          <Canvas ref={canvasRef} checkAnswer={checkAnswer} />
+        </div>
+        <div className="ruleDiv" style={{ backgroundColor: "#f9f9f9" }}>
+          <p>-각 단어들을 클릭하면 해당 단어의 발음 소리가 재생됩니다.</p>
+          <p>
+            -마우스로 캔버스에 단어를 쓰고 '확인' 버튼을 누르시면 쓴 단어의 발음
+            소리가 재생됩니다.
+          </p>
+          <p>-위에 예시 단어 외에 다른 단어를 써도 발음 소리가 재생됩니다.</p>
+          <p>
+            -최대한 또박또박 바르게 단어를 써주세요. 엉망으로 쓰시면 발음이
+            제대로 재생되지 않습니다.
+          </p>
         </div>
       </div>
     </div>

@@ -6,13 +6,16 @@ html {
 
 .header {
   display: flex;
+  background-color: #ffcbcb;
   justify-content: space-between;
   align-items: center; /* 수직 중앙 정렬 */
   box-sizing: border-box;
-  margin: 10px 0px 1px 0px;
+  margin: 0px 0px 0px 0px;
+  padding-top: 10px;
   padding-bottom: 10px;
   box-shadow: 1px 1px 0px rgb(210, 209, 209);
 }
+
 .header span {
   color: darkgray;
 }
@@ -21,6 +24,7 @@ html {
   height: 40px;
   margin-left: 30px;
   margin-right: 5px;
+  border-radius: 50%;
 }
 
 .loginLeft,
@@ -82,10 +86,9 @@ html {
   margin-left: 170px;
 }
 
-.menuIcon {
-  display: none;
-  font-size: 30px;
-  cursor: pointer;
+.navbarMenu .icon,
+.navbarAuth .icon {
+  margin-right: 7px;
 }
 
 .menuContainer {
@@ -104,7 +107,7 @@ html {
 
 .navbarMenu {
   color: rgb(0, 0, 0);
-  margin: 0 40px; /* 좌우 여백 */
+  margin: 0 30px; /* 좌우 여백 */
   font-size: 20px;
   font-weight: 600;
   text-decoration: none;

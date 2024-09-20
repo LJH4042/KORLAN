@@ -10,11 +10,10 @@
   justify-content: center;
   min-height: 70vh;
   padding: 50px;
-  background-color: #a0cbe7;
+  background-color: #f7f7f7;
 }
 
-.imageDiv,
-.combineDiv {
+.imageDiv .combineDiv {
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -32,16 +31,20 @@
 .imageDiv img {
   max-width: 70%;
   height: auto;
-  border: 3px solid rgb(146, 146, 146);
+  border: 5px solid #dbe0e6;
+  box-shadow: 0px 0px 10px rgb(207, 207, 207);
   border-radius: 8px;
-  margin: 0px 0px 10px 135px;
+  margin: 0px 0px 10px 145px;
   padding: 30px 150px 30px 150px;
 }
-
-.textQuizDiv img {
-  max-width: 60%;
+.CombineimageDiv img {
+  max-width: 70%;
   height: auto;
-  margin: 0px 0px 0px 115px;
+  border: 5px solid #dbe0e6;
+  box-shadow: 0px 0px 10px rgb(207, 207, 207);
+  border-radius: 8px;
+  margin: 0px 0px 10px 145px;
+  padding: 30px 150px 30px 150px;
 }
 
 button,
@@ -83,7 +86,9 @@ button:disabled,
   justify-content: center;
   width: 1100px;
   background-color: white;
-  border-radius: 10px;
+  border-radius: 20px;
+  margin-left: 50px;
+  border: 10px double #f7f7f7;
 }
 
 .gameContainer div {
@@ -93,16 +98,16 @@ button:disabled,
 .gameDescription_1 {
   font-size: 1.2em;
   color: #666;
-  margin: 20px 0px 20px 210px;
+  margin: 20px 0px 20px 220px;
 }
 .gameDescription_2 {
   font-size: 1.2em;
   color: #666;
-  margin: 20px 0px 20px 230px;
+  margin: 20px 0px 20px 220px;
 }
 
 .levelContainer {
-  padding: 50px 100px 50px 100px;
+  padding: 40px 100px 50px 100px;
   margin-top: 10px;
 }
 
@@ -111,10 +116,14 @@ button:disabled,
   flex-direction: column;
   align-items: center;
   justify-content: center;
+  font-size: 30px;
+  margin-bottom: 20px; /* 하단 마진만 남기고 좌우 정렬 제거 */
+  font-weight: bold;
+  letter-spacing: 5px;
 }
 
 .levelBtn {
-  margin-left: 50px;
+  margin-left: 60px;
   margin-bottom: 20px;
 }
 .levelBtn button {
@@ -186,15 +195,15 @@ button:disabled,
 }
 
 .textQuizDiv {
-  border: 3px solid rgb(146, 146, 146);
   border-radius: 20px;
   padding: 10px;
   margin-bottom: 10px;
+  background-color: #f7f7f7 !important;
 }
 
 .canvasContainer {
   width: 100%;
-  margin: auto;
+  margin-left: 10px;
 }
 
 .canvasContainer button {
@@ -221,10 +230,9 @@ button:disabled,
 
 .canvasButtonDiv h3,
 .typingContainer h3 {
-  border: 3px solid rgb(146, 146, 146);
-  border-radius: 20px;
-  padding: 10px 80px 10px 80px;
-  width: 500px;
+  text-align: center;
+  font-size: 45px;
+  padding: 10px 0px 10px 0px;
 }
 
 .typingContainer {
@@ -278,11 +286,17 @@ button:disabled,
   font-size: 50px;
 }
 .gameoverTextDiv {
-  border: 3px solid rgb(146, 146, 146);
   border-radius: 20px;
-  padding: 10px 100px 10px 100px;
+  padding: 30px 100px 30px 100px;
   margin: 50px 0px 50px 0px;
   text-align: center;
+  background-color: #f0f4f9 !important;
+  border: 10px double white;
+}
+.gameoverTextDiv h1 {
+  color: red;
+  font-style: italic;
+  text-decoration: underline;
 }
 
 .ruleDiv {
@@ -291,6 +305,15 @@ button:disabled,
   box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
   border: 3px solid #a0cbe7;
   border-radius: 20px;
+  margin-left: 10px;
+  font-size: 17px;
+}
+.hintText {
+  color: gray;
+  font-size: 15px;
+  margin-bottom: 30px;
+  text-align: center;
+  margin-left: 20px;
 }
 
 @media (max-width: 768px) {
