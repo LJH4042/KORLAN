@@ -31,7 +31,6 @@ function Register() {
           .then((res) => alert(res.data.message));
         setIsTimer(false);
       } catch (err) {
-        alert(err.response.data.message);
         setEmailError(err.response.data.emailMessage);
       }
     }
@@ -141,7 +140,7 @@ function Register() {
                 type="text"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
-                placeholder="이메일"
+                placeholder="구글 이메일"
                 className="RegisterShortInput_1"
               />
               <button className="RegisterAuthBtn_1" onClick={mailSendCode}>
