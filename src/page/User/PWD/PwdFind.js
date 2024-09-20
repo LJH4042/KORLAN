@@ -71,7 +71,7 @@ function PwdFind() {
                   type="text"
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
-                  placeholder="이메일"
+                  placeholder="구글 이메일"
                   className="pwdCheckInput"
                 />
                 <h4>{emailError}</h4>

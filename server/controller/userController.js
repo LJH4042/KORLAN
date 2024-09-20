@@ -147,6 +147,11 @@ const mailCode = asynchHandler(async (req, res) => {
     return res.status(401).json({
       emailMessage: "이메일 형식이 올바르지 않습니다. ex) admin@aaa.com",
     });
+  const existingEmail = await User.findOne({ email });
+  if (existingEmail)
+    return res
+      .status(401)
+      .json({ emailMessage: "이미 사용중인 이메일입니다." });
   const code = Math.floor(100000 + Math.random() * 900000);
   await Authcode.create({ code });
   const mailRes = await mailer(email, "이메일 인증", code);

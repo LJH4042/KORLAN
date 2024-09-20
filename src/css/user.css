@@ -128,7 +128,7 @@
   display: block;
   width: 310px;
   padding: 15px;
-  margin-top: 10px;
+  margin-top: 5px;
   border: none;
   background-color: #f0f4f3;
   color: #333;
@@ -157,6 +157,7 @@
   background-color: #a0cbe7;
   color: white;
   font-size: 20px;
+  margin-top: 5px;
 }
 .RegisterSubmitBtn {
   width: 415px;
@@ -186,14 +187,14 @@
   height: 20px;
   font-size: 14px;
   font-weight: bold;
-  margin-top: 10px;
+  margin-top: 0px;
 }
 .RegisterGender {
   display: block;
   width: 415px;
   padding: 15px;
   margin-top: 25px;
-  margin-bottom: 50px;
+  margin-bottom: 40px;
   border: none;
   background-color: #f0f4f3;
   color: #333;
