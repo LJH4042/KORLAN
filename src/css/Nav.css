@@ -1,4 +1,4 @@
-@import url("https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css");
+@import url('https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css');
 
 html {
   overflow-y: scroll; /* 항상 세로 스크롤바를 보이게 함 */
@@ -6,7 +6,7 @@ html {
 
 .header {
   display: flex;
-  background-color: #ffcbcb;
+  background-color: #9c1c2b;
   justify-content: space-between;
   align-items: center; /* 수직 중앙 정렬 */
   box-sizing: border-box;
@@ -17,7 +17,7 @@ html {
 }
 
 .header span {
-  color: darkgray;
+  color: white;
 }
 .header img {
   width: 40px;
@@ -29,7 +29,7 @@ html {
 
 .loginLeft,
 .loginRight {
-  font-size: 13px;
+  /* font-size: 13px; */
   font-weight: 600;
   letter-spacing: 0.5px;
 }
@@ -38,7 +38,7 @@ html {
 .siteLeft:hover,
 .siteMiddle:hover,
 .siteRight:hover {
-  color: #0088ff;
+  color: #f0c05a;
 }
 .loginLeft {
   margin-right: 7px;
@@ -116,7 +116,7 @@ html {
 }
 
 .navbarMenu:hover {
-  color: #0088ff;
+  color: #9c1c2b;
 }
 
 .navbarAuth {
@@ -129,7 +129,7 @@ html {
 }
 
 .navbarAuth:hover {
-  color: #0088ff;
+  color: #9c1c2b;
 }
 
 .dropdown-content {
@@ -152,7 +152,7 @@ html {
 }
 
 .dropdown-content a:hover {
-  color: #0088ff;
+  color: #9c1c2b;
 }
 
 .dropdown:hover .dropdown-content {

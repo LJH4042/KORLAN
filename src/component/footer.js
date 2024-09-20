@@ -7,7 +7,7 @@ const Footer = () => {
       <div className="footer-container">
         <div className="footer-section">
           <h4>또박또박</h4>
-          <p>중부대학교 정보보호학과 졸업작품</p>
+          <p>중부대학교 정보보호학과 2024 졸업작품</p>
         </div>
         <div className="footer-section">
           <h4>팀원</h4>
